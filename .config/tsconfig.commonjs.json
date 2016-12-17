@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../lib",
+    "types": []
+  },
+  "exclude": [
+    "../src/**/*.test.ts"
+  ]
+}
