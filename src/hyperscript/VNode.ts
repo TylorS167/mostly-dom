@@ -6,15 +6,15 @@ export const SVG_NAMESPACE = `http://www.w3.org/2000/svg`;
 
 const defaultTextNodeData: VNodeProps = {};
 
-export class VNode implements VirtualNode<any> {
-  public parent: VNode | void = VOID;
+export class MostlyVNode implements VirtualNode<Node> {
+  public parent: MostlyVNode | void = VOID;
 
   constructor(
     public tagName: string | void,
     public id: string | void,
     public className: string | void,
     public props: VNodeProps,
-    public children: Array<VirtualNode<any>> | void,
+    public children: Array<VirtualNode<Node>> | void,
     public element: Node | void,
     public text: string | void,
     public key: string | number | void,
@@ -27,15 +27,15 @@ export class VNode implements VirtualNode<any> {
     id: string | void,
     className: string | void,
     props: VNodeProps,
-    children: Array<VirtualNode<any>> | void,
+    children: Array<VirtualNode<Node>> | void,
     text: string | void,
   ) {
-    return new VNode(
-      tagName, id, className, props, children, VOID, text, props.key, VOID, VOID);
+    return new MostlyVNode(
+      tagName, id, className, props, children, VOID, text, props.key, props.scope, VOID);
   }
 
-  public static createText(text: string): VNode {
-    return new VNode(
+  public static createText(text: string): MostlyVNode {
+    return new MostlyVNode(
       VOID, VOID, VOID, defaultTextNodeData, VOID, VOID, text, VOID, VOID, VOID);
   };
 
@@ -44,15 +44,15 @@ export class VNode implements VirtualNode<any> {
     id: string | void,
     className: string | void,
     props: VNodeProps,
-    children: Array<VirtualNode<any>> | void,
+    children: Array<VirtualNode<Node>> | void,
     text: string | void,
   ) {
-    return new VNode(
-      tagName, id, className, props, children, VOID, text, props.key, VOID, SVG_NAMESPACE);
+    return new MostlyVNode(
+      tagName, id, className, props, children, VOID, text, props.key, props.scope, SVG_NAMESPACE);
   }
 }
 
-export function addSvgNamespace(vNode: VNode): void {
+export function addSvgNamespace(vNode: MostlyVNode): void {
   vNode.namespace = SVG_NAMESPACE;
 
   if (Array.isArray(vNode.children)) {

@@ -1,3 +1,5 @@
+import { VNode } from './';
+
 export const VOID = void 0;
 
 export function isString (x: any): x is string {
@@ -10,4 +12,8 @@ export function isNumber (x: any): x is number {
 
 export function isPrimitive (x: any): x is (string | number) {
   return isString(x) || isNumber(x);
+}
+
+export function vNodesAreEqual(formerVNode: VNode, vNode: VNode) {
+  return formerVNode.key === vNode.key && formerVNode.tagName === vNode.tagName;
 }

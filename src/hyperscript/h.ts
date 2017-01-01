@@ -1,5 +1,5 @@
-import { VNodeProps } from '../types';
-import { VNode, addSvgNamespace } from './VNode';
+import { VNodeProps, VNode } from '../types';
+import { MostlyVNode, addSvgNamespace } from './VNode';
 import { parseSelector } from './parseSelector';
 import { VOID, isPrimitive, isString } from '../helpers';
 
@@ -35,8 +35,8 @@ export const h: HyperscriptFn = function h(): VNode {
   const isSvg = tagName === 'svg';
 
   const vNode = isSvg
-    ? VNode.createSvg(tagName, id, className, props, VOID, text)
-    : VNode.create(tagName, id, className, props, VOID, text);
+    ? MostlyVNode.createSvg(tagName, id, className, props, VOID, text)
+    : MostlyVNode.create(tagName, id, className, props, VOID, text);
 
   if (Array.isArray(children))
     vNode.children = sanitizeChildren(children, vNode);
@@ -57,9 +57,12 @@ function sanitizeChildren (childrenOrText: Array<string | VNode>, parent: VNode)
     const vNodeOrText = childrenOrText[i];
 
     if (isString(vNodeOrText))
-      children[i] = VNode.createText(vNodeOrText);
+      children[i] = MostlyVNode.createText(vNodeOrText);
     else
       children[i] = vNodeOrText;
+
+    if (parent.scope)
+      children[i].scope = parent.scope;
 
     children[i].parent = parent;
   }

@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { VNode } from './VNode';
+import { VNode } from '../types';
 import { h } from './h';
 
 describe('h', () => {
@@ -124,8 +124,8 @@ describe('h', () => {
     });
 
     it('sets the namespace on children', () => {
-      const child = h('g', {}, []);
-      const vNode = h('svg', {}, [ child ]);
+      const vNode = h('svg', {}, [ h('g', {}, []) ]);
+      const child = vNode.children[0];
 
       assert.ok(child.namespace && child.namespace.indexOf('svg') > -1);
     });
@@ -134,6 +134,8 @@ describe('h', () => {
       const foreignObject = h('foreignObject');
       const child = h('g', {}, []);
       const vNode = h('svg', {}, [ child, foreignObject ]);
+
+      Function.prototype(vNode);
 
       assert.ok(child.namespace && child.namespace.indexOf('svg') > -1);
       assert.ok(!foreignObject.namespace);
