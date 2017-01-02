@@ -72,6 +72,17 @@ const vNode = h('div', { style: { color: '#000' } }, [
 ]);
 ```
 
+Also available a multitude of type-safe hyperscript-helper functions.
+
+```typescript
+import { div, h1, p } from 'mostly-dom';
+
+const vNode = div({ style: { color: '#000' } }, [
+  h1('Headline'),
+  p('A paragraph'),
+]);
+```
+
 #### elementToVNode(element: Element): ElementVNode
 
 Converts an element to an ElementVNode. particularly useful for an initial patch call.
@@ -100,6 +111,21 @@ const divVNode = elementToVNode(div);
 }
 */
 ```
+
+#### <a id="hasCssSelector"></a> `hasCssSelector(cssSelector: string, vNode: VNode): boolean`
+
+Given a CSS selector **without** spaces, this function does not search children, it
+will return `true` if the given CSS selector matches that of the VNode and `false`
+if it does not. If a CSS selector **with** spaces is given it will throw an error.
+
+```typescript
+import { hasCssSelector, div } from '@motorcycle/dom';
+
+console.log(hasCssSelector('.foo', div('.foo'))) // true
+console.log(hasCssSelector('.bar', div('.foo'))) // false
+console.log(hasCssSelector('div', div('.foo'))) // true
+console.log(hasCssSelector('#foo', div('#foo'))) // true
+console.log(hasCssSelector('.foo .bar'), div('.foo.bar')) // ERROR!
 
 ## Types
 
