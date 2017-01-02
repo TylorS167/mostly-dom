@@ -1,3 +1,10 @@
+# 1.1.1 (2017-01-02)
+---
+
+## Bug Fixes
+
+- fix(mostly-dom): add a fix for adding scopes to children [9027d816](https://github.com/TylorS/mostly-dom/commits/9027d816f5510ca80603049cd5dc59b7b388d14e)
+
 # 1.1.0 (2017-01-02)
 ---
 
