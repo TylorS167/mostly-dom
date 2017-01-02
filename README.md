@@ -126,6 +126,7 @@ console.log(hasCssSelector('.bar', div('.foo'))) // false
 console.log(hasCssSelector('div', div('.foo'))) // true
 console.log(hasCssSelector('#foo', div('#foo'))) // true
 console.log(hasCssSelector('.foo .bar'), div('.foo.bar')) // ERROR!
+```
 
 ## Types
 
