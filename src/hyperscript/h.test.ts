@@ -141,4 +141,20 @@ describe('h', () => {
       assert.ok(!foreignObject.namespace);
     });
   });
+
+  describe('given a scope', () => {
+    it('adds scope to children', () => {
+      const vNode = h('div', { scope: 'hello' }, [ h('h1', 'Hello') ]);
+
+      assert.strictEqual(vNode.scope, 'hello');
+      assert.strictEqual(vNode.children[0].scope, 'hello');
+    });
+
+    it('does not overwrite nested scopes', () => {
+      const vNode = h('div', { scope: 'hello' }, [ h('h1', { scope: 'other' }, 'Hello') ]);
+
+      assert.strictEqual(vNode.scope, 'hello');
+      assert.strictEqual(vNode.children[0].scope, 'other');
+    });
+  });
 });

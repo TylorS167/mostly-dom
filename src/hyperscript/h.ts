@@ -61,7 +61,7 @@ function sanitizeChildren (childrenOrText: Array<string | VNode>, parent: VNode)
     else
       children[i] = vNodeOrText;
 
-    if (parent.scope)
+    if (parent.scope && !children[i].scope)
       children[i].scope = parent.scope;
 
     children[i].parent = parent;
