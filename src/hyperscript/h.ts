@@ -1,4 +1,4 @@
-import { VNodeProps, VNode } from '../types';
+import { VNodeProps, VNode, VirtualNode } from '../types';
 import { MostlyVNode, addSvgNamespace } from './VNode';
 import { parseSelector } from './parseSelector';
 import { VOID, isPrimitive, isString } from '../helpers';
@@ -70,9 +70,16 @@ function sanitizeChildren (childrenOrText: Array<string | VNode>, parent: VNode)
   return children;
 }
 
+export type HyperscriptChildren = string | number | Array<string | VNode | null>;
+
 export interface HyperscriptFn {
   (sel: string): VNode;
   (sel: string, data: VNodeProps): VNode;
-  (sel: string, children: string | number | Array<string | VNode | null>): VNode;
-  (sel: string, data: VNodeProps, children: string | number | Array<string | VNode | null>): VNode;
+  (sel: string, children: HyperscriptChildren): VNode;
+  (sel: string, data: VNodeProps, children: HyperscriptChildren): VNode;
+
+  <T extends Node>(sel: string): VirtualNode<T>;
+  <T extends Node>(sel: string, data: VNodeProps): VirtualNode<T>;
+  <T extends Node>(sel: string, children: HyperscriptChildren): VirtualNode<T>;
+  <T extends Node>(sel: string, data: VNodeProps, children: HyperscriptChildren): VirtualNode<T>;
 }
