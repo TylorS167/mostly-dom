@@ -1,5 +1,4 @@
-/* tslint:disable:max-line-length */
-/* tslint:disable:max-file-line-count */
+/* tslint:disable */
 
 /**
  * Many thanks to TypeStyle for creating these :)
@@ -1560,7 +1559,8 @@ export interface CSSProperties {
 
   /**
    * The text-align CSS property describes how inline content like text is aligned in its parent block element. text-align does not control the alignment of block elements itself, only their inline content.
-   * @see https://developer.mozilla.org/en/docs/Web/CSS/text-align
+   * @see https:
+//developer.mozilla.org/en/docs/Web/CSS/text-align
    */
   textAlign?: CSSGlobalValues | 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'justify-all' | 'match-parent';
 
