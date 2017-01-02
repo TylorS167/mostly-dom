@@ -16,8 +16,7 @@
     "types": [
       "mocha",
       "node"
-    ],
-    "outDir": "tmp"
+    ]
   },
   "include": [
     "src/**/*.ts"
