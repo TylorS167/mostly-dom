@@ -1,3 +1,10 @@
+# 1.1.2 (2017-01-03)
+---
+
+## Bug Fixes
+
+- fix(elementToVNode): add text element to textVNode [3de43eaf](https://github.com/TylorS/mostly-dom/commits/3de43eaf252736a1d0b2da7ee5195402d861a614)
+
 # 1.1.1 (2017-01-02)
 ---
 
