@@ -20,5 +20,9 @@ function nodeToVNode(node: Element | Text): VNode {
   if (node instanceof Element)
     return elementToVNode(node);
 
-  return MostlyVNode.createText(node.textContent as string);
+  const textVNode = MostlyVNode.createText(node.textContent as string);
+
+  textVNode.element = node;
+
+  return textVNode;
 }
