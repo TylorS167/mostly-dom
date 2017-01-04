@@ -30,6 +30,7 @@ const options =
     browsers: [],
 
     karmaTypescriptConfig: {
+      tsconfig: "./tsconfig.json",
       reports: {
         "html": "coverage",
         "lcovonly": "coverage",
