@@ -1,3 +1,16 @@
+# 1.2.0 (2017-01-10)
+---
+
+## Features
+
+- feat(querySelectorAll): implement vNode querySelectorAll [60885211](https://github.com/TylorS/mostly-dom/commits/6088521166fe35ce458a6b31900230411b26d0e0)
+- feat(querySelector): implement vNode querySelector [015a7a7c](https://github.com/TylorS/mostly-dom/commits/015a7a7c01f537140b323c8ab2d3929b169e259e)
+- feat(hasCssSelector): match more complex css selectors [7c3e8e75](https://github.com/TylorS/mostly-dom/commits/7c3e8e7577cd114083d167a500a1635324c86019)
+
+## Bug Fixes
+
+- fix(types): correct VirtualNode types [32a32e3f](https://github.com/TylorS/mostly-dom/commits/32a32e3f596e59acf78479c1eafd61636f27adc9)
+
 # 1.1.2 (2017-01-03)
 ---
 
