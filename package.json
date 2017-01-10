@@ -47,5 +47,8 @@
     "preversion": "npm run build",
     "release": "northbrook release",
     "test": "northbrook tslint && karma start"
+  },
+  "dependencies": {
+    "@most/prelude": "^1.4.1"
   }
 }
