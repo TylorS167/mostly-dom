@@ -114,18 +114,48 @@ const divVNode = elementToVNode(div);
 
 #### <a id="hasCssSelector"></a> `hasCssSelector(cssSelector: string, vNode: VNode): boolean`
 
-Given a CSS selector **without** spaces, this function does not search children, it
+Given a CSS selector (this function does not search children) it
 will return `true` if the given CSS selector matches that of the VNode and `false`
-if it does not. If a CSS selector **with** spaces is given it will throw an error.
+if it does not.
 
 ```typescript
-import { hasCssSelector, div } from '@motorcycle/dom';
+import { hasCssSelector, div } from 'mostly-dom';
 
 console.log(hasCssSelector('.foo', div('.foo'))) // true
 console.log(hasCssSelector('.bar', div('.foo'))) // false
 console.log(hasCssSelector('div', div('.foo'))) // true
 console.log(hasCssSelector('#foo', div('#foo'))) // true
-console.log(hasCssSelector('.foo .bar'), div('.foo.bar')) // ERROR!
+console.log(hasCssSelector('.foo .bar'), div('.foo.bar'))) // false
+console.log(hasCssSelector('.foo, .bar', div('.foo.bar'))) // true
+```
+
+To see all of the use cases that one may have check our [tests](https://github.com/tylors/mostly-dom/tree/master/src/hyperscript/hasCssSelector.test.ts).
+
+#### <a id="querySelector"></a> `querySelector(cssSelector: string, vNode: VNode): VNode | null`
+
+Given a CSS selector it will recursively search for children matching
+the given CSS selector matches, returning the first match. If no match can be found
+`null` will be returned.
+
+```typescript
+import { querySelector, div, h1 } from 'mostly-dom';
+
+const match = querySelector('.foo', div([ h1('.foo') ]));
+
+assert.deepEqual(match, h1('.foo')); // true
+```
+
+#### <a id="querySelectorAll"></a> `querySelectorAll(cssSelector: string, vNode: VNode): Array<VNode>`
+
+Given a CSS selector it will recursively search for children matching
+the given CSS selector matches, returning an array of all the matching vNodes.
+
+```typescript
+import { querySelectorAll, div, h1 } from 'mostly-dom';
+
+const matches = querySelectorAll('.foo', div([ h1('.foo') ]));
+
+assert.deepEqual(matches, [ h1('.foo') ]); // true
 ```
 
 ## Types
