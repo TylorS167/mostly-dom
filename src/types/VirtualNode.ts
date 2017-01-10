@@ -10,14 +10,14 @@ export interface VirtualNode<T extends Node> {
   id: string | void;
   className: string | void;
   props: VNodeProps;
-  children: Array<VirtualNode<any>> | void;
+  children: Array<VirtualNode<Node>> | void;
   text: string | void;
   key: string | number | void;
   element: T | void;
   namespace: string | void;
   scope: string | void;
 
-  parent: VirtualNode<any> | void;
+  parent: VirtualNode<Node> | void;
 }
 
 export interface ElementVirtualNode<T extends Element> extends VirtualNode<Element> {
