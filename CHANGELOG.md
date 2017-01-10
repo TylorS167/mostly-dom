@@ -1,3 +1,10 @@
+# 1.2.1 (2017-01-10)
+---
+
+## Bug Fixes
+
+- fix(package): add missing dep [217d966e](https://github.com/TylorS/mostly-dom/commits/217d966e7a07e75092fa36b4ca86d4eccb6dee2b)
+
 # 1.2.0 (2017-01-10)
 ---
 
