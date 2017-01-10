@@ -1,10 +1,7 @@
-import { VNode } from '../';
-import { parseSelector } from './parseSelector';
+import { VNode } from '../../';
+import { parseSelector } from '../parseSelector';
 
-export function hasCssSelector(cssSelector: string, vNode: VNode): boolean {
-  if (cssSelector.indexOf(' ') > -1)
-    throw new Error('CSS selectors can not contain spaces');
-
+export function matchBasicCssSelector(cssSelector: string, vNode: VNode) {
   const hasTagName = cssSelector[0] !== '#' && cssSelector[0] !== '.';
 
   const { tagName, className, id } =
