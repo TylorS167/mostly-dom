@@ -1,5 +1,7 @@
 # Mostly DOM
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/TylorS/mostly-dom.svg)](https://greenkeeper.io/)
+
 > A Type-Safe virtual-dom implementation. A virtual-dom implementation that works for you.
 
 Mostly-dom a virtual-dom implementation that provides strong types for everyday things
