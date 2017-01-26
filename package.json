@@ -15,7 +15,7 @@
     "@northbrook/tsc": "^1.0.4",
     "@northbrook/tslint": "^2.1.4",
     "@types/mocha": "^2.2.35",
-    "@types/node": "^6.0.55",
+    "@types/node": "^7.0.4",
     "karma": "^1.3.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.0",
