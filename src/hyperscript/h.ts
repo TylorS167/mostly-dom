@@ -7,6 +7,7 @@ export const h: HyperscriptFn = function h(): VNode {
   const selector: string = arguments[0]; // required
   let childrenOrText: Array<VNode | string> | string = arguments[2]; // optional
 
+  let { tagName, id, className } = parseSelector(selector);
   let props: VNodeProps = {};
   let children: Array<VNode> | void;
   let text: string | void;
@@ -30,7 +31,11 @@ export const h: HyperscriptFn = function h(): VNode {
       props = childrenOrTextOrProps;
   }
 
-  const { tagName, id, className } = parseSelector(selector);
+  if (props && props.class && typeof props.class === 'object') {
+    const ck = Object.keys(props.class);
+    const cp = props.class;
+    className = ck.reduce((cn, k) => cp[k] ? `${cn} ${k}` : cn, className);
+  }
 
   const isSvg = tagName === 'svg';
 
