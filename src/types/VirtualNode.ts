@@ -44,6 +44,9 @@ export interface VNodeProps extends HtmlProperties {
   // key for dom diffing
   key?: string | number;
 
+  // classes
+  class?: { [className: string]: Boolean };
+
   // attributes for setAttribute()
   attrs?: { [attributeName: string]: any };
 
