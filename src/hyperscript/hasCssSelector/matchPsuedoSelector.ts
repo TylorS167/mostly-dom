@@ -2,9 +2,9 @@ import { VNode } from '../../';
 
 const defaultParent = Object.freeze({ children: [] as VNode[] });
 
-export function matchPsuedoSelector(cssSelector: string, vNode: VNode) {
+export function matchPsuedoSelector(cssSelector: string, vNode: VNode): boolean {
   const parent = vNode.parent || defaultParent;
-  const children = parent.children;
+  const children = parent.children as VNode[];
 
   if (cssSelector.indexOf(`:nth-child`) === 0)
     return matchNthChild(cssSelector.slice(11).split(')')[0], vNode);
@@ -13,8 +13,8 @@ export function matchPsuedoSelector(cssSelector: string, vNode: VNode) {
     return vNodeContainsText(cssSelector.slice(10).split(')')[0], vNode);
 
   switch (cssSelector) {
-    case ':first-child': return children[0] === vNode;
-    case ':last-child': return children[children.length - 1] === vNode;
+    case ':first-child': return children && children[0] === vNode;
+    case ':last-child': return children && children[children.length - 1] === vNode;
     case ':empty': return !vNode.children || vNode.children.length === 0;
     case ':root': return isRoot(vNode);
     default: return false;

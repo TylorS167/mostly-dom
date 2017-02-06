@@ -1,11 +1,11 @@
 import { VNode } from '../../';
 import { matchAttribute } from './matchAttribute';
-import { matchPsuedoSelector } from './matchPsuedoSelector';
 import { matchBasicCssSelector } from './matchBasicCssSelector';
+import { matchPsuedoSelector } from './matchPsuedoSelector';
 
 const EMPTY: any = Object.freeze({});
 
-export function matchesSelector(cssSelector: string, vNode: VNode) {
+export function matchesSelector(cssSelector: string, vNode: VNode): boolean {
   cssSelector = cssSelector.trim();
 
   // if working with an ElementVNode return use native implementation
@@ -15,9 +15,8 @@ export function matchesSelector(cssSelector: string, vNode: VNode) {
   if (cssSelector[0] === '[' && cssSelector[cssSelector.length - 1] === ']')
     return matchAttribute(cssSelector.slice(1, -1), vNode.props.attrs || EMPTY);
 
-  if (cssSelector.indexOf(':') > -1) {
+  if (cssSelector.indexOf(':') > -1)
     return matchPsuedoSelector(cssSelector, vNode);
-  }
 
   if (cssSelector.indexOf(' ') > -1)
     throw new Error('Basic CSS selectors can not contain spaces');
