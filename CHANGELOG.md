@@ -1,3 +1,11 @@
+# 1.3.0 (2017-02-06)
+---
+
+## Features
+
+- feat(VNodeProps): Add ability to give in extra classes as a key-value dictionary where the key is th [629075f7](https://github.com/TylorS/mostly-dom/commits/629075f71b6e6a2ce3122ba9b3c1bbf08ed38f77)
+- feat(hh): add i helper [ee6cf305](https://github.com/TylorS/mostly-dom/commits/ee6cf3053dcbdae9275f2e256e6d0a2109a7be6d)
+
 # 1.2.1 (2017-01-10)
 ---
 
