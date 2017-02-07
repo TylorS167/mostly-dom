@@ -1,3 +1,10 @@
+# 1.3.1 (2017-02-07)
+---
+
+## Bug Fixes
+
+- fix(patchVNode): check element type before setting properties [84ea0dc8](https://github.com/TylorS/mostly-dom/commits/84ea0dc83418f5f9aa7584c5e75b1b2dc8c5b211)
+
 # 1.3.0 (2017-02-06)
 ---
 
