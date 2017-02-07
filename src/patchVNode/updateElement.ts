@@ -1,16 +1,22 @@
-import { VNode, ElementVNode, SCOPE_ATTRIBUTE } from '../';
+import { ElementVNode, SCOPE_ATTRIBUTE, VNode } from '../';
 
 export function updateElement (formerVNode: VNode, vNode: VNode): ElementVNode {
-  vNode.element = formerVNode.element;
+  const node = vNode.element = formerVNode.element as Node;
 
-  if (vNode.id)
-    (vNode.element as Element).id = vNode.id;
+  if (isElement(node)) {
+    if (vNode.id)
+      node.id = vNode.id;
 
-  if (vNode.className)
-    (vNode.element as Element).className = vNode.className;
+    if (vNode.className)
+      node.className = vNode.className;
 
-  if (vNode.scope)
-    (vNode.element as Element).setAttribute(SCOPE_ATTRIBUTE, vNode.scope);
+    if (vNode.scope)
+      node.setAttribute(SCOPE_ATTRIBUTE, vNode.scope);
+  }
 
   return vNode as ElementVNode;
+}
+
+function isElement(node: Node): node is Element {
+  return typeof (node as Element).setAttribute === 'function';
 }
