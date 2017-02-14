@@ -1,3 +1,10 @@
+# 1.4.0 (2017-02-14)
+---
+
+## Features
+
+- feat(mostly-dom): add focus module [a457faf7](https://github.com/TylorS/mostly-dom/commits/a457faf7b01433147eb31b31b017ff41c4bd6929)
+
 # 1.3.1 (2017-02-07)
 ---
 
