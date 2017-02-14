@@ -1,19 +1,28 @@
-import { Module, ElementVNode, VNode, InsertHook } from './';
-import { ModuleCallbacks } from './modules/ModuleCallbacks';
+import { ElementVNode, InsertHook, Module, VNode } from './';
+
 import { AttributesModule } from './modules/attributes';
+import { FocusModule } from './modules/focus';
+import { ModuleCallbacks } from './modules/ModuleCallbacks';
 import { PropsModule } from './modules/props';
 import { StylesModule } from './modules/styles';
-import { vNodesAreEqual } from './helpers';
-import { patchVNode } from './patchVNode';
 import { createElement } from './createElement';
+import { patchVNode } from './patchVNode';
 import { removeVNodes } from './removeVNodes';
+import { vNodesAreEqual } from './helpers';
 
 export function init (modules: Array<Module>) {
   const attributesModule = new AttributesModule();
   const propsModule = new PropsModule();
   const stylesModule = new StylesModule();
+  const focusModule = new FocusModule();
 
-  const defaultModules = [ attributesModule, propsModule, stylesModule ];
+  const defaultModules =
+    [
+      attributesModule,
+      propsModule,
+      stylesModule,
+      focusModule,
+    ];
 
   const moduleCallbacks = new ModuleCallbacks(defaultModules.concat(modules));
 

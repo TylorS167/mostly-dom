@@ -1,10 +1,11 @@
-import { ElementVNode } from '../';
 import { BaseModule } from './BaseModule';
+import { ElementVNode } from '../';
 import { emptyVNode } from './emptyVNode';
 
 const PROPERTIES_TO_SKIP: Array<string> =
   [
     'class',
+    'focus',
     'style',
     'attrs',
     'key',

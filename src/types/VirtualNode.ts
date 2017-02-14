@@ -1,6 +1,7 @@
+import * as hooks from './hooks';
+
 import { CSSProperties } from './CSS';
 import { HtmlProperties } from './HtmlProperties';
-import * as hooks from './hooks';
 
 export interface VNode extends VirtualNode<Node> {};
 export interface ElementVNode extends ElementVirtualNode<Element> {};
@@ -52,6 +53,9 @@ export interface VNodeProps extends HtmlProperties {
 
   // styling
   style?: VNodeStyle;
+
+  // declarative focusing
+  focus?: boolean;
 
   // hooks
   init?: hooks.InitHook;
