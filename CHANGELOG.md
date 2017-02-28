@@ -1,3 +1,10 @@
+# 1.4.1 (2017-02-28)
+---
+
+## Bug Fixes
+
+- fix(styles): always set updated styles [b8451244](https://github.com/TylorS/mostly-dom/commits/b8451244eec680cba9b4141c0cd4201b453bf21f)
+
 # 1.4.0 (2017-02-14)
 ---
 
