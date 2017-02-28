@@ -40,10 +40,10 @@ const options =
 
 module.exports = function (karma) {
   if (process.env.TRAVIS)
-    options.browsers.push('Chrome_travis_ci', 'Firefox', 'PhantomJS')
+    options.browsers.push('Chrome_travis_ci', 'Firefox')
 
   if (options.browsers.length === 0)
-    options.browsers.push('Chrome', 'Firefox', 'PhantomJS')
+    options.browsers.push('Chrome', 'Firefox')
 
   karma.set(options);
 };
