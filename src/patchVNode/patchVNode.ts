@@ -1,11 +1,11 @@
-import { ElementVNode, VNode, TextVNode } from '../';
-import { ModuleCallbacks } from '../modules/ModuleCallbacks';
-import { vNodesAreEqual } from '../helpers';
+import { ElementVNode, TextVNode, VNode } from '../';
+import { postpatchHooks, prepatchHooks, updateHooks } from './hooks';
 
-import { updateElement } from './updateElement';
+import { ModuleCallbacks } from '../modules/ModuleCallbacks';
 import { patchVNodeChildren } from './patchVNodeChildren';
 import { replacePreviousElement } from './replacePreviousElement';
-import { prepatchHooks, updateHooks, postpatchHooks } from './hooks';
+import { updateElement } from './updateElement';
+import { vNodesAreEqual } from '../helpers';
 
 export function patchVNode(
   formerVNode: VNode,

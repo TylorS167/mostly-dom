@@ -1,5 +1,5 @@
-import { ElementVNode } from '../';
 import { BaseModule } from './BaseModule';
+import { ElementVNode } from '../';
 import { emptyVNode } from './emptyVNode';
 
 export class StylesModule extends BaseModule {
@@ -73,7 +73,7 @@ function updateStyle(formerVNode: ElementVNode, vNode: ElementVNode): void {
         if (!formerHasDelayedProperty || styleValue !== formerStyle.delayed[key])
           setValueOnNextFrame((element as any).style, key, styleValue);
       }
-    } else if (key !== 'remove' && styleValue !== formerStyle[key]) {
+    } else if (key !== 'remove') {
       element.style[key] = styleValue;
     }
   }
