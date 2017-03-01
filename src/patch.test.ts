@@ -1,5 +1,8 @@
 import * as assert from 'assert';
-import { h, init, VNode, ElementVNode, elementToVNode, BaseModule } from './';
+
+import { BaseModule, ElementVNode, VNode, h, init } from './';
+
+import { elementToVNode } from './elementToVNode';
 
 let patch = init([]);
 
