@@ -1,3 +1,10 @@
+# 1.4.2 (2017-03-01)
+---
+
+## Bug Fixes
+
+- fix(modules): fix module bugs [98c59343](https://github.com/TylorS/mostly-dom/commits/98c5934319d3fd24a9f0f675f17e509ba94f31a4)
+
 # 1.4.1 (2017-02-28)
 ---
 
