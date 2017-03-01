@@ -14,10 +14,6 @@ export class FocusModule extends BaseModule {
 function setFocus(vNode: ElementVNode) {
   const { props: { focus = false }, element } = vNode;
 
-  if (focus && typeof (element as HTMLElement).focus === 'function') {
+  if (focus && typeof (element as HTMLElement).focus === 'function')
     (element as HTMLElement).focus();
-
-    if (element.tagName === 'INPUT' && (element as HTMLInputElement).type === 'text')
-      (element as HTMLInputElement).selectionStart = (element as HTMLInputElement).value.length;
-  }
 }

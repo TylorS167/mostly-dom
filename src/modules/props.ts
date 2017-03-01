@@ -41,21 +41,9 @@ function updateProps(formerVNode: ElementVNode, vNode: ElementVNode): void {
   formerProps = formerProps || {};
   props = props || {};
 
-  for (key in formerProps)
-    if (!props[key])
-      delete element[key];
+  for (key in formerProps) if (PROPERTIES_TO_SKIP.indexOf(key) === -1 && !props[key])
+    delete element[key];
 
-  for (key in props) {
-    const property = props[key];
-    const formerProperty = formerProps[key];
-
-    if (PROPERTIES_TO_SKIP.indexOf(property) > -1) return;
-
-    const shouldSetProperty: boolean =
-      formerProperty !== property &&
-      (key !== 'value' || element[key] !== property);
-
-    if (shouldSetProperty)
-      element[key] = property;
-  }
+  for (key in props) if (PROPERTIES_TO_SKIP.indexOf(key) === -1)
+    element[key] = props[key];
 }
