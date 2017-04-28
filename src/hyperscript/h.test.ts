@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+
 import { VNode } from '../types';
 import { h } from './h';
 
@@ -83,6 +84,9 @@ describe('h', () => {
 
       const vNode = h('div', children);
 
+      if (!vNode.children)
+        throw new Error(`VNode should have children`);
+
       assert.strictEqual(vNode.children[0].parent, vNode);
     });
   });
@@ -108,6 +112,9 @@ describe('h', () => {
     it('converts text to VNodes', () => {
       const vNodeChildren = [ 'hi' ];
       const vNode = h('div', {}, vNodeChildren);
+
+      if (!vNode.children)
+        throw new Error(`VNode should have children`);
 
       assert.deepEqual(vNode.children[0].text, 'hi');
     });
@@ -138,6 +145,10 @@ describe('h', () => {
 
     it('sets the namespace on children', () => {
       const vNode = h('svg', {}, [ h('g', {}, []) ]);
+
+      if (!vNode.children)
+        throw new Error(`VNode should have children`);
+
       const child = vNode.children[0];
 
       assert.ok(child.namespace && child.namespace.indexOf('svg') > -1);
@@ -159,12 +170,18 @@ describe('h', () => {
     it('adds scope to children', () => {
       const vNode = h('div', { scope: 'hello' }, [ h('h1', 'Hello') ]);
 
+      if (!vNode.children)
+        throw new Error(`VNode should have children`);
+
       assert.strictEqual(vNode.scope, 'hello');
       assert.strictEqual(vNode.children[0].scope, 'hello');
     });
 
     it('does not overwrite nested scopes', () => {
       const vNode = h('div', { scope: 'hello' }, [ h('h1', { scope: 'other' }, 'Hello') ]);
+
+      if (!vNode.children)
+        throw new Error(`VNode should have children`);
 
       assert.strictEqual(vNode.scope, 'hello');
       assert.strictEqual(vNode.children[0].scope, 'other');

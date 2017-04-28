@@ -1,7 +1,9 @@
 import * as assert from 'assert';
-import { h, MostlyVNode, ElementVNode } from './';
-import { createElement } from './createElement';
+
+import { ElementVNode, MostlyVNode, h } from './';
+
 import { ModuleCallbacks } from './modules/ModuleCallbacks';
+import { createElement } from './createElement';
 
 const moduleCallbacks = new ModuleCallbacks([]);
 
@@ -81,9 +83,12 @@ describe('createElement', () => {
     it('creates children elements with data-mostly-dom-scope attribute', () => {
       const vNode = h('div', { scope: 'hello' }, [ h('h1', {}, []) ]);
 
-      createElement(vNode, moduleCallbacks, []);
+      const elementVNode = createElement(vNode, moduleCallbacks, []);
 
-      const element = vNode.children[0].element as Element;
+      if (!elementVNode.children)
+        throw new Error(`VNode should have children`);
+
+      const element = elementVNode.children[0].element;
 
       assert.strictEqual(element.getAttribute('data-mostly-dom-scope'), 'hello');
     });

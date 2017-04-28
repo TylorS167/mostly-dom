@@ -1,7 +1,8 @@
-import { VNodeProps, VNode, VirtualNode } from '../types';
 import { MostlyVNode, addSvgNamespace } from './VNode';
-import { parseSelector } from './parseSelector';
+import { VNode, VNodeProps, VirtualNode } from '../types';
 import { VOID, isPrimitive, isString } from '../helpers';
+
+import { parseSelector } from './parseSelector';
 
 export const h: HyperscriptFn = function h(): VNode {
   const selector: string = arguments[0]; // required
@@ -75,7 +76,11 @@ function sanitizeChildren (childrenOrText: Array<string | VNode>, parent: VNode)
   return children;
 }
 
-export type HyperscriptChildren = string | number | Array<string | VNode | null>;
+export type HyperscriptChildren =
+  string |
+  number |
+  Array<string | VNode | null> |
+  ReadonlyArray<string | VNode | null>;
 
 export interface HyperscriptFn {
   (sel: string): VNode;

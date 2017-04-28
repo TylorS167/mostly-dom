@@ -3,15 +3,15 @@ import * as hooks from './hooks';
 import { CSSProperties } from './CSS';
 import { HtmlProperties } from './HtmlProperties';
 
-export interface VNode extends VirtualNode<Node> {};
-export interface ElementVNode extends ElementVirtualNode<Element> {};
+export interface VNode extends VirtualNode<Node> {}
+export interface ElementVNode extends ElementVirtualNode<Element> {}
 
 export interface VirtualNode<T extends Node> {
   tagName: string | void;
   id: string | void;
   className: string | void;
   props: VNodeProps;
-  children: Array<VirtualNode<Node>> | void;
+  children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void;
   text: string | void;
   key: string | number | void;
   element: T | void;
@@ -26,7 +26,7 @@ export interface ElementVirtualNode<T extends Element> extends VirtualNode<Eleme
   element: T;
   namespace: string;
   text: void;
-  children: Array<ElementVirtualNode<Element>> | void;
+  children: Array<ElementVirtualNode<Element>> | ReadonlyArray<ElementVirtualNode<Element>> | void;
 }
 
 export interface TextVNode extends VirtualNode<Text> {
