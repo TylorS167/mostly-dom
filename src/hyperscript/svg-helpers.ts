@@ -1,5 +1,5 @@
-import { VNodeProps, VirtualNode, SvgTagNames } from '../';
-import { h, HyperscriptChildren } from './h';
+import { HyperscriptChildren, h } from './h';
+import { SvgTagNames, VNodeProps, VirtualNode } from '../';
 
 export interface SvgHyperscriptHelperFn<T extends SVGElement> {
   (): VirtualNode<T>;
@@ -33,7 +33,7 @@ function hh <T extends SVGElement>(tagName: SvgTagNames): SvgHyperscriptHelperFn
     else
       return h<T>(tagName, {});
   };
-};
+}
 
 function isValidString (param: any): boolean {
   return typeof param === 'string' && param.length > 0;

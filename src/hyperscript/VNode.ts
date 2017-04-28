@@ -1,4 +1,4 @@
-import { VirtualNode, VNodeProps } from '../types';
+import { VNodeProps, VirtualNode } from '../types';
 
 const VOID = void 0;
 
@@ -14,7 +14,7 @@ export class MostlyVNode implements VirtualNode<Node> {
     public id: string | void,
     public className: string | void,
     public props: VNodeProps,
-    public children: Array<VirtualNode<Node>> | void,
+    public children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
     public element: Node | void,
     public text: string | void,
     public key: string | number | void,
@@ -27,7 +27,7 @@ export class MostlyVNode implements VirtualNode<Node> {
     id: string | void,
     className: string | void,
     props: VNodeProps,
-    children: Array<VirtualNode<Node>> | void,
+    children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
     text: string | void,
   ) {
     return new MostlyVNode(
@@ -37,14 +37,14 @@ export class MostlyVNode implements VirtualNode<Node> {
   public static createText(text: string): MostlyVNode {
     return new MostlyVNode(
       VOID, VOID, VOID, defaultTextNodeData, VOID, VOID, text, VOID, VOID, VOID);
-  };
+  }
 
   public static createSvg(
     tagName: string | void,
     id: string | void,
     className: string | void,
     props: VNodeProps,
-    children: Array<VirtualNode<Node>> | void,
+    children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
     text: string | void,
   ) {
     return new MostlyVNode(
