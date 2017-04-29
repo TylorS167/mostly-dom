@@ -1,3 +1,10 @@
+# 1.5.0 (2017-04-28)
+---
+
+## Features
+
+- feat(types): support ReadonlyArray children [db0d2965](https://github.com/TylorS/mostly-dom/commits/db0d29657bcd0c2bf7b7107829cfca670f365eee)
+
 # 1.4.2 (2017-03-01)
 ---
 
