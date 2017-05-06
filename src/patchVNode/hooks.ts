@@ -1,41 +1,41 @@
-import { ElementVNode, VirtualNode } from '../';
+import { ElementVNode, VirtualNode } from '../'
 
-import { ModuleCallbacks } from '../modules/ModuleCallbacks';
+import { ModuleCallbacks } from '../modules/ModuleCallbacks'
 
-export function prepatchHooks (
+export function prepatchHooks(
   formerVNode: ElementVNode,
   vNode: VirtualNode<Element>,
   moduleCallbacks: ModuleCallbacks)
 {
-  const props = vNode.props;
+  const props = vNode.props
 
-  moduleCallbacks.prepatch(formerVNode, vNode);
+  moduleCallbacks.prepatch(formerVNode, vNode)
 
   if (props.prepatch)
-    props.prepatch(formerVNode, vNode);
+    props.prepatch(formerVNode, vNode)
 }
 
-export function updateHooks (
+export function updateHooks(
   formerVNode: ElementVNode,
   vNode: ElementVNode,
   moduleCallbacks: ModuleCallbacks)
 {
-  const props = vNode.props;
+  const props = vNode.props
 
-  moduleCallbacks.update(formerVNode, vNode);
+  moduleCallbacks.update(formerVNode, vNode)
 
-  if (props.update) props.update(formerVNode, vNode);
+  if (props.update) props.update(formerVNode, vNode)
 }
 
-export function postpatchHooks (
+export function postpatchHooks(
   formerVNode: ElementVNode,
   vNode: ElementVNode,
   moduleCallbacks: ModuleCallbacks)
 {
-  const props = vNode.props;
+  const props = vNode.props
 
-  moduleCallbacks.postpatch(formerVNode, vNode);
+  moduleCallbacks.postpatch(formerVNode, vNode)
 
   if (props.postpatch)
-    props.postpatch(formerVNode, vNode);
+    props.postpatch(formerVNode, vNode)
 }

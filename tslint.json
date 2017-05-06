@@ -3,6 +3,21 @@
     "@motorcycle/tslint"
   ],
   "rules": {
-    "no-bitwise": false
+    "no-bitwise": false,
+    "readonly-indexer": false,
+    "readonly-interface": false,
+    "max-params": [true, 10],
+    "no-empty": false,
+    "prefer-function-over-method": [false],
+    "no-param-reassign": false,
+    "forin": false,
+    "variable-name": [
+      true,
+      "allow-leading-underscore"
+    ],
+    "no-parameter-properties": false,
+    "unified-signatures": [false],
+    "no-arguments": false,
+    "prefer-for-of": false
   }
 }

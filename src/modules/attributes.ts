@@ -1,10 +1,10 @@
-import { BaseModule } from './BaseModule';
-import { ElementVNode } from '../';
-import { emptyVNode } from './emptyVNode';
+import { BaseModule } from './BaseModule'
+import { ElementVNode } from '../'
+import { emptyVNode } from './emptyVNode'
 
 const NAMESPACE_URIS = {
   xlink: 'http://www.w3.org/1999/xlink',
-};
+}
 
 const booleanAttributes: Array<string> = [
   'allowfullscreen', 'async', 'autofocus', 'autoplay', 'checked', 'compact',
@@ -15,59 +15,58 @@ const booleanAttributes: Array<string> = [
   'nowrap', 'open', 'pauseonexit', 'readonly', 'required', 'reversed', 'scoped',
   'seamless', 'selected', 'sortable', 'spellcheck', 'translate', 'truespeed',
   'typemustmatch', 'visible',
-];
+]
 
-const booleanAttributeDictionary: any = Object.create(null);
+const booleanAttributeDictionary: any = Object.create(null)
 
 for (let i = 0, count = booleanAttributes.length; i < count; i++)
-  booleanAttributeDictionary[booleanAttributes[i]] = true;
+  booleanAttributeDictionary[booleanAttributes[i]] = true
 
 // attributes module
 export class AttributesModule extends BaseModule<Element> {
   public create(vNode: ElementVNode) {
-    updateAttributes(emptyVNode, vNode);
+    updateAttributes(emptyVNode, vNode)
   }
 
   public update(formerVNode: ElementVNode, vNode: ElementVNode) {
-    updateAttributes(formerVNode, vNode);
+    updateAttributes(formerVNode, vNode)
   }
 }
 
-function updateAttributes (formerVNode: ElementVNode, vNode: ElementVNode) {
-  let key: string;
-  let attributeValue: any;
-  let formerAttributeValue: any;
-  let element: Element = vNode.element;
-  let formerAttributes: any = formerVNode.props.attrs;
-  let attributes: any = vNode.props.attrs;
-  let attributeParts: Array<string>;
+function updateAttributes(formerVNode: ElementVNode, vNode: ElementVNode) {
+  let attributeValue: any
+  let formerAttributeValue: any
+  const element: Element = vNode.element
+  let formerAttributes: any = formerVNode.props.attrs
+  let attributes: any = vNode.props.attrs
+  let attributeParts: Array<string>
 
-  if (!formerAttributes && !attributes) return;
+  if (!formerAttributes && !attributes) return
 
-  formerAttributes = formerAttributes || {};
-  attributes = attributes || {};
+  formerAttributes = formerAttributes || {}
+  attributes = attributes || {}
 
-  for (key in attributes) {
-    attributeValue = attributes[key];
-    formerAttributeValue = formerAttributes[key];
+  for (const key in attributes) {
+    attributeValue = attributes[key]
+    formerAttributeValue = formerAttributes[key]
 
     if (formerAttributeValue !== attributeValue) {
       if (!attributeValue && booleanAttributeDictionary[key])
-        element.removeAttribute(key);
+        element.removeAttribute(key)
 
       else {
-        attributeParts = key.split(':');
+        attributeParts = key.split(':')
 
         if (attributeParts.length > 1 && NAMESPACE_URIS.hasOwnProperty(attributeParts[0]))
-          element.setAttributeNS((NAMESPACE_URIS as any)[attributeParts[0]], key, attributeValue);
+          element.setAttributeNS((NAMESPACE_URIS as any)[attributeParts[0]], key, attributeValue)
 
         else
-          element.setAttribute(key, attributeValue);
+          element.setAttribute(key, attributeValue)
       }
     }
   }
 
-  for (key in formerAttributes)
+  for (const key in formerAttributes)
     if (!(key in attributes))
-      element.removeAttribute(key);
+      element.removeAttribute(key)
 }

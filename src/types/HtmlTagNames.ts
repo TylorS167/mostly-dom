@@ -17,7 +17,7 @@ export type HtmlTagNames =
   'shadow' | 'small' | 'source' | 'spacer' | 'span' | 'strike' | 'strong' |
   'style' | 'sub' | 'summary' | 'sup' | 'table' | 'tbody' | 'td' | 'template' |
   'textarea' | 'tfoot' | 'th' | 'thead' | 'time' | 'title' | 'tr' | 'track' |
-  'tt' | 'u' | 'ul' | 'video' | 'wbr' | 'xmp';
+  'tt' | 'u' | 'ul' | 'video' | 'wbr' | 'xmp'
 
 export type SvgTagNames = 'svg' |
   'a' | 'altGlyph' | 'altGlyphDef' | 'altGlyphItem' | 'animate' | 'animateColor' |
@@ -33,4 +33,4 @@ export type SvgTagNames = 'svg' |
   'linearGradient' | 'marker' | 'mask' | 'metadata' | 'missingGlyph' | 'mpath' |
   'path' | 'pattern' | 'polygon' | 'polyline' | 'radialGradient' | 'rect' | 'script' |
   'set' | 'stop' | 'style' | 'switch' | 'symbol' | 'text' | 'textPath' | 'title' |
-  'tref' | 'tspan' | 'use' | 'view' | 'vkern';
+  'tref' | 'tspan' | 'use' | 'view' | 'vkern'

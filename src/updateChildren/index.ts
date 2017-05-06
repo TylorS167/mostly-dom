@@ -1,1 +1,1 @@
-export * from './updateChildren';
+export * from './updateChildren'

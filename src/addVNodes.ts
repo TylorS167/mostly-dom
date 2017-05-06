@@ -1,8 +1,8 @@
-import { ElementVNode } from './';
-import { ModuleCallbacks } from './modules/ModuleCallbacks';
-import { createElement } from './createElement';
+import { ElementVNode } from './'
+import { ModuleCallbacks } from './modules/ModuleCallbacks'
+import { createElement } from './createElement'
 
-export function addVNodes (
+export function addVNodes(
   parentNode: Node,
   referenceNode: Node | null,
   vNodes: Array<ElementVNode>,
@@ -15,5 +15,5 @@ export function addVNodes (
     parentNode.insertBefore(
       createElement(vNodes[startIndex], moduleCallbacks, insertedVNodeQueue).element,
       referenceNode,
-    );
+    )
 }

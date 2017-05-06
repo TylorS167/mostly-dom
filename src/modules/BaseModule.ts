@@ -1,4 +1,4 @@
-import { ElementVNode, Module, VNode } from '../types';
+import { ElementVNode, Module, VNode } from '../types'
 
 export class BaseModule<T extends Element> implements Module<T> {
   public pre(_: VNode) {}
@@ -12,7 +12,7 @@ export class BaseModule<T extends Element> implements Module<T> {
   public update(_: ElementVNode, __: ElementVNode) {}
 
   public remove(_: ElementVNode, removeElement: Function) {
-    removeElement();
+    removeElement()
   }
 
   public destroy(_: ElementVNode) {}

@@ -1,77 +1,77 @@
-import { VNode } from '../../';
+import { VNode } from '../../'
 
-const defaultParent = Object.freeze({ children: [] as VNode[] });
+const defaultParent = Object.freeze({ children: [] as Array<VNode> })
 
 export function matchPsuedoSelector(cssSelector: string, vNode: VNode): boolean {
-  const parent = vNode.parent || defaultParent;
-  const children = parent.children as VNode[];
+  const parent = vNode.parent || defaultParent
+  const children = parent.children as Array<VNode>
 
   if (cssSelector.indexOf(`:nth-child`) === 0)
-    return matchNthChild(cssSelector.slice(11).split(')')[0], vNode);
+    return matchNthChild(cssSelector.slice(11).split(')')[0], vNode)
 
   if (cssSelector.indexOf(`:contains`) === 0)
-    return vNodeContainsText(cssSelector.slice(10).split(')')[0], vNode);
+    return vNodeContainsText(cssSelector.slice(10).split(')')[0], vNode)
 
   switch (cssSelector) {
-    case ':first-child': return children && children[0] === vNode;
-    case ':last-child': return children && children[children.length - 1] === vNode;
-    case ':empty': return !vNode.children || vNode.children.length === 0;
-    case ':root': return isRoot(vNode);
-    default: return false;
-  };
+  case ':first-child': return children && children[0] === vNode
+  case ':last-child': return children && children[children.length - 1] === vNode
+  case ':empty': return !vNode.children || vNode.children.length === 0
+  case ':root': return isRoot(vNode)
+  default: return false
+  }
 }
 
 function vNodeContainsText(text: string, vNode: VNode) {
-  if (vNode.text) return text === vNode.text;
+  if (vNode.text) return text === vNode.text
 
-  const children = vNode.children;
+  const children = vNode.children
 
-  if (!children || children.length === 0) return false;
+  if (!children || children.length === 0) return false
 
   for (let i = 0; i < children.length; ++i) {
-    const child = children[i];
+    const child = children[i]
 
-    if (child.text === text) return true;
+    if (child.text === text) return true
   }
 
-  return false;
+  return false
 }
 
 function isRoot(vNode: VNode) {
-  return !vNode.parent;
+  return !vNode.parent
 }
 
 function matchNthChild(index: string, vNode: VNode) {
-  const parent = vNode.parent || defaultParent;
-  const children = parent.children;
+  const parent = vNode.parent || defaultParent
+  const children = parent.children
 
-  if (!children || children.length === 0) return false;
+  if (!children || children.length === 0) return false
 
-  if (index.indexOf('+') === -1 && !isNaN(parseInt(index)))
-    return children[parseInt(index)] === vNode;
+  if (index.indexOf('+') === -1 && !isNaN(parseInt(index, 10)))
+    return children[parseInt(index, 10)] === vNode
 
-  const childIndex = children.indexOf(vNode);
+  const childIndex = children.indexOf(vNode)
 
   if (index === 'odd')
-    return childIndex % 2 !== 0;
+    return childIndex % 2 !== 0
 
   if (index === 'even')
-    return childIndex % 2 === 0;
+    return childIndex % 2 === 0
 
   if (index.indexOf('+') > -1) {
-    let [multipleString, offsetString] = index.split('+');
-    const multiple = parseInt(multipleString.split('n')[0]);
-    const offset = parseInt(offsetString);
+    const [ multipleString, offsetString ] = index.split('+')
+    const multiple = parseInt(multipleString.split('n')[0], 10)
+    const offset = parseInt(offsetString, 10)
 
     if (multiple === 0)
-      return true;
+      return true
 
-    return childIndex !== 0 && childIndex % (multiple + offset) === 0;
+    return childIndex !== 0 && childIndex % (multiple + offset) === 0
   }
 
-  return false;
+  return false
 }
 
-function isNaN (x: number): x is number {
-  return (x | 0) !== x;
+function isNaN(x: number): x is number {
+  return (x | 0) !== x
 }

@@ -1,1 +1,1 @@
-export * from './BaseModule';
+export * from './BaseModule'

@@ -1,29 +1,29 @@
-import { curry2, CurriedFunction2 } from '@most/prelude';
-import { VNode } from '../types';
-import { hasCssSelector } from './hasCssSelector';
+import { curry2, CurriedFunction2 } from '@most/prelude'
+import { VNode } from '../types'
+import { hasCssSelector } from './hasCssSelector'
 
 export const querySelector: QuerySelector = curry2(
   function querySelector(cssSelector: string, vNode: VNode): VNode | null {
-    const scope = vNode.scope;
+    const scope = vNode.scope
 
-    const children: Array<VNode> = [vNode];
+    const children: Array<VNode> = [ vNode ]
 
     while (children.length > 0) {
-      const child = children.shift() as VNode;
+      const child = children.shift() as VNode
 
       if (child.scope !== scope)
-        continue;
+        continue
 
       if (hasCssSelector(cssSelector, child))
-        return child;
+        return child
 
-      if (!child.children) continue;
+      if (!child.children) continue
 
-      children.push(...child.children);
+      children.push(...child.children)
     }
 
-    return null;
+    return null
   },
-);
+)
 
-export interface QuerySelector extends CurriedFunction2<string, VNode, VNode | null> {};
+export interface QuerySelector extends CurriedFunction2<string, VNode, VNode | null> {}
