@@ -1,4 +1,12 @@
-import { ElementVNode, ElementVirtualNode, InsertHook, Module, VNode, VirtualNode } from './'
+import {
+  ElementVNode,
+  ElementVirtualNode,
+  InsertHook,
+  Module,
+  VNode,
+  VNodeProps,
+  VirtualNode,
+} from './'
 
 import { AttributesModule } from './modules/attributes'
 import { CSSProperties } from './types'

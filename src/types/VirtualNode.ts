@@ -41,42 +41,40 @@ export interface TextVNode extends VirtualNode<Text> {
   scope: void
 }
 
-export type VNodeProps<T extends Element> = ElementProperties &
-  {
-    // key for dom diffing
-    key?: string | number,
+export interface VNodeProps<T extends Element> extends ElementProperties {
+  // key for dom diffing
+  key?: string | number,
 
-    // classes
-    class?: { [className: string]: Boolean },
+  // classes
+  class?: { [className: string]: Boolean },
 
-    // attributes for setAttribute()
-    attrs?: { [attributeName: string]: any },
+  // attributes for setAttribute()
+  attrs?: { [attributeName: string]: any },
 
-    // styling
-    style?: VNodeStyle,
+  // styling
+  style?: VNodeStyle,
 
-    // declarative focusing
-    focus?: boolean,
+  // declarative focusing
+  focus?: boolean,
 
-    scope?: string,
+  scope?: string,
 
-    // hooks
-    init?: hooks.InitHook
-    create?: hooks.CreateHook<T>,
-    update?: hooks.UpdateHook<T>,
-    insert?: hooks.InsertHook<T>,
-    remove?: hooks.RemoveHook<T>,
-    destroy?: hooks.DestroyHook<T>,
-    prepatch?: hooks.PrepatchHook<T>,
-    postpatch?: hooks.PostpatchHook<T>,
+  // hooks
+  init?: hooks.InitHook
+  create?: hooks.CreateHook<T>,
+  update?: hooks.UpdateHook<T>,
+  insert?: hooks.InsertHook<T>,
+  remove?: hooks.RemoveHook<T>,
+  destroy?: hooks.DestroyHook<T>,
+  prepatch?: hooks.PrepatchHook<T>,
+  postpatch?: hooks.PostpatchHook<T>,
 
-    // TODO: maybe find a better name
-    // this is a namespace for custom modules
-    module?: any,
-  }
+  // TODO: maybe find a better name
+  // this is a namespace for custom modules
+  module?: any,
+}
 
-export type VNodeStyle = CSSProperties &
-  {
-    delayed?: CSSProperties,
-    remove?: CSSProperties,
-  }
+export interface VNodeStyle extends CSSProperties {
+  delayed?: CSSProperties,
+  remove?: CSSProperties,
+}

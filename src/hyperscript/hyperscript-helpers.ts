@@ -68,16 +68,16 @@ import { HyperscriptChildren, h } from './h'
 // tslint:disable:max-line-length
 export interface HyperscriptHelperFn<
   T extends Element,
-  Props extends VNodeProps<Element> = VNodeProps<T>>
+  Props extends VNodeProps<T> = VNodeProps<T>>
 {
   (): VirtualNode<T, Props>
-  (classNameOrId: string, data: Props, children: HyperscriptChildren): VirtualNode<T, Props & VNodeProps<T>>
+  (classNameOrId: string, data: Props, children: HyperscriptChildren): VirtualNode<T, Props>
   (classNameOrId: string, data: Props): VirtualNode<T, Props & VNodeProps<T>>
-  (classNameOrId: string, children: HyperscriptChildren): VirtualNode<T, Props & VNodeProps<T>>
-  (classNameOrId: string): VirtualNode<T, Props & VNodeProps<T>>
+  (classNameOrId: string, children: HyperscriptChildren): VirtualNode<T, Props>
+  (classNameOrId: string): VirtualNode<T, Props>
   (data: Props): VirtualNode<T, Props & VNodeProps<T>>
-  (data: Props, children: HyperscriptChildren): VirtualNode<T, Props & VNodeProps<T>>
-  (children: HyperscriptChildren): VirtualNode<T, Props & VNodeProps<T>>
+  (data: Props, children: HyperscriptChildren): VirtualNode<T, Props>
+  (children: HyperscriptChildren): VirtualNode<T, Props>
 }
 // tslint:enable:max-line-length
 
