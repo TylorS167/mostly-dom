@@ -1,3 +1,15 @@
+# 2.0.0 (2017-05-06)
+---
+
+## Breaking Changes
+
+1. can no longer set properties that do no exist for a given element type
+  - feat(hyperscript): create element-specific hyperscript-helpers [24fde727](https://github.com/TylorS/mostly-dom/commits/24fde7271db0b0e7059536f0e90ad3c63f9845c5)
+
+## Features
+
+- feat(mostly-dom): parameterize VNodeProps and Hooks [d94cd68f](https://github.com/TylorS/mostly-dom/commits/d94cd68fd7826ae7642fa604a7829b05c794db40)
+
 # 1.5.0 (2017-04-28)
 ---
 
