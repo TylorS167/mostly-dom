@@ -1,3 +1,10 @@
+# 2.0.1 (2017-05-06)
+---
+
+## Bug Fixes
+
+- fix(patch): allow parameterizing patch with element type [351d8b16](https://github.com/TylorS/mostly-dom/commits/351d8b162c729a23a1ae0cd66e038edd857aca9b)
+
 # 2.0.0 (2017-05-06)
 ---
 
