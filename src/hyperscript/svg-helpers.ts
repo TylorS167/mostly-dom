@@ -3,12 +3,12 @@ import { SvgTagNames, VNodeProps, VirtualNode } from '../';
 
 export interface SvgHyperscriptHelperFn<T extends SVGElement> {
   (): VirtualNode<T>;
-  (classNameOrId: string, data: VNodeProps, children: HyperscriptChildren): VirtualNode<T>;
-  (classNameOrId: string, data: VNodeProps): VirtualNode<T>;
+  (classNameOrId: string, data: VNodeProps<T>, children: HyperscriptChildren): VirtualNode<T>;
+  (classNameOrId: string, data: VNodeProps<T>): VirtualNode<T>;
   (classNameOrId: string, children: HyperscriptChildren): VirtualNode<T>;
   (classNameOrId: string): VirtualNode<T>;
-  (data: VNodeProps): VirtualNode<T>;
-  (data: VNodeProps, children: HyperscriptChildren): VirtualNode<T>;
+  (data: VNodeProps<T>): VirtualNode<T>;
+  (data: VNodeProps<T>, children: HyperscriptChildren): VirtualNode<T>;
   (children: HyperscriptChildren): VirtualNode<T>;
 }
 

@@ -1,10 +1,10 @@
-import { Module, VNode, ElementVNode } from '../';
+import { ElementVNode, Module, VNode, VirtualNode } from '../';
 
-export class ModuleCallbacks implements Module {
-  private _modules: Array<Module>;
+export class ModuleCallbacks implements Module<Element> {
+  private _modules: Array<Module<Element>>;
   private _moduleCount: number;
 
-  constructor (modules: Array<Module>) {
+  constructor (modules: Array<Module<Element>>) {
     this._modules = modules;
     this._moduleCount = modules.length;
   }
@@ -77,7 +77,7 @@ export class ModuleCallbacks implements Module {
       modules[i].destroy(vNode);
   }
 
-  public prepatch (formerVNode: VNode, vNode: VNode) {
+  public prepatch (formerVNode: ElementVNode, vNode: VirtualNode<Element>) {
     const modules = this._modules;
     const moduleCount = this._moduleCount;
 
@@ -85,7 +85,7 @@ export class ModuleCallbacks implements Module {
       modules[i].prepatch(formerVNode, vNode);
   }
 
-  public postpatch (formerVNode: VNode, vNode: VNode) {
+  public postpatch (formerVNode: ElementVNode, vNode: ElementVNode) {
     const modules = this._modules;
     const moduleCount = this._moduleCount;
 

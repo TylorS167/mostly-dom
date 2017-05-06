@@ -2,7 +2,7 @@ import { BaseModule } from './BaseModule';
 import { ElementVNode } from '../';
 import { emptyVNode } from './emptyVNode';
 
-export class StylesModule extends BaseModule {
+export class StylesModule extends BaseModule<Element> {
   public pre () {
     setRequestAnimationFrame();
   }
@@ -36,7 +36,7 @@ function nextFrame(fn: any) {
   requestAnimationFrame(function () {
     requestAnimationFrame(fn);
   });
-};
+}
 
 function setValueOnNextFrame(obj: any, prop: string, value: any) {
   nextFrame(function () {
@@ -134,4 +134,4 @@ export {
   updateStyle as update,
   applyDestroyStyle as destroy,
   applyRemoveStyle as remove,
-}
+};

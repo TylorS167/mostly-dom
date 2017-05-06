@@ -4,38 +4,38 @@ const VOID = void 0;
 
 export const SVG_NAMESPACE = `http://www.w3.org/2000/svg`;
 
-const defaultTextNodeData: VNodeProps = {};
+const defaultTextNodeData: VNodeProps<Element> = {};
 
-export class MostlyVNode implements VirtualNode<Node> {
-  public parent: MostlyVNode | void = VOID;
+export class MostlyVNode<T extends Node> implements VirtualNode<T> {
+  public parent: MostlyVNode<Element> | void = VOID;
 
   constructor(
     public tagName: string | void,
     public id: string | void,
     public className: string | void,
-    public props: VNodeProps,
+    public props: VNodeProps<Element>,
     public children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
-    public element: Node | void,
+    public element: T | void,
     public text: string | void,
     public key: string | number | void,
     public scope: string | void,
     public namespace: string | void,
   ) {}
 
-  public static create(
+  public static create<T extends Node>(
     tagName: string | void,
     id: string | void,
     className: string | void,
-    props: VNodeProps,
+    props: VNodeProps<Element>,
     children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
     text: string | void,
   ) {
-    return new MostlyVNode(
+    return new MostlyVNode<T>(
       tagName, id, className, props, children, VOID, text, props.key, props.scope, VOID);
   }
 
-  public static createText(text: string): MostlyVNode {
-    return new MostlyVNode(
+  public static createText(text: string): MostlyVNode<Text> {
+    return new MostlyVNode<Text>(
       VOID, VOID, VOID, defaultTextNodeData, VOID, VOID, text, VOID, VOID, VOID);
   }
 
@@ -43,16 +43,16 @@ export class MostlyVNode implements VirtualNode<Node> {
     tagName: string | void,
     id: string | void,
     className: string | void,
-    props: VNodeProps,
+    props: VNodeProps<SVGElement>,
     children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
     text: string | void,
   ) {
-    return new MostlyVNode(
+    return new MostlyVNode<SVGElement>(
       tagName, id, className, props, children, VOID, text, props.key, props.scope, SVG_NAMESPACE);
   }
 }
 
-export function addSvgNamespace(vNode: MostlyVNode): void {
+export function addSvgNamespace(vNode: MostlyVNode<Node>): void {
   vNode.namespace = SVG_NAMESPACE;
 
   if (Array.isArray(vNode.children)) {
@@ -63,7 +63,7 @@ export function addSvgNamespace(vNode: MostlyVNode): void {
       const child = children[i];
 
       if (child.tagName !== 'foreignObject')
-        addSvgNamespace(child);
+        addSvgNamespace(child as MostlyVNode<Node>);
     }
   }
 }

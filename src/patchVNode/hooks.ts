@@ -1,9 +1,10 @@
-import { VNode, ElementVNode } from '../';
+import { ElementVNode, VirtualNode } from '../';
+
 import { ModuleCallbacks } from '../modules/ModuleCallbacks';
 
 export function prepatchHooks (
-  formerVNode: VNode,
-  vNode: VNode,
+  formerVNode: ElementVNode,
+  vNode: VirtualNode<Element>,
   moduleCallbacks: ModuleCallbacks)
 {
   const props = vNode.props;
@@ -15,20 +16,20 @@ export function prepatchHooks (
 }
 
 export function updateHooks (
-  formerVNode: VNode,
-  vNode: VNode,
+  formerVNode: ElementVNode,
+  vNode: ElementVNode,
   moduleCallbacks: ModuleCallbacks)
 {
   const props = vNode.props;
 
-  moduleCallbacks.update(formerVNode as ElementVNode, vNode as ElementVNode);
+  moduleCallbacks.update(formerVNode, vNode);
 
-  if (props.update) props.update(formerVNode as ElementVNode, vNode as ElementVNode);
+  if (props.update) props.update(formerVNode, vNode);
 }
 
 export function postpatchHooks (
-  formerVNode: VNode,
-  vNode: VNode,
+  formerVNode: ElementVNode,
+  vNode: ElementVNode,
   moduleCallbacks: ModuleCallbacks)
 {
   const props = vNode.props;

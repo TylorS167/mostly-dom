@@ -10,7 +10,7 @@ import { patchVNode } from './patchVNode';
 import { removeVNodes } from './removeVNodes';
 import { vNodesAreEqual } from './helpers';
 
-export function init (modules: Array<Module>) {
+export function init (modules: Array<Module<Element>>) {
   const attributesModule = new AttributesModule();
   const propsModule = new PropsModule();
   const stylesModule = new StylesModule();
@@ -46,7 +46,7 @@ export function init (modules: Array<Module>) {
     }
 
     for (let i = 0; i < insertedVNodeQueue.length; ++i)
-      (insertedVNodeQueue[i].props.insert as InsertHook)(insertedVNodeQueue[i]);
+      (insertedVNodeQueue[i].props.insert as InsertHook<Element>)(insertedVNodeQueue[i]);
 
     moduleCallbacks.post(vNode as ElementVNode);
 

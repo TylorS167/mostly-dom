@@ -9,7 +9,7 @@ export const h: HyperscriptFn = function h(): VNode {
   let childrenOrText: Array<VNode | string> | string = arguments[2]; // optional
 
   let { tagName, id, className } = parseSelector(selector);
-  let props: VNodeProps = {};
+  let props: VNodeProps<Element> = {};
   let children: Array<VNode> | void;
   let text: string | void;
 
@@ -84,12 +84,14 @@ export type HyperscriptChildren =
 
 export interface HyperscriptFn {
   (sel: string): VNode;
-  (sel: string, data: VNodeProps): VNode;
+  (sel: string, data: VNodeProps<any>): VNode;
   (sel: string, children: HyperscriptChildren): VNode;
-  (sel: string, data: VNodeProps, children: HyperscriptChildren): VNode;
+  (sel: string, data: VNodeProps<any>, children: HyperscriptChildren): VNode;
 
   <T extends Node>(sel: string): VirtualNode<T>;
-  <T extends Node>(sel: string, data: VNodeProps): VirtualNode<T>;
+  <T extends Node>(sel: string, data: VNodeProps<any>): VirtualNode<T>;
   <T extends Node>(sel: string, children: HyperscriptChildren): VirtualNode<T>;
-  <T extends Node>(sel: string, data: VNodeProps, children: HyperscriptChildren): VirtualNode<T>;
+  <T extends Node>(sel: string,
+                   data: VNodeProps<any>,
+                   children: HyperscriptChildren): VirtualNode<T>;
 }

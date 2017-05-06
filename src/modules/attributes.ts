@@ -1,5 +1,5 @@
-import { ElementVNode } from '../';
 import { BaseModule } from './BaseModule';
+import { ElementVNode } from '../';
 import { emptyVNode } from './emptyVNode';
 
 const NAMESPACE_URIS = {
@@ -23,7 +23,7 @@ for (let i = 0, count = booleanAttributes.length; i < count; i++)
   booleanAttributeDictionary[booleanAttributes[i]] = true;
 
 // attributes module
-export class AttributesModule extends BaseModule {
+export class AttributesModule extends BaseModule<Element> {
   public create(vNode: ElementVNode) {
     updateAttributes(emptyVNode, vNode);
   }

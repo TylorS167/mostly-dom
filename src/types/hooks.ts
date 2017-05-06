@@ -1,16 +1,16 @@
-import { VirtualNode, ElementVNode } from './VirtualNode';
+import { ElementVNode, ElementVirtualNode, VirtualNode } from './VirtualNode';
 
-export interface Module {
+export interface Module<T extends Element> {
   pre: PreModuleHook;
   post: PostModuleHook;
 
   init: InitHook;
-  create: CreateHook;
-  update: UpdateHook;
-  remove: RemoveHook;
-  destroy: DestroyHook;
-  prepatch: PrepatchHook;
-  postpatch: PostpatchHook;
+  create: CreateHook<T>;
+  update: UpdateHook<T>;
+  remove: RemoveHook<T>;
+  destroy: DestroyHook<T>;
+  prepatch: PrepatchHook<T>;
+  postpatch: PostpatchHook<T>;
 }
 
 // Only available to modules
@@ -23,18 +23,22 @@ export type PostModuleHook = (vNode: ElementVNode) => any;
 // called just before created an element from a VirtualNode
 export type InitHook = (vNode: VirtualNode<Node>) => any;
 // called when a VirtualNode becomes an ElementVNode
-export type CreateHook = (vNode: ElementVNode) => any;
+export type CreateHook<T extends Element> = (vNode: ElementVirtualNode<T>) => any;
 // called when a ElementVNode element is being updated
-export type UpdateHook = (formerVNode: ElementVNode, vNode: ElementVNode) => any;
+export type UpdateHook<T extends Element> =
+  (formerVNode: ElementVirtualNode<T>, vNode: ElementVirtualNode<T>) => any;
 // called when an ElementVNode is being removed from the DOM
-export type RemoveHook = (vNode: ElementVNode, removeElement: Function) => any;
+export type RemoveHook<T extends Element> =
+  (vNode: ElementVirtualNode<T>, removeElement: Function) => any;
 // called when an ElementVNode's parent is being removed from the DOM
-export type DestroyHook = (vNode: ElementVNode) => any;
+export type DestroyHook<T extends Element> = (vNode: ElementVirtualNode<T>) => any;
 // called just before an ElementVNode is about to be patched
-export type PrepatchHook = (formerVNode: VirtualNode<Node>, vNode: VirtualNode<Node>) => any;
+export type PrepatchHook<T extends Node> =
+  (formerVNode: VirtualNode<T>, vNode: VirtualNode<T>) => any;
 // called just after an ElementVNode has been patched
-export type PostpatchHook = (formerVNode: VirtualNode<Node>, vNode: VirtualNode<Node>) => any;
+export type PostpatchHook<T extends Element> =
+  (formerVNode: VirtualNode<T>, vNode: VirtualNode<T>) => any;
 
 // Available for only VNode hooks
 // called when an ElementVNode has been inserted into the DOM
-export type InsertHook = (vNode: ElementVNode) => any;
+export type InsertHook<T extends Element> = (vNode: ElementVirtualNode<T>) => any;

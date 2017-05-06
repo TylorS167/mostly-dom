@@ -1,4 +1,4 @@
-import { ElementVNode, TextVNode, VNode } from '../';
+import { ElementVNode, TextVNode, VNode, VirtualNode } from '../';
 import { postpatchHooks, prepatchHooks, updateHooks } from './hooks';
 
 import { ModuleCallbacks } from '../modules/ModuleCallbacks';
@@ -13,7 +13,7 @@ export function patchVNode(
   moduleCallbacks: ModuleCallbacks,
   insertedVNodeQueue: Array<ElementVNode>): void
 {
-  prepatchHooks(formerVNode, vNode, moduleCallbacks);
+  prepatchHooks(formerVNode as ElementVNode, vNode as VirtualNode<Element>, moduleCallbacks);
 
   vNode = updateElement(formerVNode, vNode);
 
@@ -22,12 +22,12 @@ export function patchVNode(
   if (!vNodesAreEqual(formerVNode, vNode))
     return replacePreviousElement(formerVNode, vNode, moduleCallbacks, insertedVNodeQueue);
 
-  updateHooks(formerVNode, vNode, moduleCallbacks);
+  updateHooks(formerVNode as ElementVNode, vNode as ElementVNode, moduleCallbacks);
 
   if (!vNode.text)
     patchVNodeChildren(formerVNode, vNode, moduleCallbacks, insertedVNodeQueue);
   else if (formerVNode.text !== (vNode as TextVNode).text)
     (vNode.element as Element).textContent = vNode.text;
 
-  postpatchHooks(formerVNode, vNode, moduleCallbacks);
+  postpatchHooks(formerVNode as ElementVNode, vNode as ElementVNode, moduleCallbacks);
 }

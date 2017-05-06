@@ -1,6 +1,6 @@
-import { Module, ElementVNode, VNode } from '../types';
+import { ElementVNode, Module, VNode } from '../types';
 
-export class BaseModule implements Module {
+export class BaseModule<T extends Element> implements Module<T> {
   public pre(_: VNode) {}
 
   public post(_: VNode) {}

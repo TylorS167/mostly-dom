@@ -1,18 +1,18 @@
-import { VNodeProps, VirtualNode, HtmlTagNames } from '../';
-import { h, HyperscriptChildren } from './h';
+import { HtmlTagNames, VNodeProps, VirtualNode } from '../';
+import { HyperscriptChildren, h } from './h';
 
-export interface HyperscriptHelperFn<T extends Node> {
+export interface HyperscriptHelperFn<T extends Element> {
   (): VirtualNode<T>;
-  (classNameOrId: string, data: VNodeProps, children: HyperscriptChildren): VirtualNode<T>;
-  (classNameOrId: string, data: VNodeProps): VirtualNode<T>;
+  (classNameOrId: string, data: VNodeProps<T>, children: HyperscriptChildren): VirtualNode<T>;
+  (classNameOrId: string, data: VNodeProps<T>): VirtualNode<T>;
   (classNameOrId: string, children: HyperscriptChildren): VirtualNode<T>;
   (classNameOrId: string): VirtualNode<T>;
-  (data: VNodeProps): VirtualNode<T>;
-  (data: VNodeProps, children: HyperscriptChildren): VirtualNode<T>;
+  (data: VNodeProps<T>): VirtualNode<T>;
+  (data: VNodeProps<T>, children: HyperscriptChildren): VirtualNode<T>;
   (children: HyperscriptChildren): VirtualNode<T>;
 }
 
-export function hh <T extends Node>(tagName: HtmlTagNames): HyperscriptHelperFn<T> {
+export function hh <T extends Element>(tagName: HtmlTagNames): HyperscriptHelperFn<T> {
   return function (): VirtualNode<T> {
     const selector = arguments[0];
     const data = arguments[1];
@@ -33,7 +33,7 @@ export function hh <T extends Node>(tagName: HtmlTagNames): HyperscriptHelperFn<
     else
       return h<T>(tagName, selector || {});
   };
-};
+}
 
 function isValidString (param: any): boolean {
   return typeof param === 'string' && param.length > 0;

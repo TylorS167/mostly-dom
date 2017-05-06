@@ -10,7 +10,7 @@ export interface VirtualNode<T extends Node> {
   tagName: string | void;
   id: string | void;
   className: string | void;
-  props: VNodeProps;
+  props: VNodeProps<Element>;
   children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void;
   text: string | void;
   key: string | number | void;
@@ -41,7 +41,7 @@ export interface TextVNode extends VirtualNode<Text> {
   scope: void;
 }
 
-export interface VNodeProps extends HtmlProperties {
+export interface VNodeProps<T extends Element> extends HtmlProperties {
   // key for dom diffing
   key?: string | number;
 
@@ -59,13 +59,13 @@ export interface VNodeProps extends HtmlProperties {
 
   // hooks
   init?: hooks.InitHook;
-  create?: hooks.CreateHook;
-  update?: hooks.UpdateHook;
-  insert?: hooks.InsertHook;
-  remove?: hooks.RemoveHook;
-  destroy?: hooks.DestroyHook;
-  prepatch?: hooks.PrepatchHook;
-  postpatch?: hooks.PostpatchHook;
+  create?: hooks.CreateHook<T>;
+  update?: hooks.UpdateHook<T>;
+  insert?: hooks.InsertHook<T>;
+  remove?: hooks.RemoveHook<T>;
+  destroy?: hooks.DestroyHook<T>;
+  prepatch?: hooks.PrepatchHook<T>;
+  postpatch?: hooks.PostpatchHook<T>;
 
   // TODO: maybe find a better name
   // this is a namespace for custom modules

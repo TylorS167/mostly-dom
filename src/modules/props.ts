@@ -20,7 +20,7 @@ const PROPERTIES_TO_SKIP: Array<string> =
     'postpatch',
   ];
 
-export class PropsModule extends BaseModule {
+export class PropsModule extends BaseModule<Element> {
   public create (vNode: ElementVNode) {
     updateProps(emptyVNode as ElementVNode, vNode);
   }

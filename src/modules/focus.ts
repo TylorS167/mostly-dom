@@ -1,7 +1,7 @@
 import { BaseModule } from './BaseModule';
 import { ElementVNode } from '../';
 
-export class FocusModule extends BaseModule {
+export class FocusModule extends BaseModule<Element> {
   public insert(vNode: ElementVNode) {
     setFocus(vNode);
   }
