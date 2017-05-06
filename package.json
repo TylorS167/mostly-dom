@@ -48,6 +48,6 @@
     "test": "tslint 'src/*.ts' 'src/**/*.ts' && karma start"
   },
   "dependencies": {
-    "@most/prelude": "^1.4.1"
+    "@most/prelude": "^1.6.0"
   }
 }
