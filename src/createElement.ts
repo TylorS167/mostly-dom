@@ -1,4 +1,5 @@
-import { VNode, ElementVNode, TextVNode } from './'
+import { ElementVNode, TextVNode, VNode } from './'
+
 import { ModuleCallbacks } from './modules/ModuleCallbacks'
 import { SCOPE_ATTRIBUTE } from './dom-scope-attribute'
 

@@ -1,6 +1,7 @@
-import { ElementVNode, InsertHook, Module, VNode } from './'
+import { ElementVNode, ElementVirtualNode, InsertHook, Module, VNode, VirtualNode } from './'
 
 import { AttributesModule } from './modules/attributes'
+import { CSSProperties } from './types'
 import { FocusModule } from './modules/focus'
 import { ModuleCallbacks } from './modules/ModuleCallbacks'
 import { PropsModule } from './modules/props'
@@ -26,7 +27,10 @@ export function init(modules: Array<Module<Element>>) {
 
   const moduleCallbacks = new ModuleCallbacks(defaultModules.concat(modules))
 
-  return function patch(formerVNode: ElementVNode, vNode: VNode): ElementVNode {
+  return function patch<T extends Element = Element>(
+    formerVNode: ElementVirtualNode<T>,
+    vNode: VirtualNode<T>): ElementVirtualNode<T>
+  {
     const insertedVNodeQueue: Array<ElementVNode> = []
 
     moduleCallbacks.pre(vNode)
@@ -37,7 +41,7 @@ export function init(modules: Array<Module<Element>>) {
       const element = formerVNode.element
       const parentNode = element.parentNode
 
-      vNode = createElement(vNode, moduleCallbacks, insertedVNodeQueue) as ElementVNode
+      vNode = createElement(vNode, moduleCallbacks, insertedVNodeQueue) as ElementVirtualNode<T>
 
       if (parentNode) {
         parentNode.insertBefore(vNode.element as Element, element.nextSibling)
@@ -50,6 +54,6 @@ export function init(modules: Array<Module<Element>>) {
 
     moduleCallbacks.post(vNode as ElementVNode)
 
-    return vNode as ElementVNode
+    return vNode as ElementVirtualNode<T>
   }
 }
