@@ -1,5 +1,5 @@
-import { ElementVNode } from './';
-import { ModuleCallbacks } from './modules/ModuleCallbacks';
+import { ElementVNode } from './'
+import { ModuleCallbacks } from './modules/ModuleCallbacks'
 
 export function removeVNodes(
   parentNode: Node,
@@ -9,40 +9,40 @@ export function removeVNodes(
   moduleCallbacks: ModuleCallbacks)
 {
   for (; startIndex <= endIndex; ++startIndex) {
-    const vNode = vNodes[startIndex];
+    const vNode = vNodes[startIndex]
 
-    if (!vNode) continue;
+    if (!vNode) continue
 
     if (vNode.tagName) {
-      const props = vNode.props;
+      const props = vNode.props
 
-      invokeDestroyHook(vNode, moduleCallbacks);
+      invokeDestroyHook(vNode, moduleCallbacks)
 
-      const removeElement = moduleCallbacks.createRemoveElementFn(vNode.element);
-      moduleCallbacks.remove(vNode, removeElement);
+      const removeElement = moduleCallbacks.createRemoveElementFn(vNode.element)
+      moduleCallbacks.remove(vNode, removeElement)
 
       if (props.remove)
-        props.remove(vNode, removeElement);
+        props.remove(vNode, removeElement)
       else
-        removeElement();
+        removeElement()
     } else {
-      parentNode.removeChild(vNode.element);
+      parentNode.removeChild(vNode.element)
     }
   }
 }
 
-function invokeDestroyHook (vNode: ElementVNode, moduleCallbacks: ModuleCallbacks) {
-  const props = vNode.props;
+function invokeDestroyHook(vNode: ElementVNode, moduleCallbacks: ModuleCallbacks) {
+  const props = vNode.props
 
-  if (props.destroy) props.destroy(vNode);
+  if (props.destroy) props.destroy(vNode)
 
   if (vNode.tagName)
-    moduleCallbacks.destroy(vNode);
+    moduleCallbacks.destroy(vNode)
 
-  const children = vNode.children;
+  const children = vNode.children
 
-  if (!children) return;
+  if (!children) return
 
   for (let i = 0; i < children.length; ++i)
-    invokeDestroyHook(children[i], moduleCallbacks);
+    invokeDestroyHook(children[i], moduleCallbacks)
 }

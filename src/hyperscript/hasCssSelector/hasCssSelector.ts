@@ -1,109 +1,111 @@
-import { VNode } from '../../';
-import { matchesSelector } from './matchesSelector';
+import { VNode } from '../../'
+import { matchesSelector } from './matchesSelector'
 
+// tslint:disable-next-line:cyclomatic-complexity
 export function hasCssSelector(cssSelector: string, vNode: VNode): boolean {
-  cssSelector = cssSelector.trim();
+  cssSelector = cssSelector.trim()
 
   if (cssSelector === '*')
-    return true;
+    return true
 
   if (cssSelector.indexOf(',') > -1) {
-    const cssSelectors = cssSelector.split(',').map(str => str.trim());
+    const cssSelectors = cssSelector.split(',').map((str) => str.trim())
 
     for (let i = 0; i < cssSelectors.length; ++i)
       if (hasCssSelector(cssSelectors[i], vNode))
-        return true;
+        return true
 
-    return false;
+    return false
   } else if (cssSelector.indexOf('>') > -1) {
-    const [ parentSelector, childSelector ] = splitByLastIndex(cssSelector, '>');
+    const [ parentSelector, childSelector ] = splitByLastIndex(cssSelector, '>')
 
     if (!vNode.parent)
-      return false;
+      return false
 
     return hasCssSelector(parentSelector, vNode.parent) &&
-      hasCssSelector(childSelector, vNode);
+      hasCssSelector(childSelector, vNode)
   } else if (cssSelector.indexOf(' + ') > -1) {
-    const [ siblingSelector, selector ] = splitByLastIndex(cssSelector, '+');
+    const [ siblingSelector, selector ] = splitByLastIndex(cssSelector, '+')
 
-    const parent = vNode.parent;
+    const parent = vNode.parent
 
     if (!parent || !hasCssSelector(selector, vNode))
-      return false;
+      return false
 
-    const children = parent.children;
+    const children = parent.children
 
-    if (!children) return false;
+    if (!children) return false
 
-    const index = children.indexOf(vNode);
+    const index = children.indexOf(vNode)
 
     if (index === 0 || !hasCssSelector(siblingSelector, children[index - 1]))
-      return false;
+      return false
 
-    return true;
+    return true
   } else if (cssSelector.indexOf(' ~ ') > -1) {
-    const [ siblingSelector, selector ] = splitByLastIndex(cssSelector, '~');
+    const [ siblingSelector, selector ] = splitByLastIndex(cssSelector, '~')
 
-    const parent = vNode.parent;
+    const parent = vNode.parent
 
     if (!parent || !hasCssSelector(selector, vNode))
-      return false;
+      return false
 
-    const children = parent.children;
+    const children = parent.children
 
-    if (!children) return false;
+    if (!children) return false
 
-    const index = children.indexOf(vNode);
+    const index = children.indexOf(vNode)
 
     if (index === 0)
-      return false;
+      return false
 
     for (let i = 0; i < index; ++i)
       if (hasCssSelector(siblingSelector, children[i]))
-        return true;
+        return true
 
-    return false;
+    return false
   } else if (cssSelector.indexOf(' ') > -1) {
     const cssSelectors: Array<string> =
-      cssSelector.split(' ').filter(Boolean).map(str => str.trim());
+      cssSelector.split(' ').filter(Boolean).map((str) => str.trim())
 
-    let i = cssSelectors.length - 1;
+    let i = cssSelectors.length - 1
 
     if (!hasCssSelector(cssSelectors[i], vNode))
-      return false;
+      return false
 
     while (--i >= 0) {
       const parentMatches =
-        traverseParentVNodes(parent => hasCssSelector(cssSelectors[i], parent), vNode);
+        traverseParentVNodes((parent) => hasCssSelector(cssSelectors[i], parent), vNode)
 
       if (!parentMatches)
-        return false;
+        return false
     }
 
-    return true;
+    return true
   }
 
-  return matchesSelector(cssSelector, vNode);
+  return matchesSelector(cssSelector, vNode)
 }
 
 function splitByLastIndex(cssSelector: string, token: string): [string, string] {
-  const index = cssSelector.lastIndexOf(token);
+  const index = cssSelector.lastIndexOf(token)
+
   return [
     cssSelector.substring(0, index).trim(),
     cssSelector.substring(index + 1).trim(),
-  ];
+  ]
 }
 
 function traverseParentVNodes(
   predicate: (vNode: VNode) => boolean,
   vNode: VNode): boolean
 {
-  const parent = vNode.parent;
+  const parent = vNode.parent
 
-  if (!parent) return false;
+  if (!parent) return false
 
   if (predicate(parent))
-    return true;
+    return true
 
-  return traverseParentVNodes(predicate, parent);
+  return traverseParentVNodes(predicate, parent)
 }

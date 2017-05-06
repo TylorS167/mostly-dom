@@ -1,60 +1,60 @@
-import { VNode, ElementVNode, TextVNode } from './';
-import { ModuleCallbacks } from './modules/ModuleCallbacks';
-import { SCOPE_ATTRIBUTE } from './dom-scope-attribute';
+import { VNode, ElementVNode, TextVNode } from './'
+import { ModuleCallbacks } from './modules/ModuleCallbacks'
+import { SCOPE_ATTRIBUTE } from './dom-scope-attribute'
 
-export function createElement (
+export function createElement(
   vNode: VNode,
   moduleCallbacks: ModuleCallbacks,
   insertedVNodeQueue: Array<ElementVNode>): ElementVNode | TextVNode
 {
-  const props = vNode.props;
+  const props = vNode.props
 
-  moduleCallbacks.init(vNode);
+  moduleCallbacks.init(vNode)
 
   if (props.init)
-    props.init(vNode);
+    props.init(vNode)
 
   if (vNode.tagName) {
     const element = vNode.namespace
       ? document.createElementNS(vNode.namespace, vNode.tagName)
-      : document.createElement(vNode.tagName);
+      : document.createElement(vNode.tagName)
 
     if (vNode.id)
-      element.id = vNode.id;
+      element.id = vNode.id
 
     if (vNode.className)
-      element.className = vNode.className;
+      element.className = vNode.className
 
     if (vNode.scope)
-      element.setAttribute(SCOPE_ATTRIBUTE, vNode.scope);
+      element.setAttribute(SCOPE_ATTRIBUTE, vNode.scope)
 
-    vNode.element = element;
+    vNode.element = element
 
-    const children = vNode.children;
+    const children = vNode.children
 
     if (children) {
-      const childCount = children.length;
+      const childCount = children.length
 
       for (let i = 0; i < childCount; ++i)
         element.appendChild(
-          createElement(children[i], moduleCallbacks, insertedVNodeQueue).element as Node);
+          createElement(children[i], moduleCallbacks, insertedVNodeQueue).element as Node)
     }
 
     if (vNode.text)
-      element.appendChild(document.createTextNode(vNode.text));
+      element.appendChild(document.createTextNode(vNode.text))
 
-    moduleCallbacks.create(vNode as ElementVNode);
+    moduleCallbacks.create(vNode as ElementVNode)
 
     if (props.create)
-      props.create(vNode as ElementVNode);
+      props.create(vNode as ElementVNode)
 
     if (props.insert)
-      insertedVNodeQueue.push(vNode as ElementVNode);
+      insertedVNodeQueue.push(vNode as ElementVNode)
 
-    return vNode as ElementVNode;
+    return vNode as ElementVNode
   }
 
-  vNode.element = document.createTextNode(vNode.text as string);
+  vNode.element = document.createTextNode(vNode.text as string)
 
-  return vNode as TextVNode;
+  return vNode as TextVNode
 }

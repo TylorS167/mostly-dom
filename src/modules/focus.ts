@@ -1,19 +1,19 @@
-import { BaseModule } from './BaseModule';
-import { ElementVNode } from '../';
+import { BaseModule } from './BaseModule'
+import { ElementVNode } from '../'
 
-export class FocusModule extends BaseModule {
+export class FocusModule extends BaseModule<Element> {
   public insert(vNode: ElementVNode) {
-    setFocus(vNode);
+    setFocus(vNode)
   }
 
   public update(_: ElementVNode, vNode: ElementVNode) {
-    setFocus(vNode);
+    setFocus(vNode)
   }
 }
 
 function setFocus(vNode: ElementVNode) {
-  const { props: { focus = false }, element } = vNode;
+  const { props: { focus = false }, element } = vNode
 
   if (focus && typeof (element as HTMLElement).focus === 'function')
-    (element as HTMLElement).focus();
+    (element as HTMLElement).focus()
 }

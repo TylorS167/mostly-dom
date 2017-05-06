@@ -1,40 +1,41 @@
-import { VNode, ElementVNode } from '../';
-import { ModuleCallbacks } from '../modules/ModuleCallbacks';
+import { ElementVNode, VirtualNode } from '../'
 
-export function prepatchHooks (
-  formerVNode: VNode,
-  vNode: VNode,
+import { ModuleCallbacks } from '../modules/ModuleCallbacks'
+
+export function prepatchHooks(
+  formerVNode: ElementVNode,
+  vNode: VirtualNode<Element>,
   moduleCallbacks: ModuleCallbacks)
 {
-  const props = vNode.props;
+  const props = vNode.props
 
-  moduleCallbacks.prepatch(formerVNode, vNode);
+  moduleCallbacks.prepatch(formerVNode, vNode)
 
   if (props.prepatch)
-    props.prepatch(formerVNode, vNode);
+    props.prepatch(formerVNode, vNode)
 }
 
-export function updateHooks (
-  formerVNode: VNode,
-  vNode: VNode,
+export function updateHooks(
+  formerVNode: ElementVNode,
+  vNode: ElementVNode,
   moduleCallbacks: ModuleCallbacks)
 {
-  const props = vNode.props;
+  const props = vNode.props
 
-  moduleCallbacks.update(formerVNode as ElementVNode, vNode as ElementVNode);
+  moduleCallbacks.update(formerVNode, vNode)
 
-  if (props.update) props.update(formerVNode as ElementVNode, vNode as ElementVNode);
+  if (props.update) props.update(formerVNode, vNode)
 }
 
-export function postpatchHooks (
-  formerVNode: VNode,
-  vNode: VNode,
+export function postpatchHooks(
+  formerVNode: ElementVNode,
+  vNode: ElementVNode,
   moduleCallbacks: ModuleCallbacks)
 {
-  const props = vNode.props;
+  const props = vNode.props
 
-  moduleCallbacks.postpatch(formerVNode, vNode);
+  moduleCallbacks.postpatch(formerVNode, vNode)
 
   if (props.postpatch)
-    props.postpatch(formerVNode, vNode);
+    props.postpatch(formerVNode, vNode)
 }

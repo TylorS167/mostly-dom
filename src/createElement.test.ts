@@ -1,130 +1,130 @@
-import * as assert from 'assert';
+import * as assert from 'assert'
 
-import { ElementVNode, MostlyVNode, h } from './';
+import { ElementVNode, MostlyVNode, h } from './'
 
-import { ModuleCallbacks } from './modules/ModuleCallbacks';
-import { createElement } from './createElement';
+import { ModuleCallbacks } from './modules/ModuleCallbacks'
+import { createElement } from './createElement'
 
-const moduleCallbacks = new ModuleCallbacks([]);
+const moduleCallbacks = new ModuleCallbacks([])
 
 describe('createElement', () => {
   it('creates an basic element from VNode', () => {
-    const vNode = h('div');
+    const vNode = h('div')
 
-    const element = createElement(vNode, moduleCallbacks,  []).element;
+    const element = createElement(vNode, moduleCallbacks, []).element
 
-    assert.strictEqual((element as Element).tagName, 'DIV');
-  });
+    assert.strictEqual((element as Element).tagName, 'DIV')
+  })
 
   it('creates an element with an id', () => {
-    const vNode = h('div#id');
+    const vNode = h('div#id')
 
-    const element = createElement(vNode, moduleCallbacks,  []).element as HTMLDivElement;
+    const element = createElement(vNode, moduleCallbacks, []).element as HTMLDivElement
 
-    assert.strictEqual(element.id, 'id');
-  });
+    assert.strictEqual(element.id, 'id')
+  })
 
   it('creates an element with a className', () => {
-    const vNode = h('div.className');
+    const vNode = h('div.className')
 
-    const element = createElement(vNode, moduleCallbacks,  []).element as HTMLDivElement;
+    const element = createElement(vNode, moduleCallbacks, []).element as HTMLDivElement
 
-    assert.strictEqual(element.className, 'className');
-  });
+    assert.strictEqual(element.className, 'className')
+  })
 
   it('creates an element with children', () => {
     const vNode = h('div', {}, [
       h('h1', 'Hello'),
       h('h2', 'World'),
-    ]);
+    ])
 
-    const element = createElement(vNode, moduleCallbacks,  []).element as HTMLDivElement;
+    const element = createElement(vNode, moduleCallbacks, []).element as HTMLDivElement
 
-    assert.strictEqual(element.children.length, 2);
-  });
+    assert.strictEqual(element.children.length, 2)
+  })
 
   it('adds VNodes to given array if insert hook is present', () => {
-    const vNode = h('div', { insert () {} }, []);
+    const vNode = h('div', { insert() {} }, [])
 
-    const vNodeQueue: ElementVNode[] = [];
+    const vNodeQueue: Array<ElementVNode> = []
 
-    createElement(vNode, moduleCallbacks, vNodeQueue);
+    createElement(vNode, moduleCallbacks, vNodeQueue)
 
-    assert.strictEqual(vNodeQueue.length, 1);
-  });
+    assert.strictEqual(vNodeQueue.length, 1)
+  })
 
   it('creates text elements', () => {
-    const vNode = MostlyVNode.createText('hello');
+    const vNode = MostlyVNode.createText('hello')
 
-    const text = createElement(vNode, moduleCallbacks,  []).element as Text;
+    const text = createElement(vNode, moduleCallbacks, []).element as Text
 
-    assert.strictEqual(text.nodeName, '#text');
-  });
+    assert.strictEqual(text.nodeName, '#text')
+  })
 
   it('creates an svg element', () => {
-    const vNode = h('svg', {}, []);
+    const vNode = h('svg', {}, [])
 
-    assert.strictEqual(vNode.namespace, 'http://www.w3.org/2000/svg');
+    assert.strictEqual(vNode.namespace, 'http://www.w3.org/2000/svg')
 
-    const element = createElement(vNode, moduleCallbacks,  []).element as SVGElement;
+    const element = createElement(vNode, moduleCallbacks, []).element as SVGElement
 
-    assert.strictEqual(element.namespaceURI, 'http://www.w3.org/2000/svg');
-  });
+    assert.strictEqual(element.namespaceURI, 'http://www.w3.org/2000/svg')
+  })
 
   describe('given a vNode with scope', () => {
     it('creates an element with data-mostly-dom-scope attribute', () => {
-      const vNode = h('div', { scope: 'hello' }, []);
+      const vNode = h('div', { scope: 'hello' }, [])
 
-      const element = createElement(vNode, moduleCallbacks, []).element as Element;
+      const element = createElement(vNode, moduleCallbacks, []).element as Element
 
-      assert.strictEqual(element.getAttribute('data-mostly-dom-scope'), 'hello');
-    });
+      assert.strictEqual(element.getAttribute('data-mostly-dom-scope'), 'hello')
+    })
 
     it('creates children elements with data-mostly-dom-scope attribute', () => {
-      const vNode = h('div', { scope: 'hello' }, [ h('h1', {}, []) ]);
+      const vNode = h('div', { scope: 'hello' }, [ h('h1', {}, []) ])
 
-      const elementVNode = createElement(vNode, moduleCallbacks, []);
+      const elementVNode = createElement(vNode, moduleCallbacks, [])
 
       if (!elementVNode.children)
-        throw new Error(`VNode should have children`);
+        throw new Error(`VNode should have children`)
 
-      const element = elementVNode.children[0].element;
+      const element = elementVNode.children[0].element
 
-      assert.strictEqual(element.getAttribute('data-mostly-dom-scope'), 'hello');
-    });
-  });
+      assert.strictEqual(element.getAttribute('data-mostly-dom-scope'), 'hello')
+    })
+  })
 
   describe('hooks', () => {
     describe('init', () => {
       it('calls init hook if present', () => {
-        let called = 0;
+        let called = 0
 
-        function init () {
-          ++called;
+        function init() {
+          ++called
         }
 
-        const vNode = h('div', { init });
+        const vNode = h('div', { init })
 
-        createElement(vNode, moduleCallbacks,  []);
+        createElement(vNode, moduleCallbacks, [])
 
-        assert.strictEqual(called, 1);
-      });
-    });
+        assert.strictEqual(called, 1)
+      })
+    })
 
     describe('create', () => {
       it('calls create hook if present', () => {
-        let called = 0;
+        let called = 0
 
-        function create () {
-          ++called;
+        function create() {
+          ++called
         }
 
-        const vNode = h('div', { create });
+        const vNode = h('div', { create })
 
-        createElement(vNode, moduleCallbacks,  []);
+        createElement(vNode, moduleCallbacks, [])
 
-        assert.strictEqual(called, 1);
-      });
-    });
-  });
-});
+        assert.strictEqual(called, 1)
+      })
+    })
+  })
+})

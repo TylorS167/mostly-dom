@@ -1,1 +1,1 @@
-export * from './patchVNode';
+export * from './patchVNode'
