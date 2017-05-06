@@ -45,7 +45,7 @@
     "commit": "northbrook commit",
     "preversion": "npm run build",
     "release": "northbrook release",
-    "test": "northbrook tslint && karma start"
+    "test": "tslint 'src/*.ts' 'src/**/*.ts' && karma start"
   },
   "dependencies": {
     "@most/prelude": "^1.4.1"
