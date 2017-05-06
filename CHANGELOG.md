@@ -1,3 +1,10 @@
+# 2.0.2 (2017-05-06)
+---
+
+## Bug Fixes
+
+- fix(hyperscript): improve typings [1d6db713](https://github.com/TylorS/mostly-dom/commits/1d6db7139deccfece03fe754ebb9fa09ac384b22)
+
 # 2.0.1 (2017-05-06)
 ---
 
