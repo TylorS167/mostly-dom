@@ -1,16 +1,16 @@
 import * as hooks from './hooks';
 
 import { CSSProperties } from './CSS';
-import { HtmlProperties } from './HtmlProperties';
+import { ElementProperties } from './HtmlProperties';
 
 export interface VNode extends VirtualNode<Node> {}
 export interface ElementVNode extends ElementVirtualNode<Element> {}
 
-export interface VirtualNode<T extends Node> {
+export interface VirtualNode<T extends Node, Props = VNodeProps<Element>> {
   tagName: string | void;
   id: string | void;
   className: string | void;
-  props: VNodeProps<Element>;
+  props: Props;
   children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void;
   text: string | void;
   key: string | number | void;
@@ -41,7 +41,7 @@ export interface TextVNode extends VirtualNode<Text> {
   scope: void;
 }
 
-export interface VNodeProps<T extends Element> extends HtmlProperties {
+export interface VNodeProps<T extends Element> extends ElementProperties {
   // key for dom diffing
   key?: string | number;
 
@@ -56,6 +56,8 @@ export interface VNodeProps<T extends Element> extends HtmlProperties {
 
   // declarative focusing
   focus?: boolean;
+
+  scope?: string;
 
   // hooks
   init?: hooks.InitHook;

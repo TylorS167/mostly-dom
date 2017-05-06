@@ -88,10 +88,16 @@ export interface HyperscriptFn {
   (sel: string, children: HyperscriptChildren): VNode;
   (sel: string, data: VNodeProps<any>, children: HyperscriptChildren): VNode;
 
-  <T extends Node>(sel: string): VirtualNode<T>;
-  <T extends Node>(sel: string, data: VNodeProps<any>): VirtualNode<T>;
-  <T extends Node>(sel: string, children: HyperscriptChildren): VirtualNode<T>;
-  <T extends Node>(sel: string,
-                   data: VNodeProps<any>,
-                   children: HyperscriptChildren): VirtualNode<T>;
+  <T extends Node, Props = VNodeProps<Element>>(sel: string): VirtualNode<T, Props>;
+  <T extends Node, Props = VNodeProps<Element>>(
+    sel: string,
+    data: Props): VirtualNode<T>;
+  <T extends Node, Props = VNodeProps<Element>>(
+    sel: string,
+    children: HyperscriptChildren): VirtualNode<T, Props>;
+
+  <T extends Node, Props = VNodeProps<Element>>(
+    sel: string,
+    data: Props,
+    children: HyperscriptChildren): VirtualNode<T, Props>;
 }
