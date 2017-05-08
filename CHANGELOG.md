@@ -1,3 +1,10 @@
+# 2.0.3 (2017-05-08)
+---
+
+## Bug Fixes
+
+- fix(init): parameterize init instead of patch [1368dc18](https://github.com/TylorS/mostly-dom/commits/1368dc18c84fcaf0b0080909a63cdd8817e90dca)
+
 # 2.0.2 (2017-05-06)
 ---
 
