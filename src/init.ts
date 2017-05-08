@@ -19,7 +19,7 @@ import { patchVNode } from './patchVNode'
 import { removeVNodes } from './removeVNodes'
 import { vNodesAreEqual } from './helpers'
 
-export function init(modules: Array<Module<Element>>) {
+export function init<T extends Element = Element>(modules: Array<Module<Element>>) {
   const attributesModule = new AttributesModule()
   const propsModule = new PropsModule()
   const stylesModule = new StylesModule()
@@ -35,7 +35,7 @@ export function init(modules: Array<Module<Element>>) {
 
   const moduleCallbacks = new ModuleCallbacks(defaultModules.concat(modules))
 
-  return function patch<T extends Element = Element>(
+  return function patch(
     formerVNode: ElementVirtualNode<T>,
     vNode: VirtualNode<T>): ElementVirtualNode<T>
   {

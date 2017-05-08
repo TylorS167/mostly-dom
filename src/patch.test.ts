@@ -1,6 +1,6 @@
 import * as assert from 'assert'
 
-import { BaseModule, ElementVNode, VNode, h, init } from './'
+import { BaseModule, ElementVNode, VNode, a, b, div, h, i, init, span } from './'
 
 import { elementToVNode } from './elementToVNode'
 
@@ -42,39 +42,39 @@ describe('mostly-dom', function() {
 
   describe('patching an element', function() {
     it('changes an elements props', function() {
-      const vnode1 = h('a', { src: 'http://other/' }) as ElementVNode
-      const vnode2 = h('a', { src: 'http://localhost/' })
+      const vnode1 = a({ href: 'http://other/' }) as ElementVNode
+      const vnode2 = a({ href: 'http://localhost/' })
 
       patch(vnode0, vnode1)
 
       elm = patch(vnode1, vnode2).element as HTMLAnchorElement
-      assert.equal((elm as any).src, 'http://localhost/')
+      assert.equal((elm as any).href, 'http://localhost/')
     })
 
     it('removes an elements props', function() {
-      const vnode1 = h('a', { src: 'http://other/' }) as ElementVNode
-      const vnode2 = h('a')
+      const vnode1 = a({ href: 'http://other/' }) as ElementVNode
+      const vnode2 = a()
 
       patch(vnode0, vnode1)
       patch(vnode1, vnode2)
 
-      assert.equal((elm as any).src, undefined)
+      assert.equal((elm as any).href, undefined)
     })
 
     describe('updating children with keys', function() {
       function spanNum(n: string | number) {
         if (typeof n === 'string') {
-          return h('span', {}, n)
+          return span({}, n)
         } else {
-          return h('span', { key: n }, n.toString())
+          return span({ key: n }, n.toString())
         }
       }
 
       describe('addition of elements', function() {
         it('appends elements', function() {
-          const vnode1 = h('span', [ 1 ].map(spanNum)) as ElementVNode
+          const vnode1 = span([ 1 ].map(spanNum)) as ElementVNode
 
-          const vnode2 = h('span', [ 1, 2, 3 ].map(spanNum))
+          const vnode2 = span([ 1, 2, 3 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -88,8 +88,8 @@ describe('mostly-dom', function() {
         })
 
         it('prepends elements', function() {
-          const vnode1 = h('span', [ 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 1, 2, 3, 4, 5 ].map(spanNum))
+          const vnode1 = span([ 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 1, 2, 3, 4, 5 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -101,8 +101,8 @@ describe('mostly-dom', function() {
         })
 
         it('add elements in the middle', function() {
-          const vnode1 = h('span', [ 1, 2, 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 1, 2, 3, 4, 5 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 1, 2, 3, 4, 5 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -115,8 +115,8 @@ describe('mostly-dom', function() {
         })
 
         it('add elements at begin and end', function() {
-          const vnode1 = h('span', [ 2, 3, 4 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 1, 2, 3, 4, 5 ].map(spanNum))
+          const vnode1 = span([ 2, 3, 4 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 1, 2, 3, 4, 5 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -128,8 +128,8 @@ describe('mostly-dom', function() {
         })
 
         it('adds children to parent with no children', function() {
-          const vnode1 = h('span', { key: 'span' }) as ElementVNode
-          const vnode2 = h('span', { key: 'span' }, [ 1, 2, 3 ].map(spanNum))
+          const vnode1 = span({ key: 'span' }) as ElementVNode
+          const vnode2 = span({ key: 'span' }, [ 1, 2, 3 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -141,9 +141,9 @@ describe('mostly-dom', function() {
         })
 
         it('removes all children from parent', function() {
-          const vnode1 = h('span', { key: 'span' }, [ 1, 2, 3 ].map(spanNum)) as ElementVNode
+          const vnode1 = span({ key: 'span' }, [ 1, 2, 3 ].map(spanNum)) as ElementVNode
 
-          const vnode2 = h('span', { key: 'span' })
+          const vnode2 = span({ key: 'span' })
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -157,8 +157,8 @@ describe('mostly-dom', function() {
 
       describe('removal of elements', function() {
         it('removes elements from the beginning', function() {
-          const vnode1 = h('span', [ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 3, 4, 5 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 3, 4, 5 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -170,8 +170,8 @@ describe('mostly-dom', function() {
         })
 
         it('removes elements from the end', function() {
-          const vnode1 = h('span', [ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 1, 2, 3 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 1, 2, 3 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -186,8 +186,8 @@ describe('mostly-dom', function() {
         })
 
         it('removes elements from the middle', function() {
-          const vnode1 = h('span', [ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 1, 2, 4, 5 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 1, 2, 4, 5 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -206,8 +206,8 @@ describe('mostly-dom', function() {
 
       describe('element reordering', function() {
         it('moves element forward', function() {
-          const vnode1 = h('span', [ 1, 2, 3, 4 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 2, 3, 1, 4 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3, 4 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 2, 3, 1, 4 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -223,8 +223,8 @@ describe('mostly-dom', function() {
         })
 
         it('moves element to end', function() {
-          const vnode1 = h('span', [ 1, 2, 3 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 2, 3, 1 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 2, 3, 1 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -239,8 +239,8 @@ describe('mostly-dom', function() {
         })
 
         it('moves element backwards', function() {
-          const vnode1 = h('span', [ 1, 2, 3, 4 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 1, 4, 2, 3 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3, 4 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 1, 4, 2, 3 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -256,8 +256,8 @@ describe('mostly-dom', function() {
         })
 
         it('swaps first and last', function() {
-          const vnode1 = h('span', [ 1, 2, 3, 4 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 4, 2, 3, 1 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3, 4 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 4, 2, 3, 1 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -276,8 +276,8 @@ describe('mostly-dom', function() {
 
       describe('combinations of additions, removals and reorderings', function() {
         it('move to left and replace', function() {
-          const vnode1 = h('span', [ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 4, 1, 2, 3, 6 ].map(spanNum))
+          const vnode1 = span([ 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 4, 1, 2, 3, 6 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -294,8 +294,8 @@ describe('mostly-dom', function() {
         })
 
         it('moves to left and leaves hole', function() {
-          const vnode1 = h('span', [ 1, 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 4, 6 ].map(spanNum))
+          const vnode1 = span([ 1, 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 4, 6 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -307,8 +307,8 @@ describe('mostly-dom', function() {
         })
 
         it('handles moved and set to undefined element ending at the end', function() {
-          const vnode1 = h('span', [ 2, 4, 5 ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 4, 5, 3 ].map(spanNum))
+          const vnode1 = span([ 2, 4, 5 ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 4, 5, 3 ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -323,8 +323,8 @@ describe('mostly-dom', function() {
         })
 
         it('moves a key in non-keyed nodes with a size up', function() {
-          const vnode1 = h('span', [ 1, 'a', 'b', 'c' ].map(spanNum)) as ElementVNode
-          const vnode2 = h('span', [ 'd', 'a', 'b', 'c', 1, 'e' ].map(spanNum))
+          const vnode1 = span([ 1, 'a', 'b', 'c' ].map(spanNum)) as ElementVNode
+          const vnode2 = span([ 'd', 'a', 'b', 'c', 1, 'e' ].map(spanNum))
 
           elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -339,8 +339,8 @@ describe('mostly-dom', function() {
       })
 
       it('reverses elements', function() {
-        const vnode1 = h('span', [ 1, 2, 3, 4, 5, 6, 7, 8 ].map(spanNum)) as ElementVNode
-        const vnode2 = h('span', [ 8, 7, 6, 5, 4, 3, 2, 1 ].map(spanNum))
+        const vnode1 = span([ 1, 2, 3, 4, 5, 6, 7, 8 ].map(spanNum)) as ElementVNode
+        const vnode2 = span([ 8, 7, 6, 5, 4, 3, 2, 1 ].map(spanNum))
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -352,8 +352,8 @@ describe('mostly-dom', function() {
       })
 
       it('something', function() {
-        const vnode1 = h('span', [ 0, 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
-        const vnode2 = h('span', [ 4, 3, 2, 1, 5, 0 ].map(spanNum))
+        const vnode1 = span([ 0, 1, 2, 3, 4, 5 ].map(spanNum)) as ElementVNode
+        const vnode2 = span([ 4, 3, 2, 1, 5, 0 ].map(spanNum))
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -372,13 +372,13 @@ describe('mostly-dom', function() {
         const samples = 5
 
         function spanNumWithOpacity(n: any, o: any) {
-          return h('span', { key: n, style: { opacity: o } }, n.toString())
+          return span({ key: n, style: { opacity: o } }, n.toString())
         }
 
         for (let n = 0; n < elms; ++n) { arr[n] = n }
         for (let n = 0; n < samples; ++n) {
 
-          const vnode1 = h('span', arr.map(function(num: number) {
+          const vnode1 = span(arr.map(function(num: number) {
             return spanNumWithOpacity(num, '1')
           })) as ElementVNode
 
@@ -398,7 +398,7 @@ describe('mostly-dom', function() {
             opacities[i] = Math.random().toFixed(5).toString()
           }
 
-          const vnode2 = h('span', arr.map(function(num: number) {
+          const vnode2 = span(arr.map(function(num: number) {
             return spanNumWithOpacity(shufArr[num], opacities[num])
           }))
 
@@ -415,8 +415,8 @@ describe('mostly-dom', function() {
 
     describe('updating children without keys', function() {
       it('appends elements', function() {
-        const vnode1 = h('div', [ h('span', 'Hello') ]) as ElementVNode
-        const vnode2 = h('div', [ h('span', 'Hello'), h('span', 'World') ])
+        const vnode1 = div([ span('Hello') ]) as ElementVNode
+        const vnode2 = div([ span('Hello'), span('World') ])
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -428,8 +428,8 @@ describe('mostly-dom', function() {
       })
 
       it('handles unmoved text nodes', function() {
-        const vnode1 = h('div', [ 'Text', h('span', 'Span') ]) as ElementVNode
-        const vnode2 = h('div', [ 'Text', h('span', 'Span') ])
+        const vnode1 = div([ 'Text', span('Span') ]) as ElementVNode
+        const vnode2 = div([ 'Text', span('Span') ])
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -441,8 +441,8 @@ describe('mostly-dom', function() {
       })
 
       it('handles changing text children', function() {
-        const vnode1 = h('div', [ 'Text', h('span', 'Span') ]) as ElementVNode
-        const vnode2 = h('div', [ 'Text2', h('span', 'Span') ])
+        const vnode1 = div([ 'Text', span('Span') ]) as ElementVNode
+        const vnode2 = div([ 'Text2', span('Span') ])
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -454,8 +454,8 @@ describe('mostly-dom', function() {
       })
 
       it('prepends element', function() {
-        const vnode1 = h('div', [ h('span', 'World') ]) as ElementVNode
-        const vnode2 = h('div', [ h('span', 'Hello'), h('span', 'World') ])
+        const vnode1 = div([ span('World') ]) as ElementVNode
+        const vnode2 = div([ span('Hello'), span('World') ])
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -467,8 +467,8 @@ describe('mostly-dom', function() {
       })
 
       it('prepends element of different tag type', function() {
-        const vnode1 = h('div', [ h('span', 'World') ]) as ElementVNode
-        const vnode2 = h('div', [ h('div', 'Hello'), h('span', 'World') ])
+        const vnode1 = div([ span('World') ]) as ElementVNode
+        const vnode2 = div([ div('Hello'), span('World') ])
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -481,11 +481,11 @@ describe('mostly-dom', function() {
       })
 
       it('removes elements', function() {
-        const vnode1 = h('div', [
-          h('span', 'One'), h('span', 'Two'), h('span', 'Three'),
+        const vnode1 = div([
+          span('One'), span('Two'), span('Three'),
         ]) as ElementVNode
 
-        const vnode2 = h('div', [ h('span', 'One'), h('span', 'Three') ])
+        const vnode2 = div([ span('One'), span('Three') ])
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
@@ -497,8 +497,8 @@ describe('mostly-dom', function() {
       })
 
       it('removes a single text node', function() {
-        const vnode1 = h('div', 'One') as ElementVNode
-        const vnode2 = h('div')
+        const vnode1 = div('One') as ElementVNode
+        const vnode2 = div()
 
         patch(vnode0, vnode1)
 
@@ -510,8 +510,8 @@ describe('mostly-dom', function() {
       })
 
       it('removes a single text node when children are updated', function() {
-        const vnode1 = h('div', 'One') as ElementVNode
-        const vnode2 = h('div', [ h('div', 'Two'), h('span', 'Three') ])
+        const vnode1 = div('One') as ElementVNode
+        const vnode2 = div([ div('Two'), span('Three') ])
 
         patch(vnode0, vnode1)
 
@@ -523,8 +523,8 @@ describe('mostly-dom', function() {
       })
 
       it('removes a text node among other elements', function() {
-        const vnode1 = h('div', [ 'One', h('span', 'Two') ]) as ElementVNode
-        const vnode2 = h('div', [ h('div', 'Three') ])
+        const vnode1 = div([ 'One', span('Two') ]) as ElementVNode
+        const vnode2 = div([ div('Three') ])
 
         patch(vnode0, vnode1)
 
@@ -538,8 +538,8 @@ describe('mostly-dom', function() {
 
       it('reorders elements', function() {
         const vnode1 =
-          h('div', [ h('span', 'One'), h('div', 'Two'), h('b', 'Three') ]) as ElementVNode
-        const vnode2 = h('div', [ h('b', 'Three'), h('span', 'One'), h('div', 'Two') ])
+          div([ span('One'), div('Two'), b('Three') ]) as ElementVNode
+        const vnode2 = div([ b('Three'), span('One'), div('Two') ])
         elm = patch(vnode0, vnode1).element as HTMLElement
         assert.deepEqual(map(inner, elm.children), [ 'One', 'Two', 'Three' ])
         elm = patch(vnode1, vnode2).element as HTMLElement
@@ -561,13 +561,13 @@ describe('mostly-dom', function() {
           result.push(vnode)
         }
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', { create: cb }, [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div({ create: cb }, [
+            span('Child 1'),
+            span('Child 2'),
           ]),
-          h('span', 'Can\'t touch me'),
+          span('Can\'t touch me'),
         ])
 
         patch(vnode0, vnode1)
@@ -586,13 +586,13 @@ describe('mostly-dom', function() {
           result.push(vnode)
         }
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', { insert: cb }, [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div({ insert: cb }, [
+            span('Child 1'),
+            span('Child 2'),
           ]),
-          h('span', 'Can touch me'),
+          span('Can touch me'),
         ])
 
         patch(vnode0, vnode1)
@@ -609,19 +609,19 @@ describe('mostly-dom', function() {
           result.push(vnode)
         }
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', {  prepatch: cb }, [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div({  prepatch: cb }, [
+            span('Child 1'),
+            span('Child 2'),
           ]),
         ]) as ElementVNode
 
-        const vnode2 = h('div', [
-          h('span', 'First sibling'),
-          h('div', {  prepatch: cb }, [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode2 = div([
+          span('First sibling'),
+          div({  prepatch: cb }, [
+            span('Child 1'),
+            span('Child 2'),
           ]),
         ])
 
@@ -642,19 +642,19 @@ describe('mostly-dom', function() {
           post.push(post)
         }
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', {  prepatch: preCb, postpatch: postCb }, [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div({  prepatch: preCb, postpatch: postCb }, [
+            span('Child 1'),
+            span('Child 2'),
           ]),
         ]) as ElementVNode
 
-        const vnode2 = h('div', [
-          h('span', 'First sibling'),
-          h('div', {  prepatch: preCb, postpatch: postCb }, [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode2 = div([
+          span('First sibling'),
+          div({  prepatch: preCb, postpatch: postCb }, [
+            span('Child 1'),
+            span('Child 2'),
           ]),
         ])
 
@@ -675,19 +675,19 @@ describe('mostly-dom', function() {
           result.push(vnode)
         }
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', {  update: cb.bind(null, result1) }, [
-            h('span', 'Child 1'),
-            h('span', {  update: cb.bind(null, result2) }, 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div({  update: cb.bind(null, result1) }, [
+            span('Child 1'),
+            span({  update: cb.bind(null, result2) }, 'Child 2'),
           ]),
         ]) as ElementVNode
 
-        const vnode2 = h('div', [
-          h('span', 'First sibling'),
-          h('div', {  update: cb.bind(null, result1) }, [
-            h('span', 'Child 1'),
-            h('span', {  update: cb.bind(null, result2) }, 'Child 2'),
+        const vnode2 = div([
+          span('First sibling'),
+          div({  update: cb.bind(null, result1) }, [
+            span('Child 1'),
+            span({  update: cb.bind(null, result2) }, 'Child 2'),
           ]),
         ])
 
@@ -709,16 +709,16 @@ describe('mostly-dom', function() {
           assert.equal(parent.children.length, 1)
         }
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', {  remove: cb }, [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div({  remove: cb }, [
+            span('Child 1'),
+            span('Child 2'),
           ]),
         ]) as ElementVNode
 
-        const vnode2 = h('div', [
-          h('span', 'First sibling'),
+        const vnode2 = div([
+          span('First sibling'),
         ])
 
         patch(vnode0, vnode1)
@@ -739,12 +739,12 @@ describe('mostly-dom', function() {
         }
 
         /* tslint:enable */
-        let vnode1 = h('div', { init, prepatch }) as ElementVNode
+        let vnode1 = div({ init, prepatch }) as ElementVNode
         vnode1 = patch(vnode0, vnode1)
 
         assert.equal(1, count)
 
-        const vnode2 = h('span', { init, prepatch })
+        const vnode2 = span({ init, prepatch })
 
         patch(vnode1, vnode2)
         assert.equal(2, count)
@@ -780,11 +780,11 @@ describe('mostly-dom', function() {
           new RemoveModule2(),
         ])
 
-        const vnode1 = h('div', [
-          h('a', { remove(_: any, rm: Function) { rm3 = rm } }),
+        const vnode1 = div([
+          a({ remove(_: any, rm: Function) { rm3 = rm } }),
         ]) as ElementVNode
 
-        const vnode2 = h('div', [])
+        const vnode2 = div([])
 
         elm = _patch(vnode0, vnode1).element as HTMLElement
 
@@ -818,14 +818,14 @@ describe('mostly-dom', function() {
           rm()
         }
 
-        const vnode1 = h('div', {  remove: cb }, [
-          h('b', 'Child 1'),
-          h('i', 'Child 2'),
+        const vnode1 = div({  remove: cb }, [
+          b('Child 1'),
+          i('Child 2'),
         ]) as ElementVNode
 
-        const vnode2 = h('span', [
-          h('b', 'Child 1'),
-          h('i', 'Child 2'),
+        const vnode2 = span([
+          b('Child 1'),
+          i('Child 2'),
         ])
 
         patch(vnode0, vnode1)
@@ -853,7 +853,7 @@ describe('mostly-dom', function() {
           new Module(),
         ])
 
-        const vnode1 = h('div')
+        const vnode1 = div()
 
         _patch(vnode0, vnode1)
 
@@ -864,15 +864,15 @@ describe('mostly-dom', function() {
         const result: Array<VNode> = []
         function cb(vnode: VNode) { result.push(vnode) }
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', [
-            h('span', { destroy: cb }, 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div([
+            span({ destroy: cb }, 'Child 1'),
+            span('Child 2'),
           ]),
         ]) as ElementVNode
 
-        const vnode2 = h('div')
+        const vnode2 = div()
 
         patch(patch(vnode0, vnode1), vnode2)
 
@@ -880,11 +880,11 @@ describe('mostly-dom', function() {
       })
 
       it('handles text vnodes with `undefined` `data` property', function() {
-        const vnode1 = h('div', [
+        const vnode1 = div([
           ' ',
         ]) as ElementVNode
 
-        const vnode2 = h('div', [])
+        const vnode2 = div([])
 
         patch(vnode0, vnode1)
         patch(vnode1, vnode2)
@@ -908,15 +908,15 @@ describe('mostly-dom', function() {
           new Module(),
         ])
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', [
-            h('span', 'Child 1'),
-            h('span', 'Child 2'),
+        const vnode1 = div([
+          span('First sibling'),
+          div([
+            span('Child 1'),
+            span('Child 2'),
           ]),
         ]) as ElementVNode
 
-        const vnode2 = h('div')
+        const vnode2 = div()
 
         _patch(vnode0, vnode1)
         _patch(vnode1, vnode2)
@@ -943,13 +943,13 @@ describe('mostly-dom', function() {
           new Module(),
         ])
 
-        const vnode1 = h('div', [
-          h('span', 'First child'),
+        const vnode1 = div([
+          span('First child'),
           '',
-          h('span', 'Third child'),
+          span('Third child'),
         ]) as ElementVNode
 
-        const vnode2 = h('div')
+        const vnode2 = div()
 
         _patch(vnode0, vnode1)
         _patch(vnode1, vnode2)
@@ -975,15 +975,15 @@ describe('mostly-dom', function() {
           }(),
         ])
 
-        const vnode1 = h('div', [
-          h('span', 'First sibling'),
-          h('div', [
-            h('span', 'Child 1'),
-            h('span', [ 'Text 1', 'Text 2' ]),
+        const vnode1 = div([
+          span('First sibling'),
+          div([
+            span('Child 1'),
+            span([ 'Text 1', 'Text 2' ]),
           ]),
         ]) as ElementVNode
 
-        const vnode2 = h('div')
+        const vnode2 = div()
 
         _patch(vnode0, vnode1)
         _patch(vnode1, vnode2)
@@ -999,9 +999,9 @@ describe('mostly-dom', function() {
       const result: Array<any> = []
       function cb(vnode: VNode) { result.push(vnode) }
 
-      const vnode1 = h('div', [
-        h('span', {  update: cb }, 'Hello'),
-        h('span', 'there'),
+      const vnode1 = div([
+        span({  update: cb }, 'Hello'),
+        span('there'),
       ]) as ElementVNode
 
       patch(vnode0, vnode1)
@@ -1015,12 +1015,12 @@ describe('mostly-dom', function() {
 
       function cb(vnode: VNode) { result.push(vnode) }
 
-      const vnode1 = h('div', [
-        h('span', {  update: cb }, 'Hello'),
-        h('span', 'there'),
+      const vnode1 = div([
+        span({  update: cb }, 'Hello'),
+        span('there'),
       ]) as ElementVNode
 
-      const vnode2 = h('div')
+      const vnode2 = div()
 
       vnode2.children = vnode1.children
 
