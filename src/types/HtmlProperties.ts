@@ -675,7 +675,7 @@ export interface HTMLTimeElementProperties extends VNodeProperties<HTMLTimeEleme
   dateTime?: string,
 }
 
-export interface HTMLTitleElementProperties extends VNodeProperties<HTMLTimeElement> {
+export interface HTMLTitleElementProperties extends VNodeProperties<HTMLTitleElement> {
   text?: string,
 }
 
