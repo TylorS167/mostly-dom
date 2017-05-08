@@ -1,3 +1,10 @@
+# 2.1.0 (2017-05-08)
+---
+
+## Features
+
+- feat(elementToVNode): parameterize elementToVNode [fdb7ce67](https://github.com/TylorS/mostly-dom/commits/fdb7ce6753521481518731a97d95613df4b1ebdf)
+
 # 2.0.3 (2017-05-08)
 ---
 
