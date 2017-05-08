@@ -1,8 +1,9 @@
-import { ElementVNode, MostlyVNode, VNode } from './'
+import { ElementVirtualNode, MostlyVNode, VNode } from './'
+
 import { VOID } from './helpers'
 
-export function elementToVNode(element: Element): ElementVNode {
-  return new MostlyVNode(
+export function elementToVNode<T extends Element>(element: T): ElementVirtualNode<T> {
+  return new MostlyVNode<T>(
     element.tagName && element.tagName.toLowerCase(),
     element.id,
     element.className,
@@ -13,7 +14,7 @@ export function elementToVNode(element: Element): ElementVNode {
     VOID,
     VOID,
     VOID,
-  ) as ElementVNode
+  ) as ElementVirtualNode<T>
 }
 
 function nodeToVNode(node: Element | Text): VNode {
