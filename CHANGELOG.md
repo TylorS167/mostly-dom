@@ -1,3 +1,10 @@
+# 2.1.1 (2017-05-08)
+---
+
+## Bug Fixes
+
+- fix(types): correct HTMLTitleElementProperties [3384818e](https://github.com/TylorS/mostly-dom/commits/3384818e44af4a6b212583d517a9d877f6cac3e3)
+
 # 2.1.0 (2017-05-08)
 ---
 
