@@ -3,33 +3,30 @@ import * as hooks from './hooks'
 import { CSSProperties } from './CSS'
 import { ElementProperties } from './HtmlProperties'
 
-export interface VNode extends VirtualNode<Node> { }
-export interface ElementVNode extends ElementVirtualNode<Element> { }
-
-export interface VirtualNode<T extends Node, Props = VNodeProps<Element>> {
+export interface VNode<T extends Node = Node, Props = VNodeProps<Element>> {
   tagName: string | void
   id: string | void
   className: string | void
   props: Props
-  children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void
+  children: Array<VNode> | ReadonlyArray<VNode> | void
   text: string | void
   key: string | number | void
   element: T | void
   namespace: string | void
   scope: string | void
 
-  parent: VirtualNode<Node> | void
+  parent: VNode<Element> | void
 }
 
-export interface ElementVirtualNode<T extends Element> extends VirtualNode<Element> {
+export interface ElementVNode<T extends Element = Element> extends VNode<T> {
   tagName: string
   element: T
   namespace: string
   text: void
-  children: Array<ElementVirtualNode<Element>> | ReadonlyArray<ElementVirtualNode<Element>> | void
+  children: Array<ElementVNode> | ReadonlyArray<ElementVNode> | void
 }
 
-export interface TextVNode extends VirtualNode<Text> {
+export interface TextVNode extends VNode<Text> {
   tagName: void
   id: void
   className: void
@@ -41,7 +38,7 @@ export interface TextVNode extends VirtualNode<Text> {
   scope: void
 }
 
-export interface VNodeProps<T extends Element> extends ElementProperties {
+export interface VNodeProps<T extends Element = Element> extends ElementProperties {
   // key for dom diffing
   key?: string | number,
 

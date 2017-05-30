@@ -1,10 +1,10 @@
-import { ElementVNode, VirtualNode } from '../'
+import { ElementVNode, VNode } from '../'
 
 import { ModuleCallbacks } from '../modules/ModuleCallbacks'
 
 export function prepatchHooks(
   formerVNode: ElementVNode,
-  vNode: VirtualNode<Element>,
+  vNode: VNode<Element>,
   moduleCallbacks: ModuleCallbacks)
 {
   const props = vNode.props

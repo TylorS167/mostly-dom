@@ -1,4 +1,4 @@
-import { ElementVNode, Module, VNode, VirtualNode } from '../'
+import { ElementVNode, Module, VNode } from '../'
 
 export class ModuleCallbacks implements Module<Element> {
   private _modules: Array<Module<Element>>
@@ -77,7 +77,7 @@ export class ModuleCallbacks implements Module<Element> {
       modules[i].destroy(vNode)
   }
 
-  public prepatch(formerVNode: ElementVNode, vNode: VirtualNode<Element>) {
+  public prepatch(formerVNode: ElementVNode, vNode: VNode<Element>) {
     const modules = this._modules
     const moduleCount = this._moduleCount
 

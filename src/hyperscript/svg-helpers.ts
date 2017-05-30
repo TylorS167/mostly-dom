@@ -1,19 +1,19 @@
 import { HyperscriptChildren, h } from './h'
-import { SvgTagNames, VNodeProps, VirtualNode } from '../'
+import { SvgTagNames, VNode, VNodeProps } from '../'
 
 export interface SvgHyperscriptHelperFn<T extends SVGElement> {
-  (): VirtualNode<T>
-  (classNameOrId: string, data: VNodeProps<T>, children: HyperscriptChildren): VirtualNode<T>
-  (classNameOrId: string, data: VNodeProps<T>): VirtualNode<T>
-  (classNameOrId: string, children: HyperscriptChildren): VirtualNode<T>
-  (classNameOrId: string): VirtualNode<T>
-  (data: VNodeProps<T>): VirtualNode<T>
-  (data: VNodeProps<T>, children: HyperscriptChildren): VirtualNode<T>
-  (children: HyperscriptChildren): VirtualNode<T>
+  (): VNode<T>
+  (classNameOrId: string, data: VNodeProps<T>, children: HyperscriptChildren): VNode<T>
+  (classNameOrId: string, data: VNodeProps<T>): VNode<T>
+  (classNameOrId: string, children: HyperscriptChildren): VNode<T>
+  (classNameOrId: string): VNode<T>
+  (data: VNodeProps<T>): VNode<T>
+  (data: VNodeProps<T>, children: HyperscriptChildren): VNode<T>
+  (children: HyperscriptChildren): VNode<T>
 }
 
 function hh <T extends SVGElement>(tagName: SvgTagNames): SvgHyperscriptHelperFn<T> {
-  return function(): VirtualNode<T> {
+  return function(): VNode<T> {
     const selector = arguments[0]
     const data = arguments[1]
     const children = arguments[2]

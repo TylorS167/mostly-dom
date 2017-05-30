@@ -1,4 +1,4 @@
-import { CSSProperties, ElementVirtualNode, HtmlTagNames, VNodeProps, VirtualNode } from '../'
+import { CSSProperties, ElementVNode, HtmlTagNames, VNode, VNodeProps } from '../'
 import {
   HTMLAnchorElementProperties,
   HTMLAppletElementProperties,
@@ -70,21 +70,21 @@ export interface HyperscriptHelperFn<
   T extends Element,
   Props extends VNodeProps<T> = VNodeProps<T>>
 {
-  (): VirtualNode<T, Props>
-  (classNameOrId: string, data: Props, children: HyperscriptChildren): VirtualNode<T, Props>
-  (classNameOrId: string, data: Props): VirtualNode<T, Props & VNodeProps<T>>
-  (classNameOrId: string, children: HyperscriptChildren): VirtualNode<T, Props>
-  (classNameOrId: string): VirtualNode<T, Props>
-  (data: Props): VirtualNode<T, Props & VNodeProps<T>>
-  (data: Props, children: HyperscriptChildren): VirtualNode<T, Props>
-  (children: HyperscriptChildren): VirtualNode<T, Props>
+  (): VNode<T, Props>
+  (classNameOrId: string, data: Props, children: HyperscriptChildren): VNode<T, Props>
+  (classNameOrId: string, data: Props): VNode<T, Props & VNodeProps<T>>
+  (classNameOrId: string, children: HyperscriptChildren): VNode<T, Props>
+  (classNameOrId: string): VNode<T, Props>
+  (data: Props): VNode<T, Props & VNodeProps<T>>
+  (data: Props, children: HyperscriptChildren): VNode<T, Props>
+  (children: HyperscriptChildren): VNode<T, Props>
 }
 // tslint:enable:max-line-length
 
 export function hh <T extends Element, Props extends VNodeProps<Element> = VNodeProps<T>>(
   tagName: HtmlTagNames): HyperscriptHelperFn<T, Props>
 {
-  return function(): VirtualNode<T, Props> {
+  return function(): VNode<T, Props> {
     const selector = arguments[0]
     const data = arguments[1]
     const children = arguments[2]
@@ -95,14 +95,14 @@ export function hh <T extends Element, Props extends VNodeProps<Element> = VNode
       else if (typeof data === 'object')
         return h<T, Props>(tagName + selector, data, children)
       else
-        return h<T, Props>(tagName + selector, (data || {})) as VirtualNode<T, Props>
+        return h<T, Props>(tagName + selector, (data || {})) as VNode<T, Props>
 
     if (Array.isArray(selector))
       return h<T, Props>(tagName, {} as Props, selector)
     else if (typeof selector === 'object')
       return h<T, Props>(tagName, selector, data)
     else
-      return h<T, Props>(tagName, selector || {}) as VirtualNode<T, Props>
+      return h<T, Props>(tagName, selector || {}) as VNode<T, Props>
   }
 }
 

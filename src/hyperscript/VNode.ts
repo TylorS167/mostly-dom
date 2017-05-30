@@ -1,4 +1,4 @@
-import { VNodeProps, VirtualNode } from '../types'
+import { VNode, VNodeProps } from '../types'
 
 const VOID = void 0
 
@@ -6,7 +6,7 @@ export const SVG_NAMESPACE = `http://www.w3.org/2000/svg`
 
 const defaultTextNodeData: VNodeProps<Element> = {}
 
-export class MostlyVNode<T extends Node> implements VirtualNode<T> {
+export class MostlyVNode<T extends Node> implements VNode<T> {
   public parent: MostlyVNode<Element> | void = VOID
 
   constructor(
@@ -14,7 +14,7 @@ export class MostlyVNode<T extends Node> implements VirtualNode<T> {
     public id: string | void,
     public className: string | void,
     public props: VNodeProps<Element>,
-    public children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
+    public children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
     public element: T | void,
     public text: string | void,
     public key: string | number | void,
@@ -27,7 +27,7 @@ export class MostlyVNode<T extends Node> implements VirtualNode<T> {
     id: string | void,
     className: string | void,
     props: VNodeProps<Element>,
-    children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
+    children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
     text: string | void,
   )
   {
@@ -45,7 +45,7 @@ export class MostlyVNode<T extends Node> implements VirtualNode<T> {
     id: string | void,
     className: string | void,
     props: VNodeProps<SVGElement>,
-    children: Array<VirtualNode<Node>> | ReadonlyArray<VirtualNode<Node>> | void,
+    children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
     text: string | void,
   )
   {

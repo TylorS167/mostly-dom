@@ -1,4 +1,4 @@
-import { ElementVNode, TextVNode, VNode, VirtualNode } from '../'
+import { ElementVNode, TextVNode, VNode } from '../'
 import { postpatchHooks, prepatchHooks, updateHooks } from './hooks'
 
 import { ModuleCallbacks } from '../modules/ModuleCallbacks'
@@ -13,7 +13,7 @@ export function patchVNode(
   moduleCallbacks: ModuleCallbacks,
   insertedVNodeQueue: Array<ElementVNode>): void
 {
-  prepatchHooks(formerVNode as ElementVNode, vNode as VirtualNode<Element>, moduleCallbacks)
+  prepatchHooks(formerVNode as ElementVNode, vNode as VNode<Element>, moduleCallbacks)
 
   vNode = updateElement(formerVNode, vNode)
 

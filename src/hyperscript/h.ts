@@ -1,5 +1,5 @@
 import { MostlyVNode, addSvgNamespace } from './VNode'
-import { VNode, VNodeProps, VirtualNode } from '../types'
+import { VNode, VNodeProps } from '../types'
 import { VOID, isPrimitive, isString } from '../helpers'
 
 import { parseSelector } from './parseSelector'
@@ -71,7 +71,7 @@ function sanitizeChildren(childrenOrText: Array<string | VNode>, parent: VNode):
     if (parent.scope && !children[i].scope)
       children[i].scope = parent.scope
 
-    children[i].parent = parent
+    children[i].parent = parent as VNode<Element>
   }
 
   return children
@@ -90,16 +90,16 @@ export interface HyperscriptFn {
   (sel: string, data: VNodeProps<any>, children: HyperscriptChildren): VNode
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
-    sel: string): VirtualNode<T, Props>
+    sel: string): VNode<T, Props>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     sel: string,
-    data: Props): VirtualNode<T>
+    data: Props): VNode<T>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     sel: string,
-    children: HyperscriptChildren): VirtualNode<T, Props>
+    children: HyperscriptChildren): VNode<T, Props>
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     sel: string,
     data: Props,
-    children: HyperscriptChildren): VirtualNode<T, Props>
+    children: HyperscriptChildren): VNode<T, Props>
 }
