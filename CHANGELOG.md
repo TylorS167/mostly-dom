@@ -1,3 +1,11 @@
+# 3.0.0 (2017-05-30)
+---
+
+## Breaking Changes
+
+1. deletes VirtualNode and ElementVirtualNode types
+  - feat(types): use VNode with default type parameters [40ac3377](https://github.com/TylorS/mostly-dom/commits/40ac337704eb3146e5986fede64e4508ef4a96be)
+
 # 2.1.1 (2017-05-08)
 ---
 
