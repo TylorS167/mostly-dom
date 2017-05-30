@@ -1,3 +1,10 @@
+# 3.1.0 (2017-05-30)
+---
+
+## Features
+
+- feat(hyperscript): export parseSelector function [1fdf3d00](https://github.com/TylorS/mostly-dom/commits/1fdf3d0026157c204e584172749b4f809b7c3e20)
+
 # 3.0.0 (2017-05-30)
 ---
 
