@@ -1,158 +1,251 @@
-# 3.1.0 (2017-05-30)
----
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/TylorS/mostly-dom/compare/v3.1.0...v3.2.0) (2017-06-08)
 
-## Features
 
-- feat(hyperscript): export parseSelector function [1fdf3d00](https://github.com/TylorS/mostly-dom/commits/1fdf3d0026157c204e584172749b4f809b7c3e20)
+### Bug Fixes
 
-# 3.0.0 (2017-05-30)
----
+* **src:** cleanup tslint error ([03ee4e3](https://github.com/TylorS/mostly-dom/commit/03ee4e3))
+* **types:** add slot to tagnames ([62d0e7c](https://github.com/TylorS/mostly-dom/commit/62d0e7c))
 
-## Breaking Changes
 
-1. deletes VirtualNode and ElementVirtualNode types
-  - feat(types): use VNode with default type parameters [40ac3377](https://github.com/TylorS/mostly-dom/commits/40ac337704eb3146e5986fede64e4508ef4a96be)
 
-# 2.1.1 (2017-05-08)
----
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/TylorS/mostly-dom/compare/v3.0.0...v3.1.0) (2017-05-30)
 
-## Bug Fixes
 
-- fix(types): correct HTMLTitleElementProperties [3384818e](https://github.com/TylorS/mostly-dom/commits/3384818e44af4a6b212583d517a9d877f6cac3e3)
+### Features
 
-# 2.1.0 (2017-05-08)
----
+* **hyperscript:** export parseSelector function ([1fdf3d0](https://github.com/TylorS/mostly-dom/commit/1fdf3d0))
 
-## Features
 
-- feat(elementToVNode): parameterize elementToVNode [fdb7ce67](https://github.com/TylorS/mostly-dom/commits/fdb7ce6753521481518731a97d95613df4b1ebdf)
 
-# 2.0.3 (2017-05-08)
----
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/TylorS/mostly-dom/compare/v2.1.1...v3.0.0) (2017-05-30)
 
-## Bug Fixes
 
-- fix(init): parameterize init instead of patch [1368dc18](https://github.com/TylorS/mostly-dom/commits/1368dc18c84fcaf0b0080909a63cdd8817e90dca)
+### Features
 
-# 2.0.2 (2017-05-06)
----
+* **types:** use VNode with default type parameters ([40ac337](https://github.com/TylorS/mostly-dom/commit/40ac337))
 
-## Bug Fixes
 
-- fix(hyperscript): improve typings [1d6db713](https://github.com/TylorS/mostly-dom/commits/1d6db7139deccfece03fe754ebb9fa09ac384b22)
+### BREAKING CHANGES
 
-# 2.0.1 (2017-05-06)
----
+* **types:** deletes VirtualNode and ElementVirtualNode types
 
-## Bug Fixes
 
-- fix(patch): allow parameterizing patch with element type [351d8b16](https://github.com/TylorS/mostly-dom/commits/351d8b162c729a23a1ae0cd66e038edd857aca9b)
 
-# 2.0.0 (2017-05-06)
----
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/TylorS/mostly-dom/compare/v2.1.0...v2.1.1) (2017-05-08)
 
-## Breaking Changes
 
-1. can no longer set properties that do no exist for a given element type
-  - feat(hyperscript): create element-specific hyperscript-helpers [24fde727](https://github.com/TylorS/mostly-dom/commits/24fde7271db0b0e7059536f0e90ad3c63f9845c5)
+### Bug Fixes
 
-## Features
+* **types:** correct HTMLTitleElementProperties ([3384818](https://github.com/TylorS/mostly-dom/commit/3384818))
 
-- feat(mostly-dom): parameterize VNodeProps and Hooks [d94cd68f](https://github.com/TylorS/mostly-dom/commits/d94cd68fd7826ae7642fa604a7829b05c794db40)
 
-# 1.5.0 (2017-04-28)
----
 
-## Features
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/TylorS/mostly-dom/compare/v2.0.3...v2.1.0) (2017-05-08)
 
-- feat(types): support ReadonlyArray children [db0d2965](https://github.com/TylorS/mostly-dom/commits/db0d29657bcd0c2bf7b7107829cfca670f365eee)
 
-# 1.4.2 (2017-03-01)
----
+### Features
 
-## Bug Fixes
+* **elementToVNode:** parameterize elementToVNode ([fdb7ce6](https://github.com/TylorS/mostly-dom/commit/fdb7ce6))
 
-- fix(modules): fix module bugs [98c59343](https://github.com/TylorS/mostly-dom/commits/98c5934319d3fd24a9f0f675f17e509ba94f31a4)
 
-# 1.4.1 (2017-02-28)
----
 
-## Bug Fixes
+<a name="2.0.3"></a>
+## [2.0.3](https://github.com/TylorS/mostly-dom/compare/v2.0.2...v2.0.3) (2017-05-08)
 
-- fix(styles): always set updated styles [b8451244](https://github.com/TylorS/mostly-dom/commits/b8451244eec680cba9b4141c0cd4201b453bf21f)
 
-# 1.4.0 (2017-02-14)
----
+### Bug Fixes
 
-## Features
+* **init:** parameterize init instead of patch ([1368dc1](https://github.com/TylorS/mostly-dom/commit/1368dc1))
 
-- feat(mostly-dom): add focus module [a457faf7](https://github.com/TylorS/mostly-dom/commits/a457faf7b01433147eb31b31b017ff41c4bd6929)
 
-# 1.3.1 (2017-02-07)
----
 
-## Bug Fixes
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/TylorS/mostly-dom/compare/v2.0.1...v2.0.2) (2017-05-06)
 
-- fix(patchVNode): check element type before setting properties [84ea0dc8](https://github.com/TylorS/mostly-dom/commits/84ea0dc83418f5f9aa7584c5e75b1b2dc8c5b211)
 
-# 1.3.0 (2017-02-06)
----
+### Bug Fixes
 
-## Features
+* **hyperscript:** improve typings ([1d6db71](https://github.com/TylorS/mostly-dom/commit/1d6db71))
 
-- feat(VNodeProps): Add ability to give in extra classes as a key-value dictionary where the key is th [629075f7](https://github.com/TylorS/mostly-dom/commits/629075f71b6e6a2ce3122ba9b3c1bbf08ed38f77)
-- feat(hh): add i helper [ee6cf305](https://github.com/TylorS/mostly-dom/commits/ee6cf3053dcbdae9275f2e256e6d0a2109a7be6d)
 
-# 1.2.1 (2017-01-10)
----
 
-## Bug Fixes
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/TylorS/mostly-dom/compare/v2.0.0...v2.0.1) (2017-05-06)
 
-- fix(package): add missing dep [217d966e](https://github.com/TylorS/mostly-dom/commits/217d966e7a07e75092fa36b4ca86d4eccb6dee2b)
 
-# 1.2.0 (2017-01-10)
----
+### Bug Fixes
 
-## Features
+* **patch:** allow parameterizing patch with element type ([351d8b1](https://github.com/TylorS/mostly-dom/commit/351d8b1))
 
-- feat(querySelectorAll): implement vNode querySelectorAll [60885211](https://github.com/TylorS/mostly-dom/commits/6088521166fe35ce458a6b31900230411b26d0e0)
-- feat(querySelector): implement vNode querySelector [015a7a7c](https://github.com/TylorS/mostly-dom/commits/015a7a7c01f537140b323c8ab2d3929b169e259e)
-- feat(hasCssSelector): match more complex css selectors [7c3e8e75](https://github.com/TylorS/mostly-dom/commits/7c3e8e7577cd114083d167a500a1635324c86019)
 
-## Bug Fixes
 
-- fix(types): correct VirtualNode types [32a32e3f](https://github.com/TylorS/mostly-dom/commits/32a32e3f596e59acf78479c1eafd61636f27adc9)
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/TylorS/mostly-dom/compare/v1.5.0...v2.0.0) (2017-05-06)
 
-# 1.1.2 (2017-01-03)
----
 
-## Bug Fixes
+### Features
 
-- fix(elementToVNode): add text element to textVNode [3de43eaf](https://github.com/TylorS/mostly-dom/commits/3de43eaf252736a1d0b2da7ee5195402d861a614)
+* **hyperscript:** create element-specific hyperscript-helpers ([24fde72](https://github.com/TylorS/mostly-dom/commit/24fde72))
+* **mostly-dom:** parameterize VNodeProps and Hooks ([d94cd68](https://github.com/TylorS/mostly-dom/commit/d94cd68))
 
-# 1.1.1 (2017-01-02)
----
 
-## Bug Fixes
+### BREAKING CHANGES
 
-- fix(mostly-dom): add a fix for adding scopes to children [9027d816](https://github.com/TylorS/mostly-dom/commits/9027d816f5510ca80603049cd5dc59b7b388d14e)
+* **hyperscript:** can no longer set properties that do no exist for a given element type
 
-# 1.1.0 (2017-01-02)
----
 
-## Features
 
-- feat(hasCssSelector): add utility function that checks for CSS classes on VNode. [4ba729ac](https://github.com/TylorS/mostly-dom/commits/4ba729ac774f7b81d72628b0633cc55cce4fdd60)
-- feat(h): create function variations with template types [5fb8b7f4](https://github.com/TylorS/mostly-dom/commits/5fb8b7f4cb5504d02b7c17b62f19b6919fe75bab)
-- feat(hyperscript): add hyperscript helper functions [40af7592](https://github.com/TylorS/mostly-dom/commits/40af75922c9ab1bd1e335ad858ba51f45e9651bc)
-- feat(types): add HTML tag name types [b36080ad](https://github.com/TylorS/mostly-dom/commits/b36080adb751a3cff804de15a40a8fab3ca1b7df)
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/TylorS/mostly-dom/compare/v1.4.2...v1.5.0) (2017-04-29)
 
-# 1.0.0 (2017-01-02)
----
 
-## Breaking Changes
+### Features
 
-1. initial implementation
-  - feat(mostly-dom): complete implementation [a07539a0](https://github.com/TylorS/mostly-dom/commits/a07539a0b30fcb4924488a5fe3970b46bb39b899)
+* **types:** support ReadonlyArray children ([db0d296](https://github.com/TylorS/mostly-dom/commit/db0d296))
+
+
+
+<a name="1.4.2"></a>
+## [1.4.2](https://github.com/TylorS/mostly-dom/compare/v1.4.1...v1.4.2) (2017-03-01)
+
+
+### Bug Fixes
+
+* **modules:** fix module bugs ([98c5934](https://github.com/TylorS/mostly-dom/commit/98c5934))
+
+
+
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/TylorS/mostly-dom/compare/v1.4.0...v1.4.1) (2017-02-28)
+
+
+### Bug Fixes
+
+* **styles:** always set updated styles ([b845124](https://github.com/TylorS/mostly-dom/commit/b845124))
+
+
+
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/TylorS/mostly-dom/compare/v1.3.1...v1.4.0) (2017-02-14)
+
+
+### Features
+
+* **mostly-dom:** add focus module ([a457faf](https://github.com/TylorS/mostly-dom/commit/a457faf))
+
+
+
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/TylorS/mostly-dom/compare/v1.3.0...v1.3.1) (2017-02-07)
+
+
+### Bug Fixes
+
+* **hyperscript:** fix typescript 2.1.5 compiler errors ([e85b786](https://github.com/TylorS/mostly-dom/commit/e85b786))
+* **patchVNode:** check element type before setting properties ([84ea0dc](https://github.com/TylorS/mostly-dom/commit/84ea0dc))
+* **props:** add \\`class\\` to PROPERTIES_TO_SKIP ([3c5056c](https://github.com/TylorS/mostly-dom/commit/3c5056c))
+
+
+
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/TylorS/mostly-dom/compare/v1.2.1...v1.3.0) (2017-02-06)
+
+
+### Features
+
+* **hh:** add i helper ([ee6cf30](https://github.com/TylorS/mostly-dom/commit/ee6cf30))
+* **VNodeProps:** Add ability to give in extra classes as a key-value dictionary where the key is th ([629075f](https://github.com/TylorS/mostly-dom/commit/629075f))
+
+
+
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/TylorS/mostly-dom/compare/v1.2.0...v1.2.1) (2017-01-10)
+
+
+### Bug Fixes
+
+* **package:** add missing dep ([217d966](https://github.com/TylorS/mostly-dom/commit/217d966))
+
+
+
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/TylorS/mostly-dom/compare/v1.1.2...v1.2.0) (2017-01-10)
+
+
+### Bug Fixes
+
+* **types:** correct VirtualNode types ([32a32e3](https://github.com/TylorS/mostly-dom/commit/32a32e3))
+
+
+### Features
+
+* **hasCssSelector:** match more complex css selectors ([7c3e8e7](https://github.com/TylorS/mostly-dom/commit/7c3e8e7))
+* **hyperscript:** export new functions ([fb1de4d](https://github.com/TylorS/mostly-dom/commit/fb1de4d))
+* **querySelector:** implement vNode querySelector ([015a7a7](https://github.com/TylorS/mostly-dom/commit/015a7a7))
+* **querySelectorAll:** implement vNode querySelectorAll ([6088521](https://github.com/TylorS/mostly-dom/commit/6088521))
+
+
+
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/TylorS/mostly-dom/compare/v1.1.1...v1.1.2) (2017-01-03)
+
+
+### Bug Fixes
+
+* **elementToVNode:** add text element to textVNode ([3de43ea](https://github.com/TylorS/mostly-dom/commit/3de43ea))
+
+
+
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/TylorS/mostly-dom/compare/v1.1.0...v1.1.1) (2017-01-02)
+
+
+### Bug Fixes
+
+* **mostly-dom:** add a fix for adding scopes to children ([9027d81](https://github.com/TylorS/mostly-dom/commit/9027d81))
+
+
+
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/TylorS/mostly-dom/compare/v1.0.0...v1.1.0) (2017-01-02)
+
+
+### Features
+
+* **h:** create function variations with template types ([5fb8b7f](https://github.com/TylorS/mostly-dom/commit/5fb8b7f))
+* **hasCssSelector:** add utility function that checks for CSS classes on VNode. ([4ba729a](https://github.com/TylorS/mostly-dom/commit/4ba729a))
+* **hyperscript:** add hyperscript helper functions ([40af759](https://github.com/TylorS/mostly-dom/commit/40af759))
+* **types:** add HTML tag name types ([b36080a](https://github.com/TylorS/mostly-dom/commit/b36080a))
+
+
+
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/TylorS/mostly-dom/compare/0.0.0...v1.0.0) (2017-01-02)
+
+
+### Features
+
+* **mostly-dom:** complete implementation ([a07539a](https://github.com/TylorS/mostly-dom/commit/a07539a))
+
+
+### BREAKING CHANGES
+
+* **mostly-dom:** initial implementation
+
+
+
+<a name="0.0.0"></a>
+# [0.0.0](https://github.com/TylorS/mostly-dom/compare/2aa8a52...0.0.0) (2016-12-17)
+
+
+### Features
+
+* **mostly-dom:** initial commit ([2aa8a52](https://github.com/TylorS/mostly-dom/commit/2aa8a52))
+
 
 
