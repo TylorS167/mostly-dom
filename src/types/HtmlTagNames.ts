@@ -14,7 +14,7 @@ export type HtmlTagNames =
   'noscript' | 'object' | 'ol' | 'optgroup' | 'option' | 'output' | 'p' |
   'param' | 'picture' | 'plaintext' | 'pre' | 'progress' | 'q' | 'rb' | 'rbc' |
   'rp' | 'rt' | 'rtc' | 'ruby' | 's' | 'samp' | 'script' | 'section' | 'select' |
-  'shadow' | 'small' | 'source' | 'spacer' | 'span' | 'strike' | 'strong' |
+  'shadow' | 'slot' | 'small' | 'source' | 'spacer' | 'span' | 'strike' | 'strong' |
   'style' | 'sub' | 'summary' | 'sup' | 'table' | 'tbody' | 'td' | 'template' |
   'textarea' | 'tfoot' | 'th' | 'thead' | 'time' | 'title' | 'tr' | 'track' |
   'tt' | 'u' | 'ul' | 'video' | 'wbr' | 'xmp'
