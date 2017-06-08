@@ -7,7 +7,6 @@ import {
 } from './'
 
 import { AttributesModule } from './modules/attributes'
-import { CSSProperties } from './types'
 import { FocusModule } from './modules/focus'
 import { ModuleCallbacks } from './modules/ModuleCallbacks'
 import { PropsModule } from './modules/props'
@@ -34,8 +33,8 @@ export function init<T extends Element = Element>(modules: Array<Module<Element>
   const moduleCallbacks = new ModuleCallbacks(defaultModules.concat(modules))
 
   return function patch(
-    formerVNode: ElementVNode<T>,
-    vNode: VNode<T>): ElementVNode<T>
+    formerVNode: ElementVNode<T, VNodeProps<T>>,
+    vNode: VNode<T, VNodeProps<T>>): ElementVNode<T, VNodeProps<T>>
   {
     const insertedVNodeQueue: Array<ElementVNode> = []
 

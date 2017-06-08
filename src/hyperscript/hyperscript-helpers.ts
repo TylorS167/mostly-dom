@@ -1,4 +1,3 @@
-import { CSSProperties, ElementVNode, HtmlTagNames, VNode, VNodeProps } from '../'
 import {
   HTMLAnchorElementProperties,
   HTMLAppletElementProperties,
@@ -63,6 +62,7 @@ import {
   HTMLUListElementProperties,
   HTMLVideoElementProperties,
 } from '../types/HtmlProperties'
+import { HtmlTagNames, VNode, VNodeProps } from '../'
 import { HyperscriptChildren, h } from './h'
 
 // tslint:disable:max-line-length

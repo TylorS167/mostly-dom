@@ -1052,3 +1052,4 @@ export function shuffle(array: Array<any>): Array<any> {
 
   return array
 }
+// tslint:disable:max-file-line-count

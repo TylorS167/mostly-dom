@@ -18,7 +18,8 @@ export interface VNode<T extends Node = Node, Props = VNodeProps<Element>> {
   parent: VNode<Element> | void
 }
 
-export interface ElementVNode<T extends Element = Element> extends VNode<T> {
+// tslint:disable-next-line:max-line-length
+export interface ElementVNode<T extends Element = Element, Props = VNodeProps<T>> extends VNode<T, Props> {
   tagName: string
   element: T
   namespace: string
