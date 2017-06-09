@@ -1,3 +1,21 @@
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/TylorS/mostly-dom/compare/v3.2.0...v3.3.0) (2017-06-09)
+
+
+### Bug Fixes
+
+* **hh:** missing import ([e06d256](https://github.com/TylorS/mostly-dom/commit/e06d256))
+
+
+### Features
+
+* **events:** make each event optional ([c45dd7c](https://github.com/TylorS/mostly-dom/commit/c45dd7c))
+* **modules:** implement events module ([f34a97c](https://github.com/TylorS/mostly-dom/commit/f34a97c))
+* **props:** skip over on property for props ([00d7fe9](https://github.com/TylorS/mostly-dom/commit/00d7fe9))
+* **types:** parameterize each hh function with event types ([49d9f32](https://github.com/TylorS/mostly-dom/commit/49d9f32))
+
+
+
 <a name="3.2.0"></a>
 # [3.2.0](https://github.com/TylorS/mostly-dom/compare/v3.1.0...v3.2.0) (2017-06-08)
 
