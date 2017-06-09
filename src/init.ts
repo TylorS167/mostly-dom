@@ -3,10 +3,12 @@ import {
   InsertHook,
   Module,
   VNode,
+  VNodeEvents,
   VNodeProps,
 } from './'
 
 import { AttributesModule } from './modules/attributes'
+import { EventsModule } from './modules/events'
 import { FocusModule } from './modules/focus'
 import { ModuleCallbacks } from './modules/ModuleCallbacks'
 import { PropsModule } from './modules/props'
@@ -21,6 +23,7 @@ export function init<T extends Element = Element>(modules: Array<Module<Element>
   const propsModule = new PropsModule()
   const stylesModule = new StylesModule()
   const focusModule = new FocusModule()
+  const eventsModule = new EventsModule()
 
   const defaultModules =
     [
@@ -28,6 +31,7 @@ export function init<T extends Element = Element>(modules: Array<Module<Element>
       propsModule,
       stylesModule,
       focusModule,
+      eventsModule,
     ]
 
   const moduleCallbacks = new ModuleCallbacks(defaultModules.concat(modules))

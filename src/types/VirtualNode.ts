@@ -61,6 +61,7 @@ export interface VNodeProps<
 
   // events
   on?: EventMap
+  listener?: EventListener
 
   // declarative focusing
   focus?: boolean

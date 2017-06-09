@@ -6,6 +6,7 @@ const PROPERTIES_TO_SKIP: Array<string> =
   [
     'class',
     'on',
+    'listener',
     'focus',
     'style',
     'attrs',

@@ -1,8 +1,11 @@
+import { ElementVNode } from './VirtualNode'
+
 export type VNodeEvent<T, Ev extends Event> = Ev & { target: T }
 
-export type EventHandler<T, Ev extends Event> = (event: VNodeEvent<T, Ev>) => any
+export type EventHandler<T extends Element, Ev extends Event> =
+  (event: VNodeEvent<T, Ev>, vNode: ElementVNode<T>) => any
 
-export type VNodeEvents<T extends Node, EventMap extends object> = {
+export type VNodeEvents<T extends Element, EventMap extends object> = {
   readonly [K in keyof EventMap]: EventHandler<T, EventMap[K]>
 }
 
