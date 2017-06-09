@@ -1,3 +1,4 @@
+import { ElementEvents, HtmlTagNames, VNode, VNodeEvents, VNodeProps } from '../'
 import {
   HTMLAnchorElementProperties,
   HTMLAppletElementProperties,
@@ -62,13 +63,14 @@ import {
   HTMLUListElementProperties,
   HTMLVideoElementProperties,
 } from '../types/HtmlProperties'
-import { HtmlTagNames, VNode, VNodeProps } from '../'
 import { HyperscriptChildren, h } from './h'
 
 // tslint:disable:max-line-length
 export interface HyperscriptHelperFn<
   T extends Element,
-  Props extends VNodeProps<T> = VNodeProps<T>>
+  Props extends VNodeProps<T> = VNodeProps<T>,
+  Events extends ElementEvents<T> = ElementEvents<T>
+>
 {
   (): VNode<T, Props>
   (classNameOrId: string, data: Props, children: HyperscriptChildren): VNode<T, Props>
@@ -81,8 +83,9 @@ export interface HyperscriptHelperFn<
 }
 // tslint:enable:max-line-length
 
-export function hh <T extends Element, Props extends VNodeProps<Element> = VNodeProps<T>>(
-  tagName: HtmlTagNames): HyperscriptHelperFn<T, Props>
+export function hh<T extends Element, Props extends VNodeProps<Element> = VNodeProps<T>>(
+  tagName: HtmlTagNames
+): HyperscriptHelperFn<T, Props>
 {
   return function(): VNode<T, Props> {
     const selector = arguments[0]
@@ -90,19 +93,13 @@ export function hh <T extends Element, Props extends VNodeProps<Element> = VNode
     const children = arguments[2]
 
     if (isSelector(selector))
-      if (Array.isArray(data))
-        return h<T, Props>(tagName + selector, {} as Props, data)
-      else if (typeof data === 'object')
-        return h<T, Props>(tagName + selector, data, children)
-      else
-        return h<T, Props>(tagName + selector, (data || {})) as VNode<T, Props>
+      if (Array.isArray(data)) return h<T, Props>(tagName + selector, {} as Props, data)
+      else if (typeof data === 'object') return h<T, Props>(tagName + selector, data, children)
+      else return h<T, Props>(tagName + selector, data || {}) as VNode<T, Props>
 
-    if (Array.isArray(selector))
-      return h<T, Props>(tagName, {} as Props, selector)
-    else if (typeof selector === 'object')
-      return h<T, Props>(tagName, selector, data)
-    else
-      return h<T, Props>(tagName, selector || {}) as VNode<T, Props>
+    if (Array.isArray(selector)) return h<T, Props>(tagName, {} as Props, selector)
+    else if (typeof selector === 'object') return h<T, Props>(tagName, selector, data)
+    else return h<T, Props>(tagName, selector || {}) as VNode<T, Props>
   }
 }
 
