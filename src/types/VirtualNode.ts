@@ -2,6 +2,7 @@ import * as hooks from './hooks'
 
 import { CSSProperties } from './CSS'
 import { ElementProperties } from './HtmlProperties'
+import { VNodeEvents } from './VNodeEventTypes'
 
 export interface VNode<T extends Node = Node, Props = VNodeProps<Element>> {
   tagName: string | void
@@ -19,7 +20,10 @@ export interface VNode<T extends Node = Node, Props = VNodeProps<Element>> {
 }
 
 // tslint:disable-next-line:max-line-length
-export interface ElementVNode<T extends Element = Element, Props = VNodeProps<T>> extends VNode<T, Props> {
+export interface ElementVNode<T extends Element = Element, Props = VNodeProps<T>> extends VNode<
+  T,
+  Props
+> {
   tagName: string
   element: T
   namespace: string
@@ -39,40 +43,46 @@ export interface TextVNode extends VNode<Text> {
   scope: void
 }
 
-export interface VNodeProps<T extends Element = Element> extends ElementProperties {
+export interface VNodeProps<
+  T extends Element = Element,
+  EventMap extends VNodeEvents<Element, ElementEventMap> = VNodeEvents<T, ElementEventMap>
+> extends ElementProperties {
   // key for dom diffing
-  key?: string | number,
+  key?: string | number
 
   // classes
-  class?: { [className: string]: Boolean },
+  class?: { [className: string]: Boolean }
 
   // attributes for setAttribute()
-  attrs?: { [attributeName: string]: any },
+  attrs?: { [attributeName: string]: any }
 
   // styling
-  style?: VNodeStyle,
+  style?: VNodeStyle
+
+  // events
+  on?: EventMap
 
   // declarative focusing
-  focus?: boolean,
+  focus?: boolean
 
-  scope?: string,
+  scope?: string
 
   // hooks
   init?: hooks.InitHook
-  create?: hooks.CreateHook<T>,
-  update?: hooks.UpdateHook<T>,
-  insert?: hooks.InsertHook<T>,
-  remove?: hooks.RemoveHook<T>,
-  destroy?: hooks.DestroyHook<T>,
-  prepatch?: hooks.PrepatchHook<T>,
-  postpatch?: hooks.PostpatchHook<T>,
+  create?: hooks.CreateHook<T>
+  update?: hooks.UpdateHook<T>
+  insert?: hooks.InsertHook<T>
+  remove?: hooks.RemoveHook<T>
+  destroy?: hooks.DestroyHook<T>
+  prepatch?: hooks.PrepatchHook<T>
+  postpatch?: hooks.PostpatchHook<T>
 
   // TODO: maybe find a better name
   // this is a namespace for custom modules
-  module?: any,
+  module?: any
 }
 
 export interface VNodeStyle extends CSSProperties {
-  delayed?: CSSProperties,
-  remove?: CSSProperties,
+  delayed?: CSSProperties
+  remove?: CSSProperties
 }

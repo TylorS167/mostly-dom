@@ -18,6 +18,9 @@
     "no-parameter-properties": false,
     "unified-signatures": [false],
     "no-arguments": false,
-    "prefer-for-of": false
+    "prefer-for-of": false,
+    "trailing-comma": [
+      false
+    ]
   }
 }

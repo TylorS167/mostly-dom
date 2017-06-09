@@ -1,0 +1,11 @@
+export type VNodeEvent<T, Ev extends Event> = Ev & { target: T }
+
+export type EventHandler<T, Ev extends Event> = (event: VNodeEvent<T, Ev>) => any
+
+export type VNodeEvents<T extends Node, EventMap extends object> = {
+  readonly [K in keyof EventMap]: EventHandler<T, EventMap[K]>
+}
+
+export type ElementEvents<T extends Element> = VNodeEvents<T, ElementEventMap>
+
+export type HtmlElementEvents<T extends HTMLElement> = VNodeEvents<T, HTMLElementEventMap>
