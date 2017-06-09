@@ -21,6 +21,9 @@
     "prefer-for-of": false,
     "trailing-comma": [
       false
+    ],
+    "no-unused-variable": [
+      false
     ]
   }
 }
