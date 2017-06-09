@@ -6,7 +6,7 @@ export type EventHandler<T extends Element, Ev extends Event> =
   (event: VNodeEvent<T, Ev>, vNode: ElementVNode<T>) => any
 
 export type VNodeEvents<T extends Element, EventMap extends object> = {
-  readonly [K in keyof EventMap]: EventHandler<T, EventMap[K]>
+  readonly [K in keyof EventMap]?: EventHandler<T, EventMap[K]>
 }
 
 export type ElementEvents<T extends Element> = VNodeEvents<T, ElementEventMap>

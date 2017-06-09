@@ -22,22 +22,22 @@ function updateEventHandlers<T extends Element>(
   vNode: ElementVNode<T>
 )
 {
-  const { element: formerElement, props: { on: formerOn, listener: formerListener } } = formerVNode
-  const { element, props: { on } } = vNode
+  const {
+    element: formerElement,
+    props: { on: formerOn = {}, listener: formerListener = createListener(vNode) }
+  } = formerVNode
+
+  const { element, props: { on = {} } } = vNode
 
   if (formerOn === on) return
 
-  if (formerOn && formerListener) {
-    for (const name in formerOn)
-      if (!(on as any)[name]) formerElement.removeEventListener(name, formerListener, false)
-  }
+  const listener = vNode.props.listener = formerListener
 
-  if (on) {
-    const listener = (vNode.props.listener = formerListener || createListener(vNode))
+  for (const name in formerOn)
+    if (!(on as any)[name]) formerElement.removeEventListener(name, listener, false)
 
-    for (const name in on)
-      if (!(formerOn as any)[name]) element.addEventListener(name, listener, false)
-  }
+  for (const name in on)
+    if (!(formerOn as any)[name]) element.addEventListener(name, listener, false)
 }
 
 function createListener<T extends Element>(vNode: ElementVNode<T>): EventListener {
