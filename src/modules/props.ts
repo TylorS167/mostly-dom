@@ -5,6 +5,7 @@ import { emptyVNode } from './emptyVNode'
 const PROPERTIES_TO_SKIP: Array<string> =
   [
     'class',
+    'on',
     'focus',
     'style',
     'attrs',
