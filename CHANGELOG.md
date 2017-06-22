@@ -1,3 +1,18 @@
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/TylorS/mostly-dom/compare/v3.4.0...v3.5.0) (2017-06-22)
+
+
+### Bug Fixes
+
+* **hasCssSelector:** support className and id set using props ([1e26434](https://github.com/TylorS/mostly-dom/commit/1e26434))
+
+
+
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/TylorS/mostly-dom/compare/v3.3.0...v3.4.0) (2017-06-09)
+
+
+
 <a name="3.3.0"></a>
 # [3.3.0](https://github.com/TylorS/mostly-dom/compare/v3.2.0...v3.3.0) (2017-06-09)
 
