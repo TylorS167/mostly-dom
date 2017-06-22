@@ -541,4 +541,22 @@ describe('hasCssSelector', () => {
       })
     })
   })
+
+  describe(`given a css selector of .foo and a vNode with className foo set in props`, () => {
+    it(`returns true`, () => {
+      const cssSelector = `.foo`
+      const vNode = div({ className: `foo` })
+
+      assert.ok(hasCssSelector(cssSelector, vNode))
+    })
+  })
+
+  describe(`given a css selector of #foo and a vNode with id foo set in props`, () => {
+    it(`returns true`, () => {
+      const cssSelector = `#foo`
+      const vNode = div({ id: `foo` })
+
+      assert.ok(hasCssSelector(cssSelector, vNode))
+    })
+  })
 })
