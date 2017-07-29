@@ -18,7 +18,7 @@ export function elementToVNode<T extends Element>(element: T): ElementVNode<T> {
 }
 
 function nodeToVNode(node: Element | Text): VNode {
-  if (node instanceof Element)
+  if (isElement(node))
     return elementToVNode(node)
 
   const textVNode = MostlyVNode.createText(node.textContent as string)
@@ -26,4 +26,8 @@ function nodeToVNode(node: Element | Text): VNode {
   textVNode.element = node
 
   return textVNode
+}
+
+function isElement(node: Node): node is Element {
+  return node.nodeType === 1
 }

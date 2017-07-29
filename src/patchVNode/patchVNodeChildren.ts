@@ -1,8 +1,9 @@
-import { VNode, ElementVNode } from '../'
+import { ElementVNode, VNode } from '../'
+
 import { ModuleCallbacks } from '../modules/ModuleCallbacks'
-import { updateChildren } from '../updateChildren'
 import { addVNodes } from '../addVNodes'
 import { removeVNodes } from '../removeVNodes'
+import { updateChildren } from '../updateChildren'
 
 export function patchVNodeChildren(
   formerVNode: VNode,

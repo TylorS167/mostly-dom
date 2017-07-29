@@ -91,6 +91,7 @@ export function updateChildren(
 
   if (formerStartIndex > formerEndIndex) {
     const referenceNode = children[endIndex + 1] ? children[endIndex + 1].element : null
+
     addVNodes(
       parentElement, referenceNode,
       children, startIndex, endIndex,

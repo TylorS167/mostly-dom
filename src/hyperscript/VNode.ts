@@ -22,7 +22,7 @@ export class MostlyVNode<T extends Node> implements VNode<T> {
     public namespace: string | void,
   ) {}
 
-  public static create<T extends Node>(
+  public static create<N extends Node>(
     tagName: string | void,
     id: string | void,
     className: string | void,
@@ -31,7 +31,7 @@ export class MostlyVNode<T extends Node> implements VNode<T> {
     text: string | void,
   )
   {
-    return new MostlyVNode<T>(
+    return new MostlyVNode<N>(
       tagName, id, className, props, children, VOID, text, props.key, props.scope, VOID)
   }
 

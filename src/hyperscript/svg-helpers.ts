@@ -126,6 +126,7 @@ export interface SVGHelperFn extends SvgHyperscriptHelperFn<SVGElement> {
 }
 
 function createSVGHelper(): SVGHelperFn {
+  // tslint:disable:no-shadowed-variable
   const svg: any = hh('svg')
 
   svg.a = hh('a')

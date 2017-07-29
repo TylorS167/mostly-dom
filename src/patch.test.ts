@@ -12,21 +12,24 @@ function prop(name: string) {
   }
 }
 
+// tslint:disable:no-shadowed-variable
+
 function map(fn: (x: any) => any, list: Array<any> | ArrayLike<any>): Array<any> {
   const ret: Array<any> = []
 
-  for (let i = 0; i < list.length; ++i)
-    ret[i] = fn(list[i])
+  for (let i = 0; i < list.length; ++i) ret[i] = fn(list[i])
 
   return ret
 }
 
 function getChild(vnode: VNode, index: number): VNode {
-  return vnode
-    && vnode.children
-    && (vnode.children as Array<any>).length >= index + 1
-    && vnode.children[index] as VNode
-    || h('fuckedup', {}, [])
+  return (
+    (vnode &&
+      vnode.children &&
+      (vnode.children as Array<any>).length >= index + 1 &&
+      (vnode.children[index] as VNode)) ||
+    h('fuckedup', {}, [])
+  )
 }
 
 const inner = prop('innerHTML')
@@ -201,7 +204,6 @@ describe('mostly-dom', function() {
           assert.equal(elm.children[2].innerHTML, '4')
           assert.equal(elm.children[3].innerHTML, '5')
         })
-
       })
 
       describe('element reordering', function() {
@@ -271,7 +273,6 @@ describe('mostly-dom', function() {
           assert.equal(elm.children[2].innerHTML, '3')
           assert.equal(elm.children[3].innerHTML, '1')
         })
-
       })
 
       describe('combinations of additions, removals and reorderings', function() {
@@ -344,11 +345,13 @@ describe('mostly-dom', function() {
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
-        assert.equal(elm.children.length, 8)
+        assert.equal(elm.childNodes.length, 8)
+
+        assert.deepEqual(map(inner, elm.childNodes), [ '1', '2', '3', '4', '5', '6', '7', '8' ])
 
         elm = patch(vnode1, vnode2).element as HTMLElement
 
-        assert.deepEqual(map(inner, elm.children), [ '8', '7', '6', '5', '4', '3', '2', '1' ])
+        assert.deepEqual(map(inner, elm.childNodes), [ '8', '7', '6', '5', '4', '3', '2', '1' ])
       })
 
       it('something', function() {
@@ -364,7 +367,7 @@ describe('mostly-dom', function() {
         assert.deepEqual(map(inner, elm.children), [ '4', '3', '2', '1', '5', '0' ])
       })
 
-      it('handles random shuffles', function(done: Function) {
+      it('handles random shuffles', function() {
         let i: any
         const arr: Array<any> = []
         const opacities: Array<any> = []
@@ -375,40 +378,43 @@ describe('mostly-dom', function() {
           return span({ key: n, style: { opacity: o } }, n.toString())
         }
 
-        for (let n = 0; n < elms; ++n) { arr[n] = n }
-        for (let n = 0; n < samples; ++n) {
+        for (let n = 0; n < elms; ++n) {
+          arr[n] = n
+        }
 
-          const vnode1 = span(arr.map(function(num: number) {
-            return spanNumWithOpacity(num, '1')
-          })) as ElementVNode
+        for (let n = 0; n < samples; ++n) {
+          const vnode1 = span(
+            arr.map(function(num: number) {
+              return spanNumWithOpacity(num, '1')
+            })
+          ) as ElementVNode
 
           const shufArr: Array<any> = shuffle(arr.slice(0))
 
           let element = document.createElement('div')
 
-          // phantomjs throws trying to update styles
-          try {
-            element = patch(elementToVNode(element), vnode1).element as HTMLDivElement
-          } catch (e) {
-            done()
-          }
+          element = patch(elementToVNode(element), vnode1).element as HTMLDivElement
 
           for (i = 0; i < elms; ++i) {
             assert.equal(element.children[i].innerHTML, i.toString())
             opacities[i] = Math.random().toFixed(5).toString()
           }
 
-          const vnode2 = span(arr.map(function(num: number) {
-            return spanNumWithOpacity(shufArr[num], opacities[num])
-          }))
+          const vnode2 = span(
+            arr.map(function(num: number) {
+              return spanNumWithOpacity(shufArr[num], opacities[num])
+            })
+          )
 
           element = patch(vnode1, vnode2).element as HTMLDivElement
+
           for (i = 0; i < elms; ++i) {
             assert.equal(element.children[i].innerHTML, shufArr[i].toString())
             assert.equal(
-              opacities[i].indexOf((element.children[i] as HTMLElement).style.opacity), 0)
+              opacities[i].indexOf((element.children[i] as HTMLElement).style.opacity),
+              0
+            )
           }
-          done()
         }
       })
     })
@@ -463,7 +469,11 @@ describe('mostly-dom', function() {
 
         elm = patch(vnode1, vnode2).element as HTMLElement
 
-        assert.deepEqual(map(inner, elm.children), [ 'Hello', 'World' ])
+        const { childNodes } = elm
+        const firstChild = childNodes[0]
+        const secondChild = childNodes[1]
+
+        assert.deepEqual([ firstChild.textContent, secondChild.textContent ], [ 'Hello', 'World' ])
       })
 
       it('prepends element of different tag type', function() {
@@ -481,19 +491,27 @@ describe('mostly-dom', function() {
       })
 
       it('removes elements', function() {
-        const vnode1 = div([
-          span('One'), span('Two'), span('Three'),
-        ]) as ElementVNode
+        const vnode1 = div([ span('One'), span('Two'), span('Three') ]) as ElementVNode
 
         const vnode2 = div([ span('One'), span('Three') ])
 
         elm = patch(vnode0, vnode1).element as HTMLElement
 
-        assert.deepEqual(map(inner, elm.children), [ 'One', 'Two', 'Three' ])
+        const contents: Array<string> = []
+
+        for (let i = 0; i < elm.childNodes.length; ++i)
+          contents[i] = elm.childNodes[i].textContent as string
+
+        assert.deepEqual(contents, [ 'One', 'Two', 'Three' ])
 
         elm = patch(vnode1, vnode2).element as HTMLElement
 
-        assert.deepEqual(map(inner, elm.children), [ 'One', 'Three' ])
+        const secondContents: Array<string> = []
+
+        for (let i = 0; i < elm.childNodes.length; ++i)
+          secondContents[i] = elm.childNodes[i].textContent as string
+
+        assert.deepEqual(secondContents, [ 'One', 'Three' ])
       })
 
       it('removes a single text node', function() {
@@ -537,8 +555,7 @@ describe('mostly-dom', function() {
       })
 
       it('reorders elements', function() {
-        const vnode1 =
-          div([ span('One'), div('Two'), b('Three') ]) as ElementVNode
+        const vnode1 = div([ span('One'), div('Two'), b('Three') ]) as ElementVNode
         const vnode2 = div([ b('Three'), span('One'), div('Two') ])
         elm = patch(vnode0, vnode1).element as HTMLElement
         assert.deepEqual(map(inner, elm.children), [ 'One', 'Two', 'Three' ])
@@ -555,7 +572,6 @@ describe('mostly-dom', function() {
         const result: Array<any> = []
 
         function cb(vnode: VNode) {
-          assert(vnode.element instanceof Element)
           assert.equal((vnode.element as HTMLSpanElement).children.length, 2)
           assert.strictEqual(vnode && vnode.element && vnode.element.parentNode, null)
           result.push(vnode)
@@ -563,11 +579,8 @@ describe('mostly-dom', function() {
 
         const vnode1 = div([
           span('First sibling'),
-          div({ create: cb }, [
-            span('Child 1'),
-            span('Child 2'),
-          ]),
-          span('Can\'t touch me'),
+          div({ create: cb }, [ span('Child 1'), span('Child 2') ]),
+          span("Can't touch me"),
         ])
 
         patch(vnode0, vnode1)
@@ -582,16 +595,15 @@ describe('mostly-dom', function() {
           assert(vnode.element instanceof Element)
           assert.equal((vnode.element as HTMLSpanElement).children.length, 2)
           assert.equal(
-            ((vnode.element as HTMLSpanElement).parentNode as HTMLDivElement).children.length, 3)
+            ((vnode.element as HTMLSpanElement).parentNode as HTMLDivElement).children.length,
+            3
+          )
           result.push(vnode)
         }
 
         const vnode1 = div([
           span('First sibling'),
-          div({ insert: cb }, [
-            span('Child 1'),
-            span('Child 2'),
-          ]),
+          div({ insert: cb }, [ span('Child 1'), span('Child 2') ]),
           span('Can touch me'),
         ])
 
@@ -611,18 +623,12 @@ describe('mostly-dom', function() {
 
         const vnode1 = div([
           span('First sibling'),
-          div({  prepatch: cb }, [
-            span('Child 1'),
-            span('Child 2'),
-          ]),
+          div({ prepatch: cb }, [ span('Child 1'), span('Child 2') ]),
         ]) as ElementVNode
 
         const vnode2 = div([
           span('First sibling'),
-          div({  prepatch: cb }, [
-            span('Child 1'),
-            span('Child 2'),
-          ]),
+          div({ prepatch: cb }, [ span('Child 1'), span('Child 2') ]),
         ])
 
         patch(vnode0, vnode1)
@@ -644,18 +650,12 @@ describe('mostly-dom', function() {
 
         const vnode1 = div([
           span('First sibling'),
-          div({  prepatch: preCb, postpatch: postCb }, [
-            span('Child 1'),
-            span('Child 2'),
-          ]),
+          div({ prepatch: preCb, postpatch: postCb }, [ span('Child 1'), span('Child 2') ]),
         ]) as ElementVNode
 
         const vnode2 = div([
           span('First sibling'),
-          div({  prepatch: preCb, postpatch: postCb }, [
-            span('Child 1'),
-            span('Child 2'),
-          ]),
+          div({ prepatch: preCb, postpatch: postCb }, [ span('Child 1'), span('Child 2') ]),
         ])
 
         patch(vnode0, vnode1)
@@ -677,17 +677,17 @@ describe('mostly-dom', function() {
 
         const vnode1 = div([
           span('First sibling'),
-          div({  update: cb.bind(null, result1) }, [
+          div({ update: cb.bind(null, result1) }, [
             span('Child 1'),
-            span({  update: cb.bind(null, result2) }, 'Child 2'),
+            span({ update: cb.bind(null, result2) }, 'Child 2'),
           ]),
         ]) as ElementVNode
 
         const vnode2 = div([
           span('First sibling'),
-          div({  update: cb.bind(null, result1) }, [
+          div({ update: cb.bind(null, result1) }, [
             span('Child 1'),
-            span({  update: cb.bind(null, result2) }, 'Child 2'),
+            span({ update: cb.bind(null, result2) }, 'Child 2'),
           ]),
         ])
 
@@ -700,7 +700,7 @@ describe('mostly-dom', function() {
       it('calls `remove` listener', function() {
         const result: Array<any> = []
         function cb(vnode: ElementVNode, rm: () => any) {
-          const parent = vnode.element && vnode.element.parentNode as Element
+          const parent = vnode.element && (vnode.element.parentNode as Element)
           assert(vnode.element instanceof Element)
           assert.equal(vnode.element.children && vnode.element.children.length, 2)
           assert.equal(parent.children && parent.children.length, 2)
@@ -711,15 +711,10 @@ describe('mostly-dom', function() {
 
         const vnode1 = div([
           span('First sibling'),
-          div({  remove: cb }, [
-            span('Child 1'),
-            span('Child 2'),
-          ]),
+          div({ remove: cb }, [ span('Child 1'), span('Child 2') ]),
         ]) as ElementVNode
 
-        const vnode2 = div([
-          span('First sibling'),
-        ])
+        const vnode2 = div([ span('First sibling') ])
 
         patch(vnode0, vnode1)
         patch(vnode1, vnode2)
@@ -775,13 +770,14 @@ describe('mostly-dom', function() {
           }
         }
 
-        const _patch = init([
-          new RemoveModule1(),
-          new RemoveModule2(),
-        ])
+        const _patch = init([ new RemoveModule1(), new RemoveModule2() ])
 
         const vnode1 = div([
-          a({ remove(_: any, rm: Function) { rm3 = rm } }),
+          a({
+            remove(_: any, rm: Function) {
+              rm3 = rm
+            },
+          }),
         ]) as ElementVNode
 
         const vnode2 = div([])
@@ -818,15 +814,9 @@ describe('mostly-dom', function() {
           rm()
         }
 
-        const vnode1 = div({  remove: cb }, [
-          b('Child 1'),
-          i('Child 2'),
-        ]) as ElementVNode
+        const vnode1 = div({ remove: cb }, [ b('Child 1'), i('Child 2') ]) as ElementVNode
 
-        const vnode2 = span([
-          b('Child 1'),
-          i('Child 2'),
-        ])
+        const vnode2 = span([ b('Child 1'), i('Child 2') ])
 
         patch(vnode0, vnode1)
         patch(vnode1, vnode2)
@@ -849,9 +839,7 @@ describe('mostly-dom', function() {
           }
         }
 
-        const _patch = init([
-          new Module(),
-        ])
+        const _patch = init([ new Module() ])
 
         const vnode1 = div()
 
@@ -862,14 +850,13 @@ describe('mostly-dom', function() {
 
       it('invokes global `destroy` hook for all removed children', function() {
         const result: Array<VNode> = []
-        function cb(vnode: VNode) { result.push(vnode) }
+        function cb(vnode: VNode) {
+          result.push(vnode)
+        }
 
         const vnode1 = div([
           span('First sibling'),
-          div([
-            span({ destroy: cb }, 'Child 1'),
-            span('Child 2'),
-          ]),
+          div([ span({ destroy: cb }, 'Child 1'), span('Child 2') ]),
         ]) as ElementVNode
 
         const vnode2 = div()
@@ -880,9 +867,7 @@ describe('mostly-dom', function() {
       })
 
       it('handles text vnodes with `undefined` `data` property', function() {
-        const vnode1 = div([
-          ' ',
-        ]) as ElementVNode
+        const vnode1 = div([ ' ' ]) as ElementVNode
 
         const vnode2 = div([])
 
@@ -904,16 +889,11 @@ describe('mostly-dom', function() {
           }
         }
 
-        const _patch = init([
-          new Module(),
-        ])
+        const _patch = init([ new Module() ])
 
         const vnode1 = div([
           span('First sibling'),
-          div([
-            span('Child 1'),
-            span('Child 2'),
-          ]),
+          div([ span('Child 1'), span('Child 2') ]),
         ]) as ElementVNode
 
         const vnode2 = div()
@@ -939,15 +919,9 @@ describe('mostly-dom', function() {
           }
         }
 
-        const _patch = init([
-          new Module(),
-        ])
+        const _patch = init([ new Module() ])
 
-        const vnode1 = div([
-          span('First child'),
-          '',
-          span('Third child'),
-        ]) as ElementVNode
+        const vnode1 = div([ span('First child'), '', span('Third child') ]) as ElementVNode
 
         const vnode2 = div()
 
@@ -959,7 +933,6 @@ describe('mostly-dom', function() {
       })
 
       it('does not invoke `destroy` module hook for text nodes', function() {
-
         let created = 0
         let destroyed = 0
 
@@ -977,10 +950,7 @@ describe('mostly-dom', function() {
 
         const vnode1 = div([
           span('First sibling'),
-          div([
-            span('Child 1'),
-            span([ 'Text 1', 'Text 2' ]),
-          ]),
+          div([ span('Child 1'), span([ 'Text 1', 'Text 2' ]) ]),
         ]) as ElementVNode
 
         const vnode2 = div()
@@ -997,12 +967,11 @@ describe('mostly-dom', function() {
   describe('short circuiting', function() {
     it('does not update strictly equal vnodes', function() {
       const result: Array<any> = []
-      function cb(vnode: VNode) { result.push(vnode) }
+      function cb(vnode: VNode) {
+        result.push(vnode)
+      }
 
-      const vnode1 = div([
-        span({  update: cb }, 'Hello'),
-        span('there'),
-      ]) as ElementVNode
+      const vnode1 = div([ span({ update: cb }, 'Hello'), span('there') ]) as ElementVNode
 
       patch(vnode0, vnode1)
       patch(vnode1, vnode1)
@@ -1013,12 +982,11 @@ describe('mostly-dom', function() {
     it('does not update strictly equal children', function() {
       const result: Array<any> = []
 
-      function cb(vnode: VNode) { result.push(vnode) }
+      function cb(vnode: VNode) {
+        result.push(vnode)
+      }
 
-      const vnode1 = div([
-        span({  update: cb }, 'Hello'),
-        span('there'),
-      ]) as ElementVNode
+      const vnode1 = div([ span({ update: cb }, 'Hello'), span('there') ]) as ElementVNode
 
       const vnode2 = div()
 
@@ -1039,7 +1007,6 @@ export function shuffle(array: Array<any>): Array<any> {
 
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-
     // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex)
     currentIndex -= 1

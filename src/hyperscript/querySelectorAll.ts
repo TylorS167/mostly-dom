@@ -1,9 +1,10 @@
-import { curry2, CurriedFunction2 } from '@most/prelude'
+import { CurriedFunction2, curry2 } from '@most/prelude'
+
 import { VNode } from '../types'
 import { hasCssSelector } from './hasCssSelector'
 
 export const querySelectorAll: QuerySelectorAll = curry2(
-  function querySelectorAll(cssSelector: string, vNode: VNode): Array<VNode> {
+  function(cssSelector: string, vNode: VNode): Array<VNode> {
     const matches: Array<VNode> = []
     const scope = vNode.scope
 

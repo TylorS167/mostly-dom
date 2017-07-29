@@ -66,6 +66,7 @@ import {
 import { HyperscriptChildren, h } from './h'
 
 // tslint:disable:max-line-length
+// tslint:disable:no-shadowed-variable
 export interface HyperscriptHelperFn<
   T extends Element,
   Props extends VNodeProps<T> = VNodeProps<T>,

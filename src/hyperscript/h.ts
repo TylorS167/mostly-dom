@@ -4,7 +4,7 @@ import { VOID, isPrimitive, isString } from '../helpers'
 
 import { parseSelector } from './parseSelector'
 
-export const h: HyperscriptFn = function h(): VNode {
+export const h: HyperscriptFn = function(): VNode {
   const selector: string = arguments[0] // required
   const childrenOrText: Array<VNode | string> | string = arguments[2] // optional
 
