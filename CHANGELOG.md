@@ -1,3 +1,13 @@
+<a name="3.6.0"></a>
+# [3.6.0](https://github.com/TylorS/mostly-dom/compare/v3.5.0...v3.6.0) (2017-08-07)
+
+
+### Bug Fixes
+
+* **updateElement:** correctly remove previous properties ([06456fd](https://github.com/TylorS/mostly-dom/commit/06456fd))
+
+
+
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/TylorS/mostly-dom/compare/v3.4.0...v3.5.0) (2017-06-22)
 
