@@ -4,14 +4,15 @@ export function updateElement(formerVNode: VNode, vNode: VNode): ElementVNode {
   const node = vNode.element = formerVNode.element as Node
 
   if (isElement(node)) {
-    if (vNode.id)
-      node.id = vNode.id
+    const { id, className, scope } = vNode
 
-    if (vNode.className)
-      node.className = vNode.className
+    node.id = id || ''
+    node.className = className || ''
 
-    if (vNode.scope)
-      node.setAttribute(SCOPE_ATTRIBUTE, vNode.scope)
+    if (scope)
+      node.setAttribute(SCOPE_ATTRIBUTE, scope)
+    else
+      node.removeAttribute(SCOPE_ATTRIBUTE)
   }
 
   return vNode as ElementVNode
