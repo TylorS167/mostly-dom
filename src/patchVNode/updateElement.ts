@@ -4,10 +4,7 @@ export function updateElement(formerVNode: VNode, vNode: VNode): ElementVNode {
   const node = vNode.element = formerVNode.element as Node
 
   if (isElement(node)) {
-    const { id, className, scope } = vNode
-
-    node.id = id || ''
-    node.className = className || ''
+    const { scope } = vNode
 
     if (scope)
       node.setAttribute(SCOPE_ATTRIBUTE, scope)

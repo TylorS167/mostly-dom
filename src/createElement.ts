@@ -20,12 +20,6 @@ export function createElement(
       ? document.createElementNS(vNode.namespace, vNode.tagName)
       : document.createElement(vNode.tagName)
 
-    if (vNode.id)
-      element.id = vNode.id
-
-    if (vNode.className)
-      element.className = vNode.className
-
     if (vNode.scope)
       element.setAttribute(SCOPE_ATTRIBUTE, vNode.scope)
 

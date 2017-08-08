@@ -3,10 +3,6 @@ import { SvgTagNames, VNode, VNodeProps } from '../'
 
 export interface SvgHyperscriptHelperFn<T extends SVGElement> {
   (): VNode<T>
-  (classNameOrId: string, data: VNodeProps<T>, children: HyperscriptChildren): VNode<T>
-  (classNameOrId: string, data: VNodeProps<T>): VNode<T>
-  (classNameOrId: string, children: HyperscriptChildren): VNode<T>
-  (classNameOrId: string): VNode<T>
   (data: VNodeProps<T>): VNode<T>
   (data: VNodeProps<T>, children: HyperscriptChildren): VNode<T>
   (children: HyperscriptChildren): VNode<T>
@@ -14,24 +10,16 @@ export interface SvgHyperscriptHelperFn<T extends SVGElement> {
 
 function hh <T extends SVGElement>(tagName: SvgTagNames): SvgHyperscriptHelperFn<T> {
   return function(): VNode<T> {
-    const selector = arguments[0]
-    const data = arguments[1]
-    const children = arguments[2]
+    const data = arguments[0]
+    const children = arguments[1]
 
-    if (isSelector(selector))
-      if (Array.isArray(data))
-        return h<T>(tagName + selector, {}, data)
-      else if (typeof data === 'object')
-        return h<T>(tagName + selector, data, children)
-      else
-        return h<T>(tagName + selector, {})
+    if (Array.isArray(data))
+      return h<T>(tagName, {}, data)
 
-    if (Array.isArray(selector))
-      return h<T>(tagName, {}, selector)
-    else if (typeof selector === 'object')
-      return h<T>(tagName, selector, data)
-    else
-      return h<T>(tagName, {})
+    if (typeof data === 'object')
+      return h<T>(tagName, data, children)
+
+    return h<T>(tagName, {})
   }
 }
 

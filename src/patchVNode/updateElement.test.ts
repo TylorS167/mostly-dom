@@ -20,34 +20,6 @@ describe('updateElement', () => {
     assert.strictEqual(elementVNode.element.getAttribute(SCOPE_ATTRIBUTE), 'hello')
   })
 
-  it(`removes a previous className`, () => {
-    const className = 'foo'
-
-    const formerVNode = h('div', { className }, []) as ElementVNode
-    formerVNode.element = document.createElement('div')
-    formerVNode.element.className = className
-
-    const vNode = h('div', {}, [])
-
-    const { element } = updateElement(formerVNode, vNode)
-
-    assert.strictEqual(element.className, '')
-  })
-
-  it(`removes a previous id`, () => {
-    const id = 'foo'
-
-    const formerVNode = h('div', { id }, []) as ElementVNode
-    formerVNode.element = document.createElement('div')
-    formerVNode.element.id = id
-
-    const vNode = h('div', {}, [])
-
-    const { element } = updateElement(formerVNode, vNode)
-
-    assert.strictEqual(element.id, '')
-  })
-
   it(`removes previous scope`, () => {
     const scope = 'hi'
 

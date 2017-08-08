@@ -15,51 +15,6 @@ describe('h', () => {
     })
   })
 
-  describe('given a selector representing a tagName and className', () => {
-    it('returns a vNode with className of same value', () => {
-      const className = 'hello'
-
-      const vNode = h('div.' + className)
-
-      assert.strictEqual(vNode.className, className)
-    })
-  })
-
-  describe('given a selector representing a tagName and id', () => {
-    it('returns a vNode with id of same value', () => {
-      const id = 'hello'
-
-      const vNode = h('div#' + id)
-
-      assert.strictEqual(vNode.id, id)
-    })
-  })
-
-  describe('given a selector representing a tagName id and className', () => {
-    it('returns a vNode with id and className of correct value', () => {
-      const id = 'hello'
-      const className = 'other'
-
-      const vNode = h('div#' + id + '.' + className)
-
-      assert.strictEqual(vNode.id, id)
-      assert.strictEqual(vNode.className, className)
-    })
-  })
-
-  describe('given a class in props, selector is rendered properly', () => {
-    it('returns a vNode with id and className of correct value', () => {
-      const id = 'dynamic-class'
-      const className = 'base.class'
-      const classNames = { foo: true, bar: true, not: false, this: false }
-      const expectedClass = 'base class foo bar'
-      const vNode = h('div#' + id + '.' + className, { class: classNames })
-
-      assert.strictEqual(vNode.id, id)
-      assert.strictEqual(vNode.className, expectedClass)
-    })
-  })
-
   describe('given a props object as second parameter', () => {
     it('correctly sets vNode.props', () => {
       const props = {}

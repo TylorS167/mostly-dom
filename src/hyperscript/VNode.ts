@@ -11,8 +11,6 @@ export class MostlyVNode<T extends Node> implements VNode<T> {
 
   constructor(
     public tagName: string | void,
-    public id: string | void,
-    public className: string | void,
     public props: VNodeProps<Element>,
     public children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
     public element: T | void,
@@ -24,33 +22,29 @@ export class MostlyVNode<T extends Node> implements VNode<T> {
 
   public static create<N extends Node>(
     tagName: string | void,
-    id: string | void,
-    className: string | void,
     props: VNodeProps<Element>,
     children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
     text: string | void,
   )
   {
     return new MostlyVNode<N>(
-      tagName, id, className, props, children, VOID, text, props.key, props.scope, VOID)
+      tagName, props, children, VOID, text, props.key, props.scope, VOID)
   }
 
   public static createText(text: string): MostlyVNode<Text> {
     return new MostlyVNode<Text>(
-      VOID, VOID, VOID, defaultTextNodeData, VOID, VOID, text, VOID, VOID, VOID)
+      VOID, defaultTextNodeData, VOID, VOID, text, VOID, VOID, VOID)
   }
 
   public static createSvg(
     tagName: string | void,
-    id: string | void,
-    className: string | void,
     props: VNodeProps<SVGElement>,
     children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
     text: string | void,
   )
   {
     return new MostlyVNode<SVGElement>(
-      tagName, id, className, props, children, VOID, text, props.key, props.scope, SVG_NAMESPACE)
+      tagName, props, children, VOID, text, props.key, props.scope, SVG_NAMESPACE)
   }
 }
 
