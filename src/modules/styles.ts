@@ -1,8 +1,13 @@
+import { ElementVNode, Module } from '../'
+
 import { BaseModule } from './BaseModule'
-import { ElementVNode } from '../'
 import { emptyVNode } from './emptyVNode'
 
-export class StylesModule extends BaseModule<Element> {
+export function createStylesModule(): Module {
+  return new StylesModule()
+}
+
+class StylesModule extends BaseModule<Element> {
   public pre() {
     setRequestAnimationFrame()
   }

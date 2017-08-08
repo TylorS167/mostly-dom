@@ -4,7 +4,7 @@ import { BaseModule, ElementVNode, VNode, a, b, div, h, i, init, span } from './
 
 import { elementToVNode } from './elementToVNode'
 
-const patch = init([])
+const patch = init()
 
 function prop(name: string) {
   return function(obj: any): any {
@@ -27,9 +27,8 @@ function getChild(vnode: VNode, index: number): VNode {
     (vnode &&
       vnode.children &&
       (vnode.children as Array<any>).length >= index + 1 &&
-      (vnode.children[index] as VNode)) ||
-    h('fuckedup', {}, [])
-  )
+      (vnode.children[index] as VNode))
+  ) as VNode
 }
 
 const inner = prop('innerHTML')

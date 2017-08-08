@@ -1,6 +1,11 @@
+import { ElementVNode, Module } from '../'
+
 import { BaseModule } from './BaseModule'
-import { ElementVNode } from '../'
 import { emptyVNode } from './emptyVNode'
+
+export function createPropsModule(): Module {
+  return new PropsModule()
+}
 
 const PROPERTIES_TO_SKIP: Array<string> =
   [
@@ -22,7 +27,7 @@ const PROPERTIES_TO_SKIP: Array<string> =
     'postpatch',
   ]
 
-export class PropsModule extends BaseModule<Element> {
+class PropsModule extends BaseModule<Element> {
   public create(vNode: ElementVNode) {
     updateProps(emptyVNode as ElementVNode, vNode)
   }
