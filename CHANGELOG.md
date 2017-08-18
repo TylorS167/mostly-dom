@@ -1,3 +1,22 @@
+<a name="4.0.0"></a>
+# [4.0.0](https://github.com/TylorS/mostly-dom/compare/v3.6.0...v4.0.0) (2017-08-18)
+
+
+### Features
+
+* **hyperscript:** remove the ability to define className/id in selector ([f61c008](https://github.com/TylorS/mostly-dom/commit/f61c008))
+* **modules:** expose module factory functions ([f2cd4cb](https://github.com/TylorS/mostly-dom/commit/f2cd4cb))
+
+
+### BREAKING CHANGES
+
+* **hyperscript:**   h and various hyperscript-helpers no longer accept a className/id selector
+* **modules:**   No longer are the modules concatenated, but instead they can be overridden.
+  before init required an array of modules, but now it is optional. To continue
+  having the same behavior as before use init() with no arguments
+
+
+
 <a name="3.6.0"></a>
 # [3.6.0](https://github.com/TylorS/mostly-dom/compare/v3.5.0...v3.6.0) (2017-08-07)
 
