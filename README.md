@@ -57,10 +57,10 @@ One noticable difference from Snabbdom, is that the patch function is no longer 
 is designed to be used very well with Streams, such as [Most.js](https://github.com/cujojs/most), in particular
 in a `scan` or `reduce` operator.
 
-#### h(selector: string): VNode;
-#### h(selector: string, data: VNodeProps): VNode;
-#### h(selector: string, children: HyperscriptChildren): VNode;
-#### h(selector: string, data: VNodeProps, children: HyperscriptChildren): VNode;
+#### h(tagName: string): VNode;
+#### h(tagName: string, data: VNodeProps): VNode;
+#### h(tagName: string, children: HyperscriptChildren): VNode;
+#### h(tagName: string, data: VNodeProps, children: HyperscriptChildren): VNode;
 
 The recommended way to created a `VNode`. `h` accepts a CSS selector, containing no spaces, but most start with a tag name.
 Optionally it accepts both `VNodeProps` and `HyperscriptChildren` to further represent your view.
@@ -123,12 +123,12 @@ if it does not.
 ```typescript
 import { hasCssSelector, div } from 'mostly-dom';
 
-console.log(hasCssSelector('.foo', div('.foo'))) // true
-console.log(hasCssSelector('.bar', div('.foo'))) // false
-console.log(hasCssSelector('div', div('.foo'))) // true
-console.log(hasCssSelector('#foo', div('#foo'))) // true
-console.log(hasCssSelector('.foo .bar'), div('.foo.bar'))) // false
-console.log(hasCssSelector('.foo, .bar', div('.foo.bar'))) // true
+console.log(hasCssSelector('.foo', div({ className: 'foo' }))) // true
+console.log(hasCssSelector('.bar', div({ className: 'foo' }))) // false
+console.log(hasCssSelector('div', div({ className: 'foo' }))) // true
+console.log(hasCssSelector('#foo', div({ id: 'foo' }))) // true
+console.log(hasCssSelector('.foo .bar'), div({ className: 'foo bar' }))) // false
+console.log(hasCssSelector('.foo, .bar', div({ className: 'foo bar' }))) // true
 ```
 
 To see all of the use cases that one may have check our [tests](https://github.com/tylors/mostly-dom/tree/master/src/hyperscript/hasCssSelector.test.ts).
@@ -142,9 +142,9 @@ the given CSS selector matches, returning the first match. If no match can be fo
 ```typescript
 import { querySelector, div, h1 } from 'mostly-dom';
 
-const match = querySelector('.foo', div([ h1('.foo') ]));
+const match = querySelector('.foo', div([ h1({ className: 'foo' }) ]));
 
-assert.deepEqual(match, h1('.foo')); // true
+assert.deepEqual(match, h1({ className: 'foo' })); // true
 ```
 
 #### <a id="querySelectorAll"></a> `querySelectorAll(cssSelector: string, vNode: VNode): Array<VNode>`
@@ -155,9 +155,9 @@ the given CSS selector matches, returning an array of all the matching vNodes.
 ```typescript
 import { querySelectorAll, div, h1 } from 'mostly-dom';
 
-const matches = querySelectorAll('.foo', div([ h1('.foo') ]));
+const matches = querySelectorAll('.foo', div([ h1({ className: 'foo' }) ]));
 
-assert.deepEqual(matches, [ h1('.foo') ]); // true
+assert.deepEqual(matches, [ h1({ className: '.foo' }) ]); // true
 ```
 
 ## Types
