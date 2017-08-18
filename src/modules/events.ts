@@ -1,9 +1,13 @@
-import { ElementVNode, EventHandler } from '../'
+import { ElementVNode, EventHandler, Module } from '../'
 
 import { BaseModule } from './BaseModule'
 import { emptyVNode } from './emptyVNode'
 
-export class EventsModule extends BaseModule {
+export function createEventsModule(): Module {
+  return new EventsModule()
+}
+
+class EventsModule extends BaseModule {
   public create(vNode: ElementVNode) {
     updateEventHandlers(emptyVNode, vNode)
   }

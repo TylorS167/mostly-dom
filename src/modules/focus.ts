@@ -1,7 +1,12 @@
-import { BaseModule } from './BaseModule'
-import { ElementVNode } from '../'
+import { ElementVNode, Module } from '../'
 
-export class FocusModule extends BaseModule<Element> {
+import { BaseModule } from './BaseModule'
+
+export function createFocusModule(): Module {
+  return new FocusModule()
+}
+
+class FocusModule extends BaseModule<Element> {
   public insert(vNode: ElementVNode) {
     setFocus(vNode)
   }

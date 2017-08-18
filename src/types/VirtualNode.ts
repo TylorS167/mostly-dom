@@ -6,8 +6,6 @@ import { VNodeEvents } from './VNodeEventTypes'
 
 export interface VNode<T extends Node = Node, Props = VNodeProps<Element>> {
   tagName: string | void
-  id: string | void
-  className: string | void
   props: Props
   children: Array<VNode> | ReadonlyArray<VNode> | void
   text: string | void
@@ -33,8 +31,6 @@ export interface ElementVNode<T extends Element = Element, Props = VNodeProps<T>
 
 export interface TextVNode extends VNode<Text> {
   tagName: void
-  id: void
-  className: void
   children: void
   text: string
   key: void

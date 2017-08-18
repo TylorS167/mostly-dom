@@ -1,15 +1,11 @@
+import { HtmlTagNames, SvgTagNames, VNode, VNodeProps } from '../types'
 import { MostlyVNode, addSvgNamespace } from './VNode'
-import { VNode, VNodeProps } from '../types'
 import { VOID, isPrimitive, isString } from '../helpers'
 
-import { parseSelector } from './parseSelector'
-
 export const h: HyperscriptFn = function(): VNode {
-  const selector: string = arguments[0] // required
+  const tagName: string = arguments[0] // required
   const childrenOrText: Array<VNode | string> | string = arguments[2] // optional
 
-  // tslint:disable-next-line:prefer-const
-  let { tagName, id, className } = parseSelector(selector)
   let props: VNodeProps<Element> = {}
   let children: Array<VNode> | void
   let text: string | void
@@ -33,17 +29,11 @@ export const h: HyperscriptFn = function(): VNode {
       props = childrenOrTextOrProps
   }
 
-  if (props && props.class && typeof props.class === 'object') {
-    const ck = Object.keys(props.class)
-    const cp = props.class
-    className = ck.reduce((cn, k) => cp[k] ? `${cn} ${k}` : cn, className)
-  }
-
   const isSvg = tagName === 'svg'
 
   const vNode = isSvg
-    ? MostlyVNode.createSvg(tagName, id, className, props, VOID, text)
-    : MostlyVNode.create(tagName, id, className, props, VOID, text)
+    ? MostlyVNode.createSvg(tagName, props, VOID, text)
+    : MostlyVNode.create(tagName, props, VOID, text)
 
   if (Array.isArray(children))
     vNode.children = sanitizeChildren(children, vNode)
@@ -83,23 +73,25 @@ export type HyperscriptChildren =
   Array<string | VNode | null> |
   ReadonlyArray<string | VNode | null>
 
+export type ValidTagNames = HtmlTagNames | SvgTagNames
+
 export interface HyperscriptFn {
-  (sel: string): VNode
-  (sel: string, data: VNodeProps<any>): VNode
-  (sel: string, children: HyperscriptChildren): VNode
-  (sel: string, data: VNodeProps<any>, children: HyperscriptChildren): VNode
+  (tagName: ValidTagNames): VNode
+  (tagName: ValidTagNames, props: VNodeProps<any>): VNode
+  (tagName: ValidTagNames, children: HyperscriptChildren): VNode
+  (tagName: ValidTagNames, props: VNodeProps<any>, children: HyperscriptChildren): VNode
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
-    sel: string): VNode<T, Props>
+    tagName: ValidTagNames): VNode<T, Props>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
-    sel: string,
-    data: Props): VNode<T>
+    tagName: ValidTagNames,
+    props: Props): VNode<T>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
-    sel: string,
+    tagName: ValidTagNames,
     children: HyperscriptChildren): VNode<T, Props>
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
-    sel: string,
-    data: Props,
+    tagName: ValidTagNames,
+    props: Props,
     children: HyperscriptChildren): VNode<T, Props>
 }

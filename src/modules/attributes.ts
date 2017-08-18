@@ -1,6 +1,11 @@
+import { ElementVNode, Module } from '../'
+
 import { BaseModule } from './BaseModule'
-import { ElementVNode } from '../'
 import { emptyVNode } from './emptyVNode'
+
+export function createAttributesModule(): Module {
+  return new AttributesModule()
+}
 
 const NAMESPACE_URIS = {
   xlink: 'http://www.w3.org/1999/xlink',
@@ -23,7 +28,7 @@ for (let i = 0, count = booleanAttributes.length; i < count; i++)
   booleanAttributeDictionary[booleanAttributes[i]] = true
 
 // attributes module
-export class AttributesModule extends BaseModule<Element> {
+class AttributesModule extends BaseModule<Element> {
   public create(vNode: ElementVNode) {
     updateAttributes(emptyVNode, vNode)
   }

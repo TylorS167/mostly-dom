@@ -7,34 +7,32 @@ import {
   VNodeProps,
 } from './'
 
-import { AttributesModule } from './modules/attributes'
-import { EventsModule } from './modules/events'
-import { FocusModule } from './modules/focus'
 import { ModuleCallbacks } from './modules/ModuleCallbacks'
-import { PropsModule } from './modules/props'
-import { StylesModule } from './modules/styles'
+import { createAttributesModule } from './modules/attributes'
+import { createClassModule } from './modules/class'
 import { createElement } from './createElement'
+import { createEventsModule } from './modules/events'
+import { createFocusModule } from './modules/focus'
+import { createPropsModule } from './modules/props'
+import { createStylesModule } from './modules/styles'
 import { patchVNode } from './patchVNode'
 import { removeVNodes } from './removeVNodes'
 import { vNodesAreEqual } from './helpers'
 
-export function init<T extends Element = Element>(modules: Array<Module<Element>>) {
-  const attributesModule = new AttributesModule()
-  const propsModule = new PropsModule()
-  const stylesModule = new StylesModule()
-  const focusModule = new FocusModule()
-  const eventsModule = new EventsModule()
+const defaultModules =
+  [
+    createAttributesModule(),
+    createClassModule(),
+    createEventsModule(),
+    createFocusModule(),
+    createPropsModule(),
+    createStylesModule()
+  ]
 
-  const defaultModules =
-    [
-      attributesModule,
-      propsModule,
-      stylesModule,
-      focusModule,
-      eventsModule,
-    ]
-
-  const moduleCallbacks = new ModuleCallbacks(defaultModules.concat(modules))
+export function init<T extends Element = Element>(
+  modules: Array<Module<Element>> = defaultModules)
+{
+  const moduleCallbacks = new ModuleCallbacks(modules)
 
   return function patch(
     formerVNode: ElementVNode<T, VNodeProps<T>>,

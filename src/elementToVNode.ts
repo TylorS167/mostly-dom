@@ -5,9 +5,10 @@ import { VOID } from './helpers'
 export function elementToVNode<T extends Element>(element: T): ElementVNode<T> {
   return new MostlyVNode<T>(
     element.tagName && element.tagName.toLowerCase(),
-    element.id,
-    element.className,
-    {},
+    {
+      id: element.id,
+      className: element.className
+    },
     Array.prototype.slice.call(element.childNodes).map(nodeToVNode) || VOID,
     element,
     VOID,

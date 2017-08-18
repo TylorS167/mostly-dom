@@ -16,22 +16,6 @@ describe('createElement', () => {
     assert.strictEqual((element as Element).tagName, 'DIV')
   })
 
-  it('creates an element with an id', () => {
-    const vNode = h('div#id')
-
-    const element = createElement(vNode, moduleCallbacks, []).element as HTMLDivElement
-
-    assert.strictEqual(element.id, 'id')
-  })
-
-  it('creates an element with a className', () => {
-    const vNode = h('div.className')
-
-    const element = createElement(vNode, moduleCallbacks, []).element as HTMLDivElement
-
-    assert.strictEqual(element.className, 'className')
-  })
-
   it('creates an element with children', () => {
     const vNode = h('div', {}, [
       h('h1', 'Hello'),

@@ -14,11 +14,9 @@ export function matchBasicCssSelector(cssSelector: string, vNode: VNode) {
 
   const parsedClassNames = className && className.split(' ') || []
 
-  const vNodeClassNames = vNode.className && vNode.className.split(' ') || []
-
   const { props: { className: propsClassName = '', id: propsId } } = vNode
 
-  vNodeClassNames.push(...propsClassName.split(' '))
+  const vNodeClassNames = propsClassName.split(' ')
 
   for (let i = 0; i < parsedClassNames.length; ++i) {
     const parsedClassName = parsedClassNames[i]
@@ -27,5 +25,7 @@ export function matchBasicCssSelector(cssSelector: string, vNode: VNode) {
       return false
   }
 
-  return propsId ? id === propsId : id === vNode.id
+  if (id) return propsId === id
+
+  return true
 }
