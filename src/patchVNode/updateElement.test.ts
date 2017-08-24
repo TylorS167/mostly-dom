@@ -33,4 +33,30 @@ describe('updateElement', () => {
 
     assert.ok(!element.hasAttribute(SCOPE_ATTRIBUTE))
   })
+
+  it(`removes a previous className`, () => {
+    const className = 'test'
+    const formerVNode = h('div', { className }, []) as ElementVNode
+    formerVNode.element = document.createElement('div')
+    formerVNode.element.className = className
+
+    const vNode = h('div', {}, [])
+
+    const { element } = updateElement(formerVNode, vNode)
+
+    assert.ok(!element.className)
+  })
+
+  it(`removes a previous id`, () => {
+    const id = 'test'
+    const formerVNode = h('div', { id }, []) as ElementVNode
+    formerVNode.element = document.createElement('div')
+    formerVNode.element.id = id
+
+    const vNode = h('div', {}, [])
+
+    const { element } = updateElement(formerVNode, vNode)
+
+    assert.ok(!element.id)
+  })
 })
