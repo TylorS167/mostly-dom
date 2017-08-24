@@ -1,3 +1,13 @@
+<a name="4.1.0"></a>
+# [4.1.0](https://github.com/TylorS/mostly-dom/compare/v4.0.0...v4.1.0) (2017-08-24)
+
+
+### Bug Fixes
+
+* **updateElement:** remove previous className and id from element ([b13051c](https://github.com/TylorS/mostly-dom/commit/b13051c))
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/TylorS/mostly-dom/compare/v3.6.0...v4.0.0) (2017-08-18)
 
