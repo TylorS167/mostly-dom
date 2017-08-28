@@ -6,12 +6,6 @@ export function updateElement(formerVNode: VNode, vNode: VNode): ElementVNode {
   if (isElement(node)) {
     const { scope } = vNode
 
-    if (node.className && node.classList)
-      node.classList.remove(...node.className.split(' '))
-
-    if (node.id)
-      node.removeAttribute('id') && delete node.id
-
     if (scope)
       node.setAttribute(SCOPE_ATTRIBUTE, scope)
     else

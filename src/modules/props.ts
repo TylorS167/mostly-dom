@@ -7,25 +7,28 @@ export function createPropsModule(): Module {
   return new PropsModule()
 }
 
-const PROPERTIES_TO_SKIP: Array<string> =
-  [
-    'class',
-    'on',
-    'listener',
-    'focus',
-    'style',
-    'attrs',
-    'key',
-    'module',
-    'init',
-    'create',
-    'update',
-    'insert',
-    'remove',
-    'destroy',
-    'prepatch',
-    'postpatch',
-  ]
+const PROPERTIES_TO_SKIP: Record<string, boolean> = {
+  class: true,
+  on: true,
+  listener: true,
+  focus: true,
+  style: true,
+  attrs: true,
+  key: true,
+  module: true,
+  init: true,
+  create: true,
+  update: true,
+  insert: true,
+  remove: true,
+  destroy: true,
+  prepatch: true,
+  postpatch: true,
+}
+
+const ATTRIBUTE_TO_REMOVE: any = {
+  id: true,
+}
 
 class PropsModule extends BaseModule<Element> {
   public create(vNode: ElementVNode) {
@@ -48,10 +51,26 @@ function updateProps(formerVNode: ElementVNode, vNode: ElementVNode): void {
   props = props || {}
 
   for (const key in formerProps)
-    if (PROPERTIES_TO_SKIP.indexOf(key) === -1 && !props[key])
-      delete element[key]
+    if (!PROPERTIES_TO_SKIP[key] && !props[key]) {
+      if (key === 'className')
+        removePreviousClassName(formerProps[key], element)
 
-  for (const key in props)
-    if (PROPERTIES_TO_SKIP.indexOf(key) === -1)
-      element[key] = props[key]
+      if (ATTRIBUTE_TO_REMOVE[key])
+        element.removeAttribute(key)
+
+      delete element[key]
+    }
+
+  for (const key in props) if (!PROPERTIES_TO_SKIP[key]) element[key] = props[key]
+}
+
+function removePreviousClassName(className: string, element: Element) {
+  if (className && element.classList) {
+    element.classList.remove(...className.split(' '))
+
+    const classAttr = element.getAttribute('class')
+
+    if (classAttr === '')
+      element.removeAttribute('class')
+  }
 }

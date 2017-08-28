@@ -17,7 +17,7 @@ class ClassModule extends BaseModule {
   }
 }
 
-function updateClass(formerVNode: ElementVNode, vNode: VNode): void {
+function updateClass(formerVNode: ElementVNode, vNode: ElementVNode): void {
   const { props: { class: formerClass = {} }, element: formerElement } = formerVNode
   const { props: { class: klass = {} }, element } = vNode
 
@@ -29,5 +29,5 @@ function updateClass(formerVNode: ElementVNode, vNode: VNode): void {
 
   for (const name in klass)
     if (klass[name] !== formerClass[name])
-      (element as Element).classList.toggle(name)
+      element.classList.toggle(name)
 }
