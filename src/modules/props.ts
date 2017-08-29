@@ -50,27 +50,26 @@ function updateProps(formerVNode: ElementVNode, vNode: ElementVNode): void {
   formerProps = formerProps || {}
   props = props || {}
 
-  for (const key in formerProps)
-    if (!PROPERTIES_TO_SKIP[key] && !props[key]) {
-      if (key === 'className')
-        removePreviousClassName(formerProps[key], element)
+  for (const key in formerProps) {
+    const propertyIsMissing = !PROPERTIES_TO_SKIP[key] && !props[key]
+    const keyIsClassName = propertyIsMissing && key === 'className'
+    const shouldRemoveAttribute = propertyIsMissing && ATTRIBUTE_TO_REMOVE[key]
 
-      if (ATTRIBUTE_TO_REMOVE[key])
-        element.removeAttribute(key)
+    if (propertyIsMissing) delete element[key]
 
-      delete element[key]
-    }
+    if (keyIsClassName) removePreviousClassName(formerProps[key], element)
+
+    if (shouldRemoveAttribute) element.removeAttribute(key)
+  }
 
   for (const key in props) if (!PROPERTIES_TO_SKIP[key]) element[key] = props[key]
 }
 
 function removePreviousClassName(className: string, element: Element) {
-  if (className && element.classList) {
-    element.classList.remove(...className.split(' '))
+  const shouldRemoveClassName = className && element.classList
+  const shouldRemoveClassAttribute = shouldRemoveClassName && element.getAttribute('class') === ''
 
-    const classAttr = element.getAttribute('class')
+  if (shouldRemoveClassName) element.classList.remove(...className.split(' '))
 
-    if (classAttr === '')
-      element.removeAttribute('class')
-  }
+  if (shouldRemoveClassAttribute) element.removeAttribute('class')
 }
