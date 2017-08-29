@@ -1,26 +1,30 @@
+import { ElementVNode, Module } from '../'
+
 import { BaseModule } from './BaseModule'
-import { ElementVNode } from '../'
 import { emptyVNode } from './emptyVNode'
 
-const PROPERTIES_TO_SKIP: Array<string> =
-  [
-    'class',
-    'on',
-    'listener',
-    'focus',
-    'style',
-    'attrs',
-    'key',
-    'module',
-    'init',
-    'create',
-    'update',
-    'insert',
-    'remove',
-    'destroy',
-    'prepatch',
-    'postpatch',
-  ]
+const PROPERTIES_TO_SKIP: Record<string, boolean> = {
+  class: true,
+  on: true,
+  listener: true,
+  focus: true,
+  style: true,
+  attrs: true,
+  key: true,
+  module: true,
+  init: true,
+  create: true,
+  update: true,
+  insert: true,
+  remove: true,
+  destroy: true,
+  prepatch: true,
+  postpatch: true,
+}
+
+const ATTRIBUTE_TO_REMOVE: any = {
+  id: true,
+}
 
 export class PropsModule extends BaseModule<Element> {
   public create(vNode: ElementVNode) {
@@ -42,11 +46,26 @@ function updateProps(formerVNode: ElementVNode, vNode: ElementVNode): void {
   formerProps = formerProps || {}
   props = props || {}
 
-  for (const key in formerProps)
-    if (PROPERTIES_TO_SKIP.indexOf(key) === -1 && !props[key])
-      delete element[key]
+  for (const key in formerProps) {
+    const propertyIsMissing = !PROPERTIES_TO_SKIP[key] && !props[key]
+    const keyIsClassName = propertyIsMissing && key === 'className'
+    const shouldRemoveAttribute = propertyIsMissing && ATTRIBUTE_TO_REMOVE[key]
 
-  for (const key in props)
-    if (PROPERTIES_TO_SKIP.indexOf(key) === -1)
-      element[key] = props[key]
+    if (propertyIsMissing) delete element[key]
+
+    if (keyIsClassName) removePreviousClassName(formerProps[key], element)
+
+    if (shouldRemoveAttribute) element.removeAttribute(key)
+  }
+
+  for (const key in props) if (!PROPERTIES_TO_SKIP[key]) element[key] = props[key]
+}
+
+function removePreviousClassName(className: string, element: Element) {
+  const shouldRemoveClassName = className && element.classList
+  const shouldRemoveClassAttribute = shouldRemoveClassName && element.getAttribute('class') === ''
+
+  if (shouldRemoveClassName) element.classList.remove(...className.split(' '))
+
+  if (shouldRemoveClassAttribute) element.removeAttribute('class')
 }

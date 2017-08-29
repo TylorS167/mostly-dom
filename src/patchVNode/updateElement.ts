@@ -6,8 +6,15 @@ export function updateElement(formerVNode: VNode, vNode: VNode): ElementVNode {
   if (isElement(node)) {
     const { id, className, scope } = vNode
 
-    node.id = id || ''
-    node.className = className || ''
+    if (id)
+      node.id = id
+    else
+      node.removeAttribute('id') && delete node.id
+
+    if (className)
+      trySetClassName(className, node)
+    else
+      tryRemoveClass(node)
 
     if (scope)
       node.setAttribute(SCOPE_ATTRIBUTE, scope)
@@ -16,6 +23,22 @@ export function updateElement(formerVNode: VNode, vNode: VNode): ElementVNode {
   }
 
   return vNode as ElementVNode
+}
+
+function trySetClassName(className: string, element: Element) {
+  try {
+    element.className = className
+  } catch (e) {}
+}
+
+function tryRemoveClass(element: Element) {
+  try {
+    if (element.className)
+      element.classList.remove(...element.className.split(' '))
+
+    if (!element.className)
+      element.removeAttribute('class')
+  } catch (e) {}
 }
 
 function isElement(node: Node): node is Element {
