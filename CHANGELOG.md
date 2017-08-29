@@ -1,3 +1,13 @@
+<a name="4.2.0"></a>
+# [4.2.0](https://github.com/TylorS/mostly-dom/compare/v4.1.0...v4.2.0) (2017-08-29)
+
+
+### Bug Fixes
+
+* **props:** fix props module ([f69be9c](https://github.com/TylorS/mostly-dom/commit/f69be9c))
+
+
+
 <a name="4.1.0"></a>
 # [4.1.0](https://github.com/TylorS/mostly-dom/compare/v4.0.0...v4.1.0) (2017-08-24)
 
