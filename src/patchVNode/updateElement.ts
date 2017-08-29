@@ -8,13 +8,9 @@ export function updateElement(formerVNode: VNode, vNode: VNode): ElementVNode {
 
     if (id)
       node.id = id
-    else
-      node.removeAttribute('id') && delete node.id
 
     if (className)
       trySetClassName(className, node)
-    else
-      tryRemoveClass(node)
 
     if (scope)
       node.setAttribute(SCOPE_ATTRIBUTE, scope)
