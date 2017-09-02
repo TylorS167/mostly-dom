@@ -1,3 +1,13 @@
+<a name="4.3.0"></a>
+# [4.3.0](https://github.com/TylorS/mostly-dom/compare/v4.2.0...v4.3.0) (2017-09-02)
+
+
+### Features
+
+* **HtmlProperties:** convert VNodeProperties from type alias to interface ([7b7ebdb](https://github.com/TylorS/mostly-dom/commit/7b7ebdb))
+
+
+
 <a name="4.2.0"></a>
 # [4.2.0](https://github.com/TylorS/mostly-dom/compare/v4.1.0...v4.2.0) (2017-08-29)
 
@@ -19,7 +29,7 @@
 
 
 <a name="4.0.0"></a>
-# [4.0.0](https://github.com/TylorS/mostly-dom/compare/v3.6.0...v4.0.0) (2017-08-18)
+# [4.0.0](https://github.com/TylorS/mostly-dom/compare/v3.6.2...v4.0.0) (2017-08-18)
 
 
 ### Features
@@ -37,8 +47,8 @@
 
 
 
-<a name="3.6.0"></a>
-# [3.6.0](https://github.com/TylorS/mostly-dom/compare/v3.5.0...v3.6.0) (2017-08-07)
+<a name="3.6.2"></a>
+## [3.6.2](https://github.com/TylorS/mostly-dom/compare/v3.6.0...v3.6.2) (2017-08-07)
 
 
 ### Bug Fixes
