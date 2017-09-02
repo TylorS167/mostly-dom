@@ -34,10 +34,10 @@ export interface HTMLElementProperties extends ElementProperties {
   title?: string
 }
 
-export type VNodeProperties<
+export interface VNodeProperties<
   T extends HTMLElement,
   EventMap extends VNodeEvents<Element, ElementEventMap> = HtmlElementEvents<T>
-> = HTMLElementProperties & {
+> extends HTMLElementProperties {
   // key for dom diffing
   key?: string | number
 
@@ -73,10 +73,8 @@ export type VNodeProperties<
   module?: any
 }
 
-export interface HTMLAnchorElementProperties extends VNodeProperties<
-  HTMLAnchorElement,
-  HtmlElementEvents<HTMLAnchorElement>
-> {
+export interface HTMLAnchorElementProperties
+  extends VNodeProperties<HTMLAnchorElement, HtmlElementEvents<HTMLAnchorElement>> {
   Methods?: string
   charset?: string
   coords?: string
@@ -100,10 +98,8 @@ export interface HTMLAnchorElementProperties extends VNodeProperties<
   urn?: string
 }
 
-export interface HTMLAppletElementProperties extends VNodeProperties<
-  HTMLAppletElement,
-  HtmlElementEvents<HTMLAppletElement>
-> {
+export interface HTMLAppletElementProperties
+  extends VNodeProperties<HTMLAppletElement, HtmlElementEvents<HTMLAppletElement>> {
   align?: string
   alt?: string
   altHtml?: string
@@ -124,10 +120,8 @@ export interface HTMLAppletElementProperties extends VNodeProperties<
   width?: number
 }
 
-export interface HTMLAreaElementProperties extends VNodeProperties<
-  HTMLAreaElement,
-  HtmlElementEvents<HTMLAreaElement>
-> {
+export interface HTMLAreaElementProperties
+  extends VNodeProperties<HTMLAreaElement, HtmlElementEvents<HTMLAreaElement>> {
   alt?: string
   coords?: string
   download?: string
@@ -145,38 +139,28 @@ export interface HTMLAreaElementProperties extends VNodeProperties<
   target?: string
 }
 
-export interface HTMLAudioElementProperties extends VNodeProperties<
-  HTMLAudioElement,
-  HtmlElementEvents<HTMLAudioElement>
-> {}
+export interface HTMLAudioElementProperties
+  extends VNodeProperties<HTMLAudioElement, HtmlElementEvents<HTMLAudioElement>> {}
 
-export interface HTMLBRElementProperties extends VNodeProperties<
-  HTMLBRElement,
-  HtmlElementEvents<HTMLBRElement>
-> {
+export interface HTMLBRElementProperties
+  extends VNodeProperties<HTMLBRElement, HtmlElementEvents<HTMLBRElement>> {
   clear?: string
 }
 
-export interface HTMLBaseElementProperties extends VNodeProperties<
-  HTMLBaseElement,
-  HtmlElementEvents<HTMLBaseElement>
-> {
+export interface HTMLBaseElementProperties
+  extends VNodeProperties<HTMLBaseElement, HtmlElementEvents<HTMLBaseElement>> {
   href?: string
   target?: string
 }
 
-export interface HTMLBaseFontElementProperties extends VNodeProperties<
-  HTMLBaseFontElement,
-  HtmlElementEvents<HTMLBaseFontElement>
-> {
+export interface HTMLBaseFontElementProperties
+  extends VNodeProperties<HTMLBaseFontElement, HtmlElementEvents<HTMLBaseFontElement>> {
   face?: string
   size?: number
 }
 
-export interface HTMLBodyElementProperties extends VNodeProperties<
-  HTMLBodyElement,
-  VNodeEvents<HTMLBodyElement, HTMLBodyElementEventMap>
-> {
+export interface HTMLBodyElementProperties
+  extends VNodeProperties<HTMLBodyElement, VNodeEvents<HTMLBodyElement, HTMLBodyElementEventMap>> {
   aLink?: any
   background?: string
   bgColor?: any
@@ -187,10 +171,8 @@ export interface HTMLBodyElementProperties extends VNodeProperties<
   vLink?: any
 }
 
-export interface HTMLButtonElementProperties extends VNodeProperties<
-  HTMLButtonElement,
-  HtmlElementEvents<HTMLButtonElement>
-> {
+export interface HTMLButtonElementProperties
+  extends VNodeProperties<HTMLButtonElement, HtmlElementEvents<HTMLButtonElement>> {
   autofocus?: boolean
   disabled?: boolean
   formAction?: string
@@ -204,32 +186,24 @@ export interface HTMLButtonElementProperties extends VNodeProperties<
   value?: string
 }
 
-export interface HTMLCanvasElementProperties extends VNodeProperties<
-  HTMLCanvasElement,
-  HtmlElementEvents<HTMLCanvasElement>
-> {
+export interface HTMLCanvasElementProperties
+  extends VNodeProperties<HTMLCanvasElement, HtmlElementEvents<HTMLCanvasElement>> {
   height?: number
   width?: number
 }
 
-export interface HTMLDListElementProperties extends VNodeProperties<
-  HTMLDListElement,
-  HtmlElementEvents<HTMLDListElement>
-> {
+export interface HTMLDListElementProperties
+  extends VNodeProperties<HTMLDListElement, HtmlElementEvents<HTMLDListElement>> {
   compact?: boolean
 }
 
-export interface HTMLDataElementProperties extends VNodeProperties<
-  HTMLDataElement,
-  HtmlElementEvents<HTMLDataElement>
-> {
+export interface HTMLDataElementProperties
+  extends VNodeProperties<HTMLDataElement, HtmlElementEvents<HTMLDataElement>> {
   value?: string
 }
 
-export interface HTMLDataListElementProperties extends VNodeProperties<
-  HTMLDataListElement,
-  HtmlElementEvents<HTMLDataListElement>
-> {
+export interface HTMLDataListElementProperties
+  extends VNodeProperties<HTMLDataListElement, HtmlElementEvents<HTMLDataListElement>> {
   options?: HTMLCollectionOf<HTMLOptionElement>
 }
 
@@ -276,10 +250,11 @@ export interface HTMLFormElementProperties extends VNodeProperties<HTMLFormEleme
   target?: string
 }
 
-export interface HTMLFrameElementProperties extends VNodeProperties<
-  HTMLFrameElement,
-  VNodeEvents<HTMLFrameElement, HTMLFrameElementEventMap>
-> {
+export interface HTMLFrameElementProperties
+  extends VNodeProperties<
+      HTMLFrameElement,
+      VNodeEvents<HTMLFrameElement, HTMLFrameElementEventMap>
+    > {
   border?: string
   borderColor?: any
   frameBorder?: string
@@ -295,10 +270,11 @@ export interface HTMLFrameElementProperties extends VNodeProperties<
   width?: string | number
 }
 
-export interface HTMLFrameSetElementProperties extends VNodeProperties<
-  HTMLFrameSetElement,
-  VNodeEvents<HTMLFrameSetElement, HTMLFrameSetElementEventMap>
-> {
+export interface HTMLFrameSetElementProperties
+  extends VNodeProperties<
+      HTMLFrameSetElement,
+      VNodeEvents<HTMLFrameSetElement, HTMLFrameSetElementEventMap>
+    > {
   border?: string
   borderColor?: string
   cols?: string
@@ -326,10 +302,11 @@ export interface HTMLHtmlElementProperties extends VNodeProperties<HTMLHtmlEleme
   version?: string
 }
 
-export interface HTMLIFrameElementProperties extends VNodeProperties<
-  HTMLIFrameElement,
-  VNodeEvents<HTMLIFrameElement, HTMLIFrameElementEventMap>
-> {
+export interface HTMLIFrameElementProperties
+  extends VNodeProperties<
+      HTMLIFrameElement,
+      VNodeEvents<HTMLIFrameElement, HTMLIFrameElementEventMap>
+    > {
   align?: string
   allowFullscreen?: boolean
   allowPaymentRequest?: boolean
@@ -448,10 +425,11 @@ export interface HTMLMapElementProperties extends VNodeProperties<HTMLMapElement
   name?: string
 }
 
-export interface HTMLMarqueeElementProperties extends VNodeProperties<
-  HTMLMarqueeElement,
-  VNodeEvents<HTMLMarqueeElement, HTMLMarqueeElementEventMap>
-> {
+export interface HTMLMarqueeElementProperties
+  extends VNodeProperties<
+      HTMLMarqueeElement,
+      VNodeEvents<HTMLMarqueeElement, HTMLMarqueeElementEventMap>
+    > {
   behavior?: string
   bgColor?: any
   direction?: string
@@ -465,10 +443,11 @@ export interface HTMLMarqueeElementProperties extends VNodeProperties<
   width?: string
 }
 
-export interface HTMLMediaElementProperties extends VNodeProperties<
-  HTMLMediaElement,
-  VNodeEvents<HTMLMediaElement, HTMLMediaElementEventMap>
-> {
+export interface HTMLMediaElementProperties
+  extends VNodeProperties<
+      HTMLMediaElement,
+      VNodeEvents<HTMLMediaElement, HTMLMediaElementEventMap>
+    > {
   autoplay?: boolean
   controls?: boolean
   crossOrigin?: string | null
@@ -642,9 +621,8 @@ export interface HTMLStyleElementProperties extends VNodeProperties<HTMLStyleEle
   type?: string
 }
 
-export interface HTMLTableCaptionElementProperties extends VNodeProperties<
-  HTMLTableCaptionElement
-> {
+export interface HTMLTableCaptionElementProperties
+  extends VNodeProperties<HTMLTableCaptionElement> {
   align?: string
   vAlign?: string
 }
@@ -669,9 +647,8 @@ export interface HTMLTableColElementProperties extends VNodeProperties<HTMLTable
   width?: any
 }
 
-export interface HTMLTableDataCellElementProperties extends VNodeProperties<
-  HTMLTableDataCellElement
-> {}
+export interface HTMLTableDataCellElementProperties
+  extends VNodeProperties<HTMLTableDataCellElement> {}
 
 export interface HTMLTableElementProperties extends VNodeProperties<HTMLTableElement> {
   align?: string
@@ -693,9 +670,8 @@ export interface HTMLTableElementProperties extends VNodeProperties<HTMLTableEle
   width?: string
 }
 
-export interface HTMLTableHeaderCellElementProperties extends VNodeProperties<
-  HTMLTableHeaderCellElement
-> {
+export interface HTMLTableHeaderCellElementProperties
+  extends VNodeProperties<HTMLTableHeaderCellElement> {
   scope?: string
 }
 
@@ -706,9 +682,8 @@ export interface HTMLTableRowElementProperties extends VNodeProperties<HTMLTable
   height?: any
 }
 
-export interface HTMLTableSectionElementProperties extends VNodeProperties<
-  HTMLTableSectionElement
-> {
+export interface HTMLTableSectionElementProperties
+  extends VNodeProperties<HTMLTableSectionElement> {
   align?: string
   rows?: HTMLCollectionOf<HTMLTableRowElement>
 }
