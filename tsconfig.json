@@ -9,6 +9,8 @@
       "es5",
       "es2015"
     ],
+    "jsx": "react",
+    "jsxFactory": "h",
     "noImplicitAny": true,
     "sourceMap": true,
     "noUnusedParameters": true,
@@ -19,7 +21,7 @@
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"
