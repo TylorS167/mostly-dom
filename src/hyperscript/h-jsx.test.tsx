@@ -5,31 +5,33 @@ import { HyperscriptChildren } from '../index'
 
 describe('h jsx support', () => {
   it('accepts a function', () => {
-    const myComponent = () => <div />
+    function MyComponent() {
+      return <div />
+    }
 
-    const vNode = <myComponent />
+    const vNode = <MyComponent />
     assert.strictEqual(vNode.tagName, 'div')
   })
 
   it('supports destructuration', () => {
-    const myComponent = ({ className }: { className: string }) => (
-      <div className={className} />
-    )
+    function MyComponent({ className }: { className: string }) {
+      return <div className={className} />
+    }
 
-    const vNode = <myComponent className='foo' />
+    const vNode = <MyComponent className='foo' />
     assert.strictEqual(vNode.tagName, 'div')
   })
 
   it('supports children', () => {
-    const myComponent = (_: any, children: HyperscriptChildren) => (
-      <div>{children}</div>
-    )
+    function MyComponent(_: any, children: HyperscriptChildren) {
+      return <div>{children}</div>
+    }
 
     const vNode = (
-      <myComponent>
+      <MyComponent>
         <div />
         <span />
-      </myComponent>
+      </MyComponent>
     )
 
     if (!vNode.children) throw new Error(`VNode should have children`)
