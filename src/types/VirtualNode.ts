@@ -73,10 +73,6 @@ export interface VNodeProps<
   destroy?: hooks.DestroyHook<T>
   prepatch?: hooks.PrepatchHook<T>
   postpatch?: hooks.PostpatchHook<T>
-
-  // TODO: maybe find a better name
-  // this is a namespace for custom modules
-  module?: any
 }
 
 export interface VNodeStyle extends CSSProperties {

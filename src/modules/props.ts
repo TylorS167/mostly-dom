@@ -7,7 +7,7 @@ export function createPropsModule(): Module {
   return new PropsModule()
 }
 
-const PROPERTIES_TO_SKIP: Record<string, boolean> = {
+export const PROPERTIES_TO_SKIP: Record<string, boolean> = {
   class: true,
   on: true,
   listener: true,
@@ -26,7 +26,7 @@ const PROPERTIES_TO_SKIP: Record<string, boolean> = {
   postpatch: true,
 }
 
-const ATTRIBUTE_TO_REMOVE: any = {
+export const ATTRIBUTE_TO_REMOVE: Record<string, boolean> = {
   id: true,
 }
 
