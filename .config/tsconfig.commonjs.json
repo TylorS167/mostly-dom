@@ -12,6 +12,8 @@
     "noImplicitAny": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strict": true,
     "sourceMap": true,
     "target": "es5",
     "module": "commonjs",

@@ -1,14 +1,12 @@
 import { ElementVNode, MostlyVNode, VNodeProps } from '../'
 
-import { VOID } from '../helpers'
-
 export const emptyVNode: ElementVNode<Element, VNodeProps<Element>> = new MostlyVNode(
-  VOID,
+  undefined,
   {},
-  VOID,
-  VOID,
-  VOID,
-  VOID,
-  VOID,
-  VOID,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined
 ) as ElementVNode<Element, VNodeProps<Element>>

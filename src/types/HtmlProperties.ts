@@ -4,6 +4,7 @@ import * as hooks from './hooks'
 import { HtmlElementEvents, VNodeEvents } from './VNodeEventTypes'
 
 import { VNodeStyle } from './VirtualNode'
+import { VNode } from '../index'
 
 export interface NodeProperties {
   nodeValue?: string | null
@@ -36,7 +37,7 @@ export interface HTMLElementProperties extends ElementProperties {
 
 export interface VNodeProperties<
   T extends HTMLElement,
-  EventMap extends VNodeEvents<Element, ElementEventMap> = HtmlElementEvents<T>
+  EventMap extends VNodeEvents<T, HTMLElementEventMap> = VNodeEvents<T, HTMLElementEventMap>
 > extends HTMLElementProperties {
   // key for dom diffing
   key?: string | number
@@ -52,6 +53,7 @@ export interface VNodeProperties<
 
   // events
   on?: EventMap
+  listener?: EventListener
 
   // declarative focusing
   focus?: boolean
@@ -67,10 +69,6 @@ export interface VNodeProperties<
   destroy?: hooks.DestroyHook<T>
   prepatch?: hooks.PrepatchHook<T>
   postpatch?: hooks.PostpatchHook<T>
-
-  // TODO: maybe find a better name
-  // this is a namespace for custom modules
-  module?: any
 }
 
 export interface HTMLAnchorElementProperties

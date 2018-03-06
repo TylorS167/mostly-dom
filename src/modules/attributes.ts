@@ -28,7 +28,7 @@ for (let i = 0, count = booleanAttributes.length; i < count; i++)
   booleanAttributeDictionary[booleanAttributes[i]] = true
 
 // attributes module
-class AttributesModule extends BaseModule<Element> {
+class AttributesModule extends BaseModule {
   public create(vNode: ElementVNode) {
     updateAttributes(emptyVNode, vNode)
   }

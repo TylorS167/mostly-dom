@@ -7,7 +7,7 @@ export function createStylesModule(): Module {
   return new StylesModule()
 }
 
-class StylesModule extends BaseModule<Element> {
+class StylesModule extends BaseModule {
   public pre() {
     setRequestAnimationFrame()
   }

@@ -1,50 +1,66 @@
 import { HtmlTagNames, SvgTagNames, VNode, VNodeProps } from '../types'
 import { MostlyVNode, addSvgNamespace } from './VNode'
-import { VOID, isPrimitive, isString } from '../helpers'
+import { isPrimitive, isString } from '../helpers'
 
 export const h: HyperscriptFn = function(): VNode {
-  const tagName: string = arguments[0] // required
-  const childrenOrText: Array<VNode | string> | string = arguments[2] // optional
+  const tagName: string | ComponentFn = arguments[0] // required
+  const childrenOrText: HyperscriptChildren = arguments[2] // optional
 
   let props: VNodeProps<Element> = {}
-  let children: Array<VNode> | void
-  let text: string | void
+  let children: ArrayLike<VNode> | undefined
+  let text: string | undefined
 
   if (childrenOrText) {
     props = arguments[1]
 
-    if (Array.isArray(childrenOrText))
-      children = childrenOrText as Array<VNode>
-    else if (isPrimitive(childrenOrText))
-      text = String(childrenOrText)
-
+    if (isArrayLike(childrenOrText)) children = flattenArrayLike(childrenOrText) as Array<VNode>
+    else if (isPrimitive(childrenOrText)) text = String(childrenOrText)
   } else if (arguments[1]) {
     const childrenOrTextOrProps = arguments[1]
 
-    if (Array.isArray(childrenOrTextOrProps))
-      children = childrenOrTextOrProps as Array<VNode>
-    else if (isPrimitive(childrenOrTextOrProps))
-      text = String(childrenOrTextOrProps)
-    else
-      props = childrenOrTextOrProps
+    if (isArrayLike(childrenOrTextOrProps))
+      children = flattenArrayLike(childrenOrTextOrProps) as Array<VNode>
+    else if (isPrimitive(childrenOrTextOrProps)) text = String(childrenOrTextOrProps)
+    else props = childrenOrTextOrProps
+  }
+
+  if (typeof tagName === 'function') {
+    return tagName(props, Array.isArray(children) ? children : text ? [ text ] : [])
   }
 
   const isSvg = tagName === 'svg'
 
   const vNode = isSvg
-    ? MostlyVNode.createSvg(tagName, props, VOID, text)
-    : MostlyVNode.create(tagName, props, VOID, text)
+    ? MostlyVNode.createSvg(tagName, props, undefined, text)
+    : MostlyVNode.create(tagName, props, undefined, text)
 
-  if (Array.isArray(children))
-    vNode.children = sanitizeChildren(children, vNode)
+  if (Array.isArray(children)) vNode.children = sanitizeChildren(children, vNode)
 
-  if (isSvg)
-    addSvgNamespace(vNode)
+  if (isSvg) addSvgNamespace(vNode)
 
   return vNode
 }
 
-function sanitizeChildren(childrenOrText: Array<string | VNode>, parent: VNode): Array<VNode> {
+function isArrayLike<T>(x: any): x is ArrayLike<T> {
+  const typeOf = typeof x
+
+  return x && typeof x.length === 'number' && typeOf !== 'function' && typeOf !== 'string'
+}
+
+function flattenArrayLike<A>(arrayLike: ArrayLike<A | ArrayLike<A>>, arr: Array<A> = []): Array<A> {
+  forEach(
+    (x: A | ArrayLike<A>) => (isArrayLike(x) ? flattenArrayLike(x, arr) : arr.push(x)),
+    arrayLike
+  )
+
+  return arr
+}
+
+function forEach<A>(fn: (value: A) => void, list: ArrayLike<A>): void {
+  for (let i = 0; i < list.length; ++i) fn(list[i])
+}
+
+function sanitizeChildren(childrenOrText: Array<VNode>, parent: VNode): Array<VNode> {
   childrenOrText = childrenOrText.filter(Boolean) // remove possible null values
   const childCount: number = childrenOrText.length
 
@@ -53,13 +69,10 @@ function sanitizeChildren(childrenOrText: Array<string | VNode>, parent: VNode):
   for (let i = 0; i < childCount; ++i) {
     const vNodeOrText = childrenOrText[i]
 
-    if (isString(vNodeOrText))
-      children[i] = MostlyVNode.createText(vNodeOrText)
-    else
-      children[i] = vNodeOrText
+    if (isString(vNodeOrText)) children[i] = MostlyVNode.createText(vNodeOrText)
+    else children[i] = vNodeOrText
 
-    if (parent.scope && !children[i].scope)
-      children[i].scope = parent.scope
+    if (parent.scope && !children[i].scope) children[i].scope = parent.scope
 
     children[i].parent = parent as VNode<Element>
   }
@@ -67,13 +80,18 @@ function sanitizeChildren(childrenOrText: Array<string | VNode>, parent: VNode):
   return children
 }
 
+export type VNodeChildren = string | number | null | VNode
 export type HyperscriptChildren =
-  string |
-  number |
-  Array<string | VNode | null> |
-  ReadonlyArray<string | VNode | null>
+  | VNodeChildren
+  | ArrayLike<VNodeChildren>
+  | ArrayLike<VNodeChildren | ArrayLike<VNodeChildren>>
+  | ArrayLike<ArrayLike<VNodeChildren>>
 
-export type ValidTagNames = HtmlTagNames | SvgTagNames
+export interface ComponentFn {
+  (props: VNodeProps, children: Array<string | null | VNode>): VNode
+}
+
+export type ValidTagNames = HtmlTagNames | SvgTagNames | ComponentFn
 
 export interface HyperscriptFn {
   (tagName: ValidTagNames): VNode
@@ -82,16 +100,20 @@ export interface HyperscriptFn {
   (tagName: ValidTagNames, props: VNodeProps<any>, children: HyperscriptChildren): VNode
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
-    tagName: ValidTagNames): VNode<T, Props>
+    tagName: ValidTagNames
+  ): VNode<T, Props>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     tagName: ValidTagNames,
-    props: Props): VNode<T>
+    props: Props
+  ): VNode<T>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     tagName: ValidTagNames,
-    children: HyperscriptChildren): VNode<T, Props>
+    children: HyperscriptChildren
+  ): VNode<T, Props>
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     tagName: ValidTagNames,
     props: Props,
-    children: HyperscriptChildren): VNode<T, Props>
+    children: HyperscriptChildren
+  ): VNode<T, Props>
 }

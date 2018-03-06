@@ -1,31 +1,34 @@
-import { CurriedFunction2, curry2 } from '@most/prelude'
-
 import { VNode } from '../types'
 import { hasCssSelector } from './hasCssSelector'
 
-export const querySelectorAll: QuerySelectorAll = curry2(
-  function(cssSelector: string, vNode: VNode): Array<VNode> {
-    const matches: Array<VNode> = []
-    const scope = vNode.scope
+export const querySelectorAll: QuerySelectorAll = function(cssSelector: string, vNode: VNode) {
+  if (!vNode) return (_vNode: VNode) => _querySelectorAll(cssSelector, vNode)
 
-    const children: Array<VNode> = [ vNode ]
+  return _querySelectorAll(cssSelector, vNode)
+} as QuerySelectorAll
 
-    while (children.length > 0) {
-      const child = children.shift() as VNode
+function _querySelectorAll(cssSelector: string, vNode: VNode): Array<VNode> {
+  const matches: Array<VNode> = []
+  const scope = vNode.scope
 
-      if (child.scope !== scope)
-        continue
+  const children: Array<VNode> = [ vNode ]
 
-      if (hasCssSelector(cssSelector, child))
-        matches.push(child)
+  while (children.length > 0) {
+    const child = children.shift() as VNode
 
-      if (!child.children) continue
+    if (child.scope !== scope) continue
 
-      children.push(...child.children)
-    }
+    if (hasCssSelector(cssSelector, child)) matches.push(child)
 
-    return matches
-  },
-)
+    if (!child.children) continue
 
-export interface QuerySelectorAll extends CurriedFunction2<string, VNode, Array<VNode>> {}
+    children.push(...child.children)
+  }
+
+  return matches
+}
+
+export interface QuerySelectorAll {
+  (cssSelector: string, vNode: VNode): Array<VNode>
+  (cssSelector: string): (vNode: VNode) => Array<VNode>
+}

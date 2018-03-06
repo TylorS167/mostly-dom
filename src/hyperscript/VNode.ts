@@ -1,50 +1,72 @@
-import { VNode, VNodeProps } from '../types'
-
-const VOID = void 0
+import { VNode, VNodeProps, VNodeEvents } from '../types'
 
 export const SVG_NAMESPACE = `http://www.w3.org/2000/svg`
 
 const defaultTextNodeData: VNodeProps<Element> = {}
 
 export class MostlyVNode<T extends Node> implements VNode<T> {
-  public parent: MostlyVNode<Element> | void = VOID
+  public parent: MostlyVNode<Element> | undefined = undefined
 
   constructor(
-    public tagName: string | void,
+    public tagName: string | undefined,
     public props: VNodeProps<Element>,
-    public children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
-    public element: T | void,
-    public text: string | void,
-    public key: string | number | void,
-    public scope: string | void,
-    public namespace: string | void,
+    public children: Array<VNode> | undefined,
+    public element: T | undefined,
+    public text: string | undefined,
+    public key: string | number | undefined,
+    public scope: string | undefined,
+    public namespace: string | undefined
   ) {}
 
   public static create<N extends Node>(
-    tagName: string | void,
+    tagName: string | undefined,
     props: VNodeProps<Element>,
-    children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
-    text: string | void,
+    children: Array<VNode> | undefined,
+    text: string | undefined
   )
   {
-    return new MostlyVNode<N>(
-      tagName, props, children, VOID, text, props.key, props.scope, VOID)
+    return new MostlyVNode(
+      tagName,
+      props,
+      children,
+      undefined,
+      text,
+      props.key,
+      props.scope,
+      undefined
+    )
   }
 
   public static createText(text: string): MostlyVNode<Text> {
     return new MostlyVNode<Text>(
-      VOID, defaultTextNodeData, VOID, VOID, text, VOID, VOID, VOID)
+      undefined,
+      defaultTextNodeData,
+      undefined,
+      undefined,
+      text,
+      undefined,
+      undefined,
+      undefined
+    )
   }
 
   public static createSvg(
-    tagName: string | void,
-    props: VNodeProps<SVGElement>,
-    children: Array<VNode<Node>> | ReadonlyArray<VNode<Node>> | void,
-    text: string | void,
+    tagName: string | undefined,
+    props: VNodeProps<SVGElement, VNodeEvents<SVGElement, SVGElementEventMap>>,
+    children: Array<VNode> | undefined,
+    text: string | undefined
   )
   {
     return new MostlyVNode<SVGElement>(
-      tagName, props, children, VOID, text, props.key, props.scope, SVG_NAMESPACE)
+      tagName,
+      props as any,
+      children,
+      undefined,
+      text,
+      props.key,
+      props.scope,
+      SVG_NAMESPACE
+    )
   }
 }
 
@@ -58,8 +80,7 @@ export function addSvgNamespace(vNode: MostlyVNode<Node>): void {
     for (let i = 0; i < childCount; ++i) {
       const child = children[i]
 
-      if (child.tagName !== 'foreignObject')
-        addSvgNamespace(child as MostlyVNode<Node>)
+      if (child.tagName !== 'foreignObject') addSvgNamespace(child as MostlyVNode<Node>)
     }
   }
 }

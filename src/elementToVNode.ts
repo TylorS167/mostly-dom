@@ -1,7 +1,5 @@
 import { ElementVNode, MostlyVNode, VNode } from './'
 
-import { VOID } from './helpers'
-
 export function elementToVNode<T extends Element>(element: T): ElementVNode<T> {
   return new MostlyVNode<T>(
     element.tagName && element.tagName.toLowerCase(),
@@ -9,12 +7,12 @@ export function elementToVNode<T extends Element>(element: T): ElementVNode<T> {
       id: element.id,
       className: element.className
     },
-    Array.prototype.slice.call(element.childNodes).map(nodeToVNode) || VOID,
+    Array.prototype.slice.call(element.childNodes).map(nodeToVNode) || undefined,
     element,
-    VOID,
-    VOID,
-    VOID,
-    VOID,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
   ) as ElementVNode<T>
 }
 
@@ -26,7 +24,7 @@ function nodeToVNode(node: Element | Text): VNode {
 
   textVNode.element = node
 
-  return textVNode
+  return textVNode as VNode
 }
 
 function isElement(node: Node): node is Element {
