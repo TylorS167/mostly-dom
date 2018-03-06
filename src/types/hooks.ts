@@ -8,7 +8,7 @@ export interface Module {
   update: UpdateHook<Element>
   remove: RemoveHook<Element>
   destroy: DestroyHook<Element>
-  prepatch: PrepatchHook<Node>
+  prepatch: PrepatchHook<Element>
   postpatch: PostpatchHook<Element>
 }
 
