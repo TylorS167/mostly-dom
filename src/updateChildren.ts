@@ -1,4 +1,4 @@
-import { ElementVNode } from '../'
+import { ElementVNode } from './types'
 import { ModuleCallbacks } from './modules/ModuleCallbacks'
 import { addVNodes } from './addVNodes'
 import { createElement } from './createElement'
