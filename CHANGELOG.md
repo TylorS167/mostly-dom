@@ -1,3 +1,24 @@
+<a name="5.0.0"></a>
+# [5.0.0](https://github.com/TylorS/mostly-dom/compare/v4.4.0...v5.0.0) (2018-03-06)
+
+
+### Bug Fixes
+
+* ensure importing from correct directory ([fe041df](https://github.com/TylorS/mostly-dom/commit/fe041df))
+* use Element instead of Node ([0e3aebd](https://github.com/TylorS/mostly-dom/commit/0e3aebd))
+* use undefined ([aeae37e](https://github.com/TylorS/mostly-dom/commit/aeae37e))
+
+
+### Features
+
+* allow extending props to skip and attributes to remove ([22d3c5b](https://github.com/TylorS/mostly-dom/commit/22d3c5b))
+* JSX support, target -> currentTarget, no default modules ([50aab85](https://github.com/TylorS/mostly-dom/commit/50aab85))
+* remove dependencies ([e505cb3](https://github.com/TylorS/mostly-dom/commit/e505cb3))
+* upgrade CSS types ([183e9d3](https://github.com/TylorS/mostly-dom/commit/183e9d3))
+* upgrade to typescript 2.7 + strict mode ([f2f5b09](https://github.com/TylorS/mostly-dom/commit/f2f5b09))
+
+
+
 <a name="4.4.0"></a>
 # [4.4.0](https://github.com/TylorS/mostly-dom/compare/v4.3.0...v4.4.0) (2018-03-06)
 
@@ -244,7 +265,7 @@
 ### Bug Fixes
 
 * **hyperscript:** fix typescript 2.1.5 compiler errors ([e85b786](https://github.com/TylorS/mostly-dom/commit/e85b786))
-* **patchVNode:** check element type before setting properties ([84ea0dc](https://github.com/TylorS/mostly-dom/commit/84ea0dc))
+* **patchVNode:** check element type before setting properties ([84ea0dc](https://github.com/TylorS/mostly-dom/commit/84ea0dc)), closes [motorcyclejs/motorcyclejs#27](https://github.com/motorcyclejs/motorcyclejs/issues/27)
 * **props:** add \\`class\\` to PROPERTIES_TO_SKIP ([3c5056c](https://github.com/TylorS/mostly-dom/commit/3c5056c))
 
 
