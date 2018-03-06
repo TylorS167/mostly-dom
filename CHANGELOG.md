@@ -1,3 +1,8 @@
+<a name="4.4.0"></a>
+# [4.4.0](https://github.com/TylorS/mostly-dom/compare/v4.3.0...v4.4.0) (2018-03-06)
+
+
+
 <a name="4.3.0"></a>
 # [4.3.0](https://github.com/TylorS/mostly-dom/compare/v4.2.0...v4.3.0) (2017-09-02)
 
