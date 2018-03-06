@@ -47,20 +47,17 @@ function isArrayLike<T>(x: any): x is ArrayLike<T> {
   return x && typeof x.length === 'number' && typeOf !== 'function' && typeOf !== 'string'
 }
 
-function flattenArrayLike<A>(arrayLike: ArrayLike<A | ArrayLike<A>>): Array<A> {
-  const arr = []
-
-  for (let i = 0; i < arrayLike.length; ++i) {
-    const x = arrayLike[i]
-
-    if (isArrayLike(x)) {
-      arr.push(...Array.from(x))
-    } else {
-      arr.push(x)
-    }
-  }
+function flattenArrayLike<A>(arrayLike: ArrayLike<A | ArrayLike<A>>, arr: Array<A> = []): Array<A> {
+  forEach(
+    (x: A | ArrayLike<A>) => (isArrayLike(x) ? flattenArrayLike(x, arr) : arr.push(x)),
+    arrayLike
+  )
 
   return arr
+}
+
+function forEach<A>(fn: (value: A) => void, list: ArrayLike<A>): void {
+  for (let i = 0; i < list.length; ++i) fn(list[i])
 }
 
 function sanitizeChildren(childrenOrText: Array<VNode>, parent: VNode): Array<VNode> {
