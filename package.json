@@ -51,7 +51,7 @@
     "release:major": "npm version major -m 'chore(package): v%s'",
     "release:minor": "npm version minor -m 'chore(package): v%s'",
     "test": "npm run test:lint && karma start --single-run",
-    "test:lint": "tslint --project tsconfig.json --type-check"
+    "test:lint": "tslint --project tsconfig.json"
   },
   "dependencies": {
     "@most/prelude": "^1.6.0"

@@ -4,29 +4,30 @@ import { VOID, isPrimitive, isString } from '../helpers'
 
 export const h: HyperscriptFn = function(): VNode {
   const tagName: string = arguments[0] // required
-  const childrenOrText: Array<VNode | string> | string = arguments[2] // optional
+  const childrenOrText: HyperscriptChildren = arguments[2] // optional
 
   let props: VNodeProps<Element> = {}
-  let children: Array<VNode> | void
+  let children: ArrayLike<VNode> | void
   let text: string | void
 
   if (childrenOrText) {
     props = arguments[1]
 
-    if (Array.isArray(childrenOrText))
-      children = childrenOrText as Array<VNode>
-    else if (isPrimitive(childrenOrText))
-      text = String(childrenOrText)
-
+    if (isArrayLike(childrenOrText)) children = flattenArrayLike(childrenOrText) as Array<VNode>
+    else if (isPrimitive(childrenOrText)) text = String(childrenOrText)
   } else if (arguments[1]) {
     const childrenOrTextOrProps = arguments[1]
 
-    if (Array.isArray(childrenOrTextOrProps))
-      children = childrenOrTextOrProps as Array<VNode>
-    else if (isPrimitive(childrenOrTextOrProps))
-      text = String(childrenOrTextOrProps)
-    else
-      props = childrenOrTextOrProps
+    if (isArrayLike(childrenOrTextOrProps))
+      children = flattenArrayLike(childrenOrTextOrProps) as Array<VNode>
+    else if (isPrimitive(childrenOrTextOrProps)) text = String(childrenOrTextOrProps)
+    else props = childrenOrTextOrProps
+  }
+
+  if (typeof tagName === 'function') {
+    const childrenArray = children ? flattenArrayLike(children) : text ? [ text ] : []
+
+    return tagName(props, childrenArray)
   }
 
   const isSvg = tagName === 'svg'
@@ -35,16 +36,36 @@ export const h: HyperscriptFn = function(): VNode {
     ? MostlyVNode.createSvg(tagName, props, VOID, text)
     : MostlyVNode.create(tagName, props, VOID, text)
 
-  if (Array.isArray(children))
-    vNode.children = sanitizeChildren(children, vNode)
+  if (Array.isArray(children)) vNode.children = sanitizeChildren(children, vNode)
 
-  if (isSvg)
-    addSvgNamespace(vNode)
+  if (isSvg) addSvgNamespace(vNode)
 
   return vNode
 }
 
-function sanitizeChildren(childrenOrText: Array<string | VNode>, parent: VNode): Array<VNode> {
+function isArrayLike<T>(x: any): x is ArrayLike<T> {
+  const typeOf = typeof x
+
+  return x && typeof x.length === 'number' && typeOf !== 'function' && typeOf !== 'string'
+}
+
+function flattenArrayLike<A>(arrayLike: ArrayLike<A | ArrayLike<A>>): ArrayLike<A> {
+  const arr = []
+
+  for (let i = 0; i < arrayLike.length; ++i) {
+    const x = arrayLike[i]
+
+    if (isArrayLike(x)) {
+      arr.push(...Array.from(x))
+    } else {
+      arr.push(x)
+    }
+  }
+
+  return arr
+}
+
+function sanitizeChildren(childrenOrText: Array<VNode>, parent: VNode): Array<VNode> {
   childrenOrText = childrenOrText.filter(Boolean) // remove possible null values
   const childCount: number = childrenOrText.length
 
@@ -53,13 +74,10 @@ function sanitizeChildren(childrenOrText: Array<string | VNode>, parent: VNode):
   for (let i = 0; i < childCount; ++i) {
     const vNodeOrText = childrenOrText[i]
 
-    if (isString(vNodeOrText))
-      children[i] = MostlyVNode.createText(vNodeOrText)
-    else
-      children[i] = vNodeOrText
+    if (isString(vNodeOrText)) children[i] = MostlyVNode.createText(vNodeOrText)
+    else children[i] = vNodeOrText
 
-    if (parent.scope && !children[i].scope)
-      children[i].scope = parent.scope
+    if (parent.scope && !children[i].scope) children[i].scope = parent.scope
 
     children[i].parent = parent as VNode<Element>
   }
@@ -67,13 +85,18 @@ function sanitizeChildren(childrenOrText: Array<string | VNode>, parent: VNode):
   return children
 }
 
+export type VNodeChildren = string | number | null | VNode
 export type HyperscriptChildren =
-  string |
-  number |
-  Array<string | VNode | null> |
-  ReadonlyArray<string | VNode | null>
+  | VNodeChildren
+  | ArrayLike<VNodeChildren>
+  | ArrayLike<VNodeChildren | ArrayLike<VNodeChildren>>
+  | ArrayLike<ArrayLike<VNodeChildren>>
 
-export type ValidTagNames = HtmlTagNames | SvgTagNames
+export interface ComponentFn {
+  (props: VNodeProps, children: Array<string | null | VNode>): VNode
+}
+
+export type ValidTagNames = HtmlTagNames | SvgTagNames | ComponentFn
 
 export interface HyperscriptFn {
   (tagName: ValidTagNames): VNode
@@ -82,16 +105,163 @@ export interface HyperscriptFn {
   (tagName: ValidTagNames, props: VNodeProps<any>, children: HyperscriptChildren): VNode
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
-    tagName: ValidTagNames): VNode<T, Props>
+    tagName: ValidTagNames
+  ): VNode<T, Props>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     tagName: ValidTagNames,
-    props: Props): VNode<T>
+    props: Props
+  ): VNode<T>
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     tagName: ValidTagNames,
-    children: HyperscriptChildren): VNode<T, Props>
+    children: HyperscriptChildren
+  ): VNode<T, Props>
 
   <T extends Node, Props extends VNodeProps<Element> = VNodeProps<Element>>(
     tagName: ValidTagNames,
     props: Props,
-    children: HyperscriptChildren): VNode<T, Props>
+    children: HyperscriptChildren
+  ): VNode<T, Props>
+}
+
+import {
+  HTMLAnchorElementProperties,
+  HTMLAppletElementProperties,
+  HTMLAreaElementProperties,
+  HTMLAudioElementProperties,
+  HTMLBRElementProperties,
+  HTMLBaseElementProperties,
+  HTMLBaseFontElementProperties,
+  HTMLBodyElementProperties,
+  HTMLButtonElementProperties,
+  HTMLCanvasElementProperties,
+  HTMLDListElementProperties,
+  HTMLDataElementProperties,
+  HTMLDataListElementProperties,
+  HTMLDirectoryElementProperties,
+  HTMLDivElementProperties,
+  HTMLEmbedElementProperties,
+  HTMLFieldSetElementProperties,
+  HTMLFontElementProperties,
+  HTMLFormElementProperties,
+  HTMLFrameElementProperties,
+  HTMLFrameSetElementProperties,
+  HTMLHRElementProperties,
+  HTMLHeadElementProperties,
+  HTMLHeadingElementProperties,
+  HTMLHtmlElementProperties,
+  HTMLIFrameElementProperties,
+  HTMLImageElementProperties,
+  HTMLInputElementProperties,
+  HTMLLIElementProperties,
+  HTMLLabelElementProperties,
+  HTMLLegendElementProperties,
+  HTMLLinkElementProperties,
+  HTMLMapElementProperties,
+  HTMLMarqueeElementProperties,
+  HTMLMenuElementProperties,
+  HTMLMetaElementProperties,
+  HTMLMeterElementProperties,
+  HTMLOListElementProperteis,
+  HTMLObjectElementProperties,
+  HTMLOptGroupElementProperties,
+  HTMLOptionElementProperties,
+  HTMLOutputElementProperties,
+  HTMLParagraphElementProperties,
+  HTMLParamElementProperties,
+  HTMLPictureElementProperties,
+  HTMLPreElementProperties,
+  HTMLProgressElementProperties,
+  HTMLQuoteElementProperties,
+  HTMLScriptElementProperties,
+  HTMLSelectElementProperties,
+  HTMLSourceElementProperties,
+  HTMLSpanElementProperties,
+  HTMLStyleElementProperties,
+  HTMLTableElementProperties,
+  HTMLTableRowElementProperties,
+  HTMLTemplateElementProperties,
+  HTMLTextAreaElementProperties,
+  HTMLTimeElementProperties,
+  HTMLTitleElementProperties,
+  HTMLTrackElementProperties,
+  HTMLUListElementProperties,
+  HTMLVideoElementProperties
+} from '../types/HtmlProperties'
+
+// tslint:disable:no-mixed-interface
+declare global {
+  namespace JSX {
+    interface Element extends VNode {}
+    interface IntrinsicElements {
+      [tag: string]: VNodeProps
+      a: HTMLAnchorElementProperties
+      applet: HTMLAppletElementProperties
+      area: HTMLAreaElementProperties
+      audio: HTMLAudioElementProperties
+      base: HTMLBaseElementProperties
+      basefont: HTMLBaseFontElementProperties
+      body: HTMLBodyElementProperties
+      br: HTMLBRElementProperties
+      button: HTMLButtonElementProperties
+      canvas: HTMLCanvasElementProperties
+      data: HTMLDataElementProperties
+      datalist: HTMLDataListElementProperties
+      dir: HTMLDirectoryElementProperties
+      div: HTMLDivElementProperties
+      dl: HTMLDListElementProperties
+      embed: HTMLEmbedElementProperties
+      fieldset: HTMLFieldSetElementProperties
+      font: HTMLFontElementProperties
+      form: HTMLFormElementProperties
+      frame: HTMLFrameElementProperties
+      frameset: HTMLFrameSetElementProperties
+      h1: HTMLHeadingElementProperties
+      h2: HTMLHeadingElementProperties
+      h3: HTMLHeadingElementProperties
+      h4: HTMLHeadingElementProperties
+      h5: HTMLHeadingElementProperties
+      h6: HTMLHeadingElementProperties
+      head: HTMLHeadElementProperties
+      hr: HTMLHRElementProperties
+      html: HTMLHtmlElementProperties
+      i: HTMLHtmlElementProperties
+      iframe: HTMLIFrameElementProperties
+      img: HTMLImageElementProperties
+      input: HTMLInputElementProperties
+      label: HTMLLabelElementProperties
+      legend: HTMLLegendElementProperties
+      li: HTMLLIElementProperties
+      link: HTMLLinkElementProperties
+      map: HTMLMapElementProperties
+      marquee: HTMLMarqueeElementProperties
+      menu: HTMLMenuElementProperties
+      meta: HTMLMetaElementProperties
+      meter: HTMLMeterElementProperties
+      object: HTMLObjectElementProperties
+      ol: HTMLOListElementProperteis
+      optgroup: HTMLOptGroupElementProperties
+      option: HTMLOptionElementProperties
+      output: HTMLOutputElementProperties
+      p: HTMLParagraphElementProperties
+      param: HTMLParamElementProperties
+      picture: HTMLPictureElementProperties
+      pre: HTMLPreElementProperties
+      progress: HTMLProgressElementProperties
+      q: HTMLQuoteElementProperties
+      script: HTMLScriptElementProperties
+      select: HTMLSelectElementProperties
+      source: HTMLSourceElementProperties
+      span: HTMLSpanElementProperties
+      style: HTMLStyleElementProperties
+      table: HTMLTableElementProperties
+      template: HTMLTemplateElementProperties
+      textarea: HTMLTextAreaElementProperties
+      time: HTMLTimeElementProperties
+      title: HTMLTitleElementProperties
+      tr: HTMLTableRowElementProperties
+      track: HTMLTrackElementProperties
+      ul: HTMLUListElementProperties
+      video: HTMLVideoElementProperties
+    }
+  }
 }

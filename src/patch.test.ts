@@ -3,6 +3,7 @@ import * as assert from 'assert'
 import { BaseModule, ElementVNode, VNode, a, b, div, h, i, init, span } from './'
 
 import { elementToVNode } from './elementToVNode'
+import { createPropsModule } from './modules/props'
 
 const patch = init()
 
@@ -47,6 +48,8 @@ describe('mostly-dom', function() {
       const vnode1 = a({ href: 'http://other/' }) as ElementVNode
       const vnode2 = a({ href: 'http://localhost/' })
 
+      const patch = init([ createPropsModule() ])
+
       patch(vnode0, vnode1)
 
       elm = patch(vnode1, vnode2).element as HTMLAnchorElement
@@ -56,6 +59,8 @@ describe('mostly-dom', function() {
     it('removes an elements props', function() {
       const vnode1 = a({ href: 'http://other/' }) as ElementVNode
       const vnode2 = a()
+
+      const patch = init([ createPropsModule() ])
 
       patch(vnode0, vnode1)
       patch(vnode1, vnode2)

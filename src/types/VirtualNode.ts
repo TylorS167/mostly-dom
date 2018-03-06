@@ -41,7 +41,7 @@ export interface TextVNode extends VNode<Text> {
 
 export interface VNodeProps<
   T extends Element = Element,
-  EventMap extends VNodeEvents<Element, ElementEventMap> = VNodeEvents<T, ElementEventMap>
+  EventMap extends VNodeEvents<T, ElementEventMap> = VNodeEvents<T, ElementEventMap>
 > extends ElementProperties {
   // key for dom diffing
   key?: string | number
