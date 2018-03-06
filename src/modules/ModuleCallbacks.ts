@@ -1,10 +1,10 @@
 import { ElementVNode, Module, VNode } from '../'
 
-export class ModuleCallbacks implements Module<Element> {
-  private _modules: Array<Module<Element>>
+export class ModuleCallbacks implements Module {
+  private _modules: Array<Module>
   private _moduleCount: number
 
-  constructor(modules: Array<Module<Element>>) {
+  constructor(modules: Array<Module>) {
     this._modules = modules
     this._moduleCount = modules.length
   }
@@ -61,7 +61,7 @@ export class ModuleCallbacks implements Module<Element> {
       modules[i].update(formerVNode, vNode)
   }
 
-  public remove(vNode: ElementVNode, removeElement: Function) {
+  public remove(vNode: ElementVNode, removeElement: () => void) {
     const modules = this._modules
     const moduleCount = this._moduleCount
 
@@ -77,7 +77,7 @@ export class ModuleCallbacks implements Module<Element> {
       modules[i].destroy(vNode)
   }
 
-  public prepatch(formerVNode: ElementVNode, vNode: VNode<Element>) {
+  public prepatch(formerVNode: VNode, vNode: VNode) {
     const modules = this._modules
     const moduleCount = this._moduleCount
 

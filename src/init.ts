@@ -6,13 +6,13 @@ import { patchVNode } from './patchVNode'
 import { removeVNodes } from './removeVNodes'
 import { vNodesAreEqual } from './helpers'
 
-export function init<T extends Element = Element>(modules: Array<Module<Element>> = []) {
+export function init(modules: Array<Module> = []) {
   const moduleCallbacks = new ModuleCallbacks(modules)
 
-  return function patch(
-    formerVNode: ElementVNode<T, VNodeProps<T>>,
-    vNode: VNode<T, VNodeProps<T>>
-  ): ElementVNode<T, VNodeProps<T>>
+  return function patch<
+    T extends Element,
+    Props extends VNodeProps<T, VNodeEvents<T, ElementEventMap>>
+  >(formerVNode: ElementVNode, vNode: VNode<T, Props>): ElementVNode<T>
   {
     const insertedVNodeQueue: Array<ElementVNode> = []
 
@@ -24,7 +24,7 @@ export function init<T extends Element = Element>(modules: Array<Module<Element>
       const element = formerVNode.element
       const parentNode = element.parentNode
 
-      vNode = createElement(vNode, moduleCallbacks, insertedVNodeQueue) as ElementVNode<T>
+      vNode = createElement(vNode, moduleCallbacks, insertedVNodeQueue) as VNode
 
       if (parentNode) {
         parentNode.insertBefore(vNode.element as Element, element.nextSibling)
@@ -37,6 +37,6 @@ export function init<T extends Element = Element>(modules: Array<Module<Element>
 
     moduleCallbacks.post(vNode as ElementVNode)
 
-    return vNode as ElementVNode<T>
+    return vNode as ElementVNode<T, Props>
   }
 }

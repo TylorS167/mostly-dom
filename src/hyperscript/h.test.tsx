@@ -17,7 +17,7 @@ describe('h jsx support', () => {
       return <div className={className} />
     }
 
-    const vNode = <MyComponent className="foo" />
+    const vNode = <MyComponent className='foo' />
     assert.strictEqual(vNode.tagName, 'div')
   })
 

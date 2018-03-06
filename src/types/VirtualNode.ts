@@ -3,40 +3,37 @@ import * as hooks from './hooks'
 import { CSSProperties } from './CSS'
 import { ElementProperties } from './HtmlProperties'
 import { VNodeEvents } from './VNodeEventTypes'
+import { HyperscriptChildren } from '../index'
 
-export interface VNode<T extends Node = Node, Props = VNodeProps<Element>> {
-  tagName: string | void
+export interface VNode<T extends Node = any, Props = any> {
+  tagName: string | undefined
   props: Props
-  children: Array<VNode> | ReadonlyArray<VNode> | void
-  text: string | void
-  key: string | number | void
-  element: T | void
-  namespace: string | void
-  scope: string | void
+  children: Array<VNode> | undefined
+  text: string | undefined
+  key: string | number | undefined
+  element: T | undefined
+  namespace: string | undefined
+  scope: string | undefined
 
-  parent: VNode<Element> | void
+  parent: VNode<Element> | undefined
 }
 
 // tslint:disable-next-line:max-line-length
-export interface ElementVNode<T extends Element = Element, Props = VNodeProps<T>> extends VNode<
-  T,
-  Props
-> {
+export interface ElementVNode<T extends Element = Element, Props = any> extends VNode<T, Props> {
   tagName: string
   element: T
   namespace: string
-  text: void
-  children: Array<ElementVNode> | ReadonlyArray<ElementVNode> | void
+  text: undefined
 }
 
 export interface TextVNode extends VNode<Text> {
-  tagName: void
-  children: void
+  tagName: undefined
+  children: undefined
   text: string
-  key: void
+  key: undefined
   element: Text
-  namespace: void
-  scope: void
+  namespace: undefined
+  scope: undefined
 }
 
 export interface VNodeProps<

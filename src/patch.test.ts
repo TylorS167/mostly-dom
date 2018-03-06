@@ -28,7 +28,7 @@ function getChild(vnode: VNode, index: number): VNode {
     (vnode &&
       vnode.children &&
       (vnode.children as Array<any>).length >= index + 1 &&
-      (vnode.children[index] as VNode))
+      ((vnode.children as Array<any>)[index] as VNode))
   ) as VNode
 }
 
@@ -703,7 +703,7 @@ describe('mostly-dom', function() {
 
       it('calls `remove` listener', function() {
         const result: Array<any> = []
-        function cb(vnode: ElementVNode, rm: () => any) {
+        function cb(vnode: ElementVNode, rm: Function) {
           const parent = vnode.element && (vnode.element.parentNode as Element)
           assert(vnode.element instanceof Element)
           assert.equal(vnode.element.children && vnode.element.children.length, 2)
@@ -754,7 +754,7 @@ describe('mostly-dom', function() {
         let rm2: any
         let rm3: any
 
-        class RemoveModule1 extends BaseModule<Element> {
+        class RemoveModule1 extends BaseModule {
           constructor() {
             super()
           }
@@ -764,7 +764,7 @@ describe('mostly-dom', function() {
           }
         }
 
-        class RemoveModule2 extends BaseModule<Element> {
+        class RemoveModule2 extends BaseModule {
           constructor() {
             super()
           }
@@ -833,7 +833,7 @@ describe('mostly-dom', function() {
       it('invokes `pre` and `post` hook', function() {
         const result: Array<any> = []
 
-        class Module extends BaseModule<Element> {
+        class Module extends BaseModule {
           public pre() {
             result.push('pre')
           }
@@ -883,7 +883,7 @@ describe('mostly-dom', function() {
         let created = 0
         let destroyed = 0
 
-        class Module extends BaseModule<Element> {
+        class Module extends BaseModule {
           public create() {
             created++
           }
@@ -913,7 +913,7 @@ describe('mostly-dom', function() {
         let created = 0
         let removed = 0
 
-        class Module extends BaseModule<Element> {
+        class Module extends BaseModule {
           public create() {
             created++
           }
@@ -942,7 +942,7 @@ describe('mostly-dom', function() {
 
         const _patch = init([
           // tslint:disable-next-line:max-classes-per-file
-          new class extends BaseModule<Element> {
+          new class extends BaseModule {
             public create() {
               created++
             }

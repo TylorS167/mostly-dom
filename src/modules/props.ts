@@ -30,7 +30,7 @@ export const ATTRIBUTE_TO_REMOVE: Record<string, boolean> = {
   id: true,
 }
 
-class PropsModule extends BaseModule<Element> {
+class PropsModule extends BaseModule {
   public create(vNode: ElementVNode) {
     updateProps(emptyVNode as ElementVNode, vNode)
   }

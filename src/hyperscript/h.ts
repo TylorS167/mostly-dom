@@ -3,12 +3,12 @@ import { MostlyVNode, addSvgNamespace } from './VNode'
 import { VOID, isPrimitive, isString } from '../helpers'
 
 export const h: HyperscriptFn = function(): VNode {
-  const tagName: string = arguments[0] // required
+  const tagName: string | ComponentFn = arguments[0] // required
   const childrenOrText: HyperscriptChildren = arguments[2] // optional
 
   let props: VNodeProps<Element> = {}
-  let children: ArrayLike<VNode> | void
-  let text: string | void
+  let children: ArrayLike<VNode> | undefined
+  let text: string | undefined
 
   if (childrenOrText) {
     props = arguments[1]
@@ -25,16 +25,14 @@ export const h: HyperscriptFn = function(): VNode {
   }
 
   if (typeof tagName === 'function') {
-    const childrenArray = children ? flattenArrayLike(children) : text ? [ text ] : []
-
-    return tagName(props, childrenArray)
+    return tagName(props, Array.isArray(children) ? children : text ? [ text ] : [])
   }
 
   const isSvg = tagName === 'svg'
 
   const vNode = isSvg
-    ? MostlyVNode.createSvg(tagName, props, VOID, text)
-    : MostlyVNode.create(tagName, props, VOID, text)
+    ? MostlyVNode.createSvg(tagName, props as any, VOID, text)
+    : MostlyVNode.create(tagName, props, undefined, text)
 
   if (Array.isArray(children)) vNode.children = sanitizeChildren(children, vNode)
 
@@ -49,7 +47,7 @@ function isArrayLike<T>(x: any): x is ArrayLike<T> {
   return x && typeof x.length === 'number' && typeOf !== 'function' && typeOf !== 'string'
 }
 
-function flattenArrayLike<A>(arrayLike: ArrayLike<A | ArrayLike<A>>): ArrayLike<A> {
+function flattenArrayLike<A>(arrayLike: ArrayLike<A | ArrayLike<A>>): Array<A> {
   const arr = []
 
   for (let i = 0; i < arrayLike.length; ++i) {
@@ -121,147 +119,4 @@ export interface HyperscriptFn {
     props: Props,
     children: HyperscriptChildren
   ): VNode<T, Props>
-}
-
-import {
-  HTMLAnchorElementProperties,
-  HTMLAppletElementProperties,
-  HTMLAreaElementProperties,
-  HTMLAudioElementProperties,
-  HTMLBRElementProperties,
-  HTMLBaseElementProperties,
-  HTMLBaseFontElementProperties,
-  HTMLBodyElementProperties,
-  HTMLButtonElementProperties,
-  HTMLCanvasElementProperties,
-  HTMLDListElementProperties,
-  HTMLDataElementProperties,
-  HTMLDataListElementProperties,
-  HTMLDirectoryElementProperties,
-  HTMLDivElementProperties,
-  HTMLEmbedElementProperties,
-  HTMLFieldSetElementProperties,
-  HTMLFontElementProperties,
-  HTMLFormElementProperties,
-  HTMLFrameElementProperties,
-  HTMLFrameSetElementProperties,
-  HTMLHRElementProperties,
-  HTMLHeadElementProperties,
-  HTMLHeadingElementProperties,
-  HTMLHtmlElementProperties,
-  HTMLIFrameElementProperties,
-  HTMLImageElementProperties,
-  HTMLInputElementProperties,
-  HTMLLIElementProperties,
-  HTMLLabelElementProperties,
-  HTMLLegendElementProperties,
-  HTMLLinkElementProperties,
-  HTMLMapElementProperties,
-  HTMLMarqueeElementProperties,
-  HTMLMenuElementProperties,
-  HTMLMetaElementProperties,
-  HTMLMeterElementProperties,
-  HTMLOListElementProperteis,
-  HTMLObjectElementProperties,
-  HTMLOptGroupElementProperties,
-  HTMLOptionElementProperties,
-  HTMLOutputElementProperties,
-  HTMLParagraphElementProperties,
-  HTMLParamElementProperties,
-  HTMLPictureElementProperties,
-  HTMLPreElementProperties,
-  HTMLProgressElementProperties,
-  HTMLQuoteElementProperties,
-  HTMLScriptElementProperties,
-  HTMLSelectElementProperties,
-  HTMLSourceElementProperties,
-  HTMLSpanElementProperties,
-  HTMLStyleElementProperties,
-  HTMLTableElementProperties,
-  HTMLTableRowElementProperties,
-  HTMLTemplateElementProperties,
-  HTMLTextAreaElementProperties,
-  HTMLTimeElementProperties,
-  HTMLTitleElementProperties,
-  HTMLTrackElementProperties,
-  HTMLUListElementProperties,
-  HTMLVideoElementProperties
-} from '../types/HtmlProperties'
-
-// tslint:disable:no-mixed-interface
-declare global {
-  namespace JSX {
-    interface Element extends VNode {}
-    interface IntrinsicElements {
-      [tag: string]: VNodeProps
-      a: HTMLAnchorElementProperties
-      applet: HTMLAppletElementProperties
-      area: HTMLAreaElementProperties
-      audio: HTMLAudioElementProperties
-      base: HTMLBaseElementProperties
-      basefont: HTMLBaseFontElementProperties
-      body: HTMLBodyElementProperties
-      br: HTMLBRElementProperties
-      button: HTMLButtonElementProperties
-      canvas: HTMLCanvasElementProperties
-      data: HTMLDataElementProperties
-      datalist: HTMLDataListElementProperties
-      dir: HTMLDirectoryElementProperties
-      div: HTMLDivElementProperties
-      dl: HTMLDListElementProperties
-      embed: HTMLEmbedElementProperties
-      fieldset: HTMLFieldSetElementProperties
-      font: HTMLFontElementProperties
-      form: HTMLFormElementProperties
-      frame: HTMLFrameElementProperties
-      frameset: HTMLFrameSetElementProperties
-      h1: HTMLHeadingElementProperties
-      h2: HTMLHeadingElementProperties
-      h3: HTMLHeadingElementProperties
-      h4: HTMLHeadingElementProperties
-      h5: HTMLHeadingElementProperties
-      h6: HTMLHeadingElementProperties
-      head: HTMLHeadElementProperties
-      hr: HTMLHRElementProperties
-      html: HTMLHtmlElementProperties
-      i: HTMLHtmlElementProperties
-      iframe: HTMLIFrameElementProperties
-      img: HTMLImageElementProperties
-      input: HTMLInputElementProperties
-      label: HTMLLabelElementProperties
-      legend: HTMLLegendElementProperties
-      li: HTMLLIElementProperties
-      link: HTMLLinkElementProperties
-      map: HTMLMapElementProperties
-      marquee: HTMLMarqueeElementProperties
-      menu: HTMLMenuElementProperties
-      meta: HTMLMetaElementProperties
-      meter: HTMLMeterElementProperties
-      object: HTMLObjectElementProperties
-      ol: HTMLOListElementProperteis
-      optgroup: HTMLOptGroupElementProperties
-      option: HTMLOptionElementProperties
-      output: HTMLOutputElementProperties
-      p: HTMLParagraphElementProperties
-      param: HTMLParamElementProperties
-      picture: HTMLPictureElementProperties
-      pre: HTMLPreElementProperties
-      progress: HTMLProgressElementProperties
-      q: HTMLQuoteElementProperties
-      script: HTMLScriptElementProperties
-      select: HTMLSelectElementProperties
-      source: HTMLSourceElementProperties
-      span: HTMLSpanElementProperties
-      style: HTMLStyleElementProperties
-      table: HTMLTableElementProperties
-      template: HTMLTemplateElementProperties
-      textarea: HTMLTextAreaElementProperties
-      time: HTMLTimeElementProperties
-      title: HTMLTitleElementProperties
-      tr: HTMLTableRowElementProperties
-      track: HTMLTrackElementProperties
-      ul: HTMLUListElementProperties
-      video: HTMLVideoElementProperties
-    }
-  }
 }

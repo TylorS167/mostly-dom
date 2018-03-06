@@ -1,4 +1,4 @@
-import { ElementEvents, HtmlTagNames, VNode, VNodeEvents, VNodeProps } from '../'
+import { ElementEvents, HtmlTagNames, VNode, VNodeEvents, VNodeProps, VNodeProperties } from '../'
 import {
   HTMLAnchorElementProperties,
   HTMLAppletElementProperties,
@@ -61,7 +61,7 @@ import {
   HTMLTitleElementProperties,
   HTMLTrackElementProperties,
   HTMLUListElementProperties,
-  HTMLVideoElementProperties,
+  HTMLVideoElementProperties
 } from '../types/HtmlProperties'
 import { HyperscriptChildren, h } from './h'
 
@@ -71,8 +71,7 @@ export interface HyperscriptHelperFn<
   T extends Element,
   Props extends VNodeProps<T> = VNodeProps<T>,
   Events extends ElementEvents<T> = ElementEvents<T>
->
-{
+> {
   (): VNode<T, Props>
   (data: Props): VNode<T, Props & VNodeProps<T>>
   (data: Props, children: HyperscriptChildren): VNode<T, Props>
@@ -80,7 +79,7 @@ export interface HyperscriptHelperFn<
 }
 // tslint:enable:max-line-length
 
-export function hh<T extends Element, Props extends VNodeProps<Element> = VNodeProps<T>>(
+export function hh<T extends HTMLElement, Props extends VNodeProps<T> = VNodeProps<T>>(
   tagName: HtmlTagNames
 ): HyperscriptHelperFn<T, Props>
 {
@@ -88,13 +87,11 @@ export function hh<T extends Element, Props extends VNodeProps<Element> = VNodeP
     const data = arguments[0]
     const children = arguments[1]
 
-    if (Array.isArray(data))
-      return h<T, Props>(tagName, {} as Props, data)
+    if (Array.isArray(data)) return h(tagName, {}, data) as any
 
-    if (typeof data === 'object')
-      return h<T, Props>(tagName, data, children)
+    if (typeof data === 'object') return h(tagName, data, children) as any
 
-    return h<T, Props>(tagName, data || {}) as VNode<T, Props>
+    return h(tagName, data || {}) as any
   }
 }
 
@@ -250,3 +247,81 @@ export const ul = hh<HTMLUListElement, HTMLUListElementProperties>('ul')
 export const video = hh<HTMLVideoElement, HTMLVideoElementProperties>('video')
 export const wbr = hh('wbr')
 export const xmp = hh('xmp')
+
+// tslint:disable:no-mixed-interface
+declare global {
+  namespace JSX {
+    interface Element extends VNode {}
+    interface IntrinsicElements {
+      a: HTMLAnchorElementProperties
+      applet: HTMLAppletElementProperties
+      area: HTMLAreaElementProperties
+      audio: HTMLAudioElementProperties
+      base: HTMLBaseElementProperties
+      basefont: HTMLBaseFontElementProperties
+      body: HTMLBodyElementProperties
+      br: HTMLBRElementProperties
+      button: HTMLButtonElementProperties
+      canvas: HTMLCanvasElementProperties
+      data: HTMLDataElementProperties
+      datalist: HTMLDataListElementProperties
+      dir: HTMLDirectoryElementProperties
+      div: HTMLDivElementProperties
+      dl: HTMLDListElementProperties
+      embed: HTMLEmbedElementProperties
+      fieldset: HTMLFieldSetElementProperties
+      font: HTMLFontElementProperties
+      form: HTMLFormElementProperties
+      frame: HTMLFrameElementProperties
+      frameset: HTMLFrameSetElementProperties
+      h1: HTMLHeadingElementProperties
+      h2: HTMLHeadingElementProperties
+      h3: HTMLHeadingElementProperties
+      h4: HTMLHeadingElementProperties
+      h5: HTMLHeadingElementProperties
+      h6: HTMLHeadingElementProperties
+      head: HTMLHeadElementProperties
+      hr: HTMLHRElementProperties
+      html: HTMLHtmlElementProperties
+      i: HTMLHtmlElementProperties
+      iframe: HTMLIFrameElementProperties
+      img: HTMLImageElementProperties
+      input: HTMLInputElementProperties
+      label: HTMLLabelElementProperties
+      legend: HTMLLegendElementProperties
+      li: HTMLLIElementProperties
+      link: HTMLLinkElementProperties
+      map: HTMLMapElementProperties
+      marquee: HTMLMarqueeElementProperties
+      menu: HTMLMenuElementProperties
+      meta: HTMLMetaElementProperties
+      meter: HTMLMeterElementProperties
+      object: HTMLObjectElementProperties
+      ol: HTMLOListElementProperteis
+      optgroup: HTMLOptGroupElementProperties
+      option: HTMLOptionElementProperties
+      output: HTMLOutputElementProperties
+      p: HTMLParagraphElementProperties
+      param: HTMLParamElementProperties
+      picture: HTMLPictureElementProperties
+      pre: HTMLPreElementProperties
+      progress: HTMLProgressElementProperties
+      q: HTMLQuoteElementProperties
+      script: HTMLScriptElementProperties
+      select: HTMLSelectElementProperties
+      source: HTMLSourceElementProperties
+      span: HTMLSpanElementProperties
+      style: HTMLStyleElementProperties
+      table: HTMLTableElementProperties
+      template: HTMLTemplateElementProperties
+      textarea: HTMLTextAreaElementProperties
+      time: HTMLTimeElementProperties
+      title: HTMLTitleElementProperties
+      tr: HTMLTableRowElementProperties
+      track: HTMLTrackElementProperties
+      ul: HTMLUListElementProperties
+      video: HTMLVideoElementProperties
+    }
+  }
+// tslint:disable-next-line:max-file-line-count
+}

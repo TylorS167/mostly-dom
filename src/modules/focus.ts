@@ -6,7 +6,7 @@ export function createFocusModule(): Module {
   return new FocusModule()
 }
 
-class FocusModule extends BaseModule<Element> {
+class FocusModule extends BaseModule {
   public insert(vNode: ElementVNode) {
     setFocus(vNode)
   }
