@@ -87,11 +87,11 @@ export function hh<T extends HTMLElement, Props extends VNodeProps<T> = VNodePro
     const data = arguments[0]
     const children = arguments[1]
 
-    if (Array.isArray(data)) return h(tagName, {}, data) as any
+    if (Array.isArray(data)) return h(tagName, {}, data)
 
-    if (typeof data === 'object') return h(tagName, data, children) as any
+    if (typeof data === 'object') return h(tagName, data, children)
 
-    return h(tagName, data || {}) as any
+    return h(tagName, data || {})
   }
 }
 

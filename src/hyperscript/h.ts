@@ -31,7 +31,7 @@ export const h: HyperscriptFn = function(): VNode {
   const isSvg = tagName === 'svg'
 
   const vNode = isSvg
-    ? MostlyVNode.createSvg(tagName, props as any, VOID, text)
+    ? MostlyVNode.createSvg(tagName, props, VOID, text)
     : MostlyVNode.create(tagName, props, undefined, text)
 
   if (Array.isArray(children)) vNode.children = sanitizeChildren(children, vNode)

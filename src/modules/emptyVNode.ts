@@ -11,4 +11,4 @@ export const emptyVNode: ElementVNode<Element, VNodeProps<Element>> = new Mostly
   VOID,
   VOID,
   VOID,
-) as any as ElementVNode<Element, VNodeProps<Element>>
+) as ElementVNode<Element, VNodeProps<Element>>

@@ -15,7 +15,7 @@ export function elementToVNode<T extends Element>(element: T): ElementVNode<T> {
     VOID,
     VOID,
     VOID,
-  ) as any as ElementVNode<T>
+  ) as ElementVNode<T>
 }
 
 function nodeToVNode(node: Element | Text): VNode {
