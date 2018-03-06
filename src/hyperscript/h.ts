@@ -1,6 +1,6 @@
 import { HtmlTagNames, SvgTagNames, VNode, VNodeProps } from '../types'
 import { MostlyVNode, addSvgNamespace } from './VNode'
-import { VOID, isPrimitive, isString } from '../helpers'
+import { isPrimitive, isString } from '../helpers'
 
 export const h: HyperscriptFn = function(): VNode {
   const tagName: string | ComponentFn = arguments[0] // required
@@ -31,7 +31,7 @@ export const h: HyperscriptFn = function(): VNode {
   const isSvg = tagName === 'svg'
 
   const vNode = isSvg
-    ? MostlyVNode.createSvg(tagName, props, VOID, text)
+    ? MostlyVNode.createSvg(tagName, props, undefined, text)
     : MostlyVNode.create(tagName, props, undefined, text)
 
   if (Array.isArray(children)) vNode.children = sanitizeChildren(children, vNode)

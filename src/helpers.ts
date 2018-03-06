@@ -1,7 +1,5 @@
 import { VNode } from './'
 
-export const VOID = void 0
-
 export function isString(x: any): x is string {
   return typeof x === 'string'
 }
