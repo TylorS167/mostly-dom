@@ -54,6 +54,7 @@ export interface VNodeProps<
 
   // events
   on?: EventMap
+  onCapture?: EventMap
   listener?: EventListener
 
   // declarative focusing
