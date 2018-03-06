@@ -1,10 +1,10 @@
 import { ElementVNode } from '../'
-import { ModuleCallbacks } from '../modules/ModuleCallbacks'
-import { addVNodes } from '../addVNodes'
-import { createElement } from '../createElement'
-import { patchVNode } from '../patchVNode'
-import { removeVNodes } from '../removeVNodes'
-import { vNodesAreEqual } from '../helpers'
+import { ModuleCallbacks } from './modules/ModuleCallbacks'
+import { addVNodes } from './addVNodes'
+import { createElement } from './createElement'
+import { patchVNode } from './patchVNode'
+import { removeVNodes } from './removeVNodes'
+import { vNodesAreEqual } from './helpers'
 
 export function updateChildren(
   parentElement: Element,
