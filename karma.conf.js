@@ -6,11 +6,11 @@ const options =
     ],
 
     files: [
-      { pattern: 'src/**/*.ts' },
+      { pattern: 'src/**/*.+(ts|tsx)' }
     ],
 
     preprocessors: {
-      '**/*.ts': 'karma-typescript',
+      '**/*.+(ts|tsx)': 'karma-typescript',
     },
 
     reporters: [
