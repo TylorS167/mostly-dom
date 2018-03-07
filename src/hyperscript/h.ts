@@ -4,14 +4,14 @@ import { isPrimitive, isString } from '../helpers'
 
 export const h: HyperscriptFn = function(): VNode {
   const tagName: string | ComponentFn = arguments[0] // required
-  const childrenOrText: HyperscriptChildren = arguments[2] // optional
+  const childrenOrText: HyperscriptChildren = slice(2, arguments) // optional
 
   let props: VNodeProps<Element> = {}
   let children: ArrayLike<VNode> | undefined
   let text: string | undefined
 
   if (childrenOrText) {
-    props = arguments[1]
+    props = arguments[1] || {}
 
     if (isArrayLike(childrenOrText)) children = flattenArrayLike(childrenOrText) as Array<VNode>
     else if (isPrimitive(childrenOrText)) text = String(childrenOrText)
@@ -21,11 +21,20 @@ export const h: HyperscriptFn = function(): VNode {
     if (isArrayLike(childrenOrTextOrProps))
       children = flattenArrayLike(childrenOrTextOrProps) as Array<VNode>
     else if (isPrimitive(childrenOrTextOrProps)) text = String(childrenOrTextOrProps)
-    else props = childrenOrTextOrProps
+    else props = childrenOrTextOrProps || {}
   }
 
   if (typeof tagName === 'function') {
-    return tagName(props, Array.isArray(children) ? children : text ? [ text ] : [])
+    const childVNodes = Array.isArray(children)
+      ? children
+      : text ? [ MostlyVNode.createText(text) ] : []
+    const computedVNode = tagName(props, childVNodes)
+
+    if (Array.isArray(computedVNode.children)) {
+      computedVNode.children = sanitizeChildren(computedVNode.children, computedVNode)
+    }
+
+    return computedVNode
   }
 
   const isSvg = tagName === 'svg'
@@ -39,6 +48,15 @@ export const h: HyperscriptFn = function(): VNode {
   if (isSvg) addSvgNamespace(vNode)
 
   return vNode
+}
+
+function slice<A>(from: number, arrLike: ArrayLike<A>): Array<A> | null {
+  const arr = [] as Array<A>
+  for (let i = from; i < arrLike.length; ++i) arr.push(arrLike[i])
+
+  if (arr.length === 0) return null
+
+  return arr
 }
 
 function isArrayLike<T>(x: any): x is ArrayLike<T> {
@@ -61,7 +79,7 @@ function forEach<A>(fn: (value: A) => void, list: ArrayLike<A>): void {
 }
 
 function sanitizeChildren(childrenOrText: Array<VNode>, parent: VNode): Array<VNode> {
-  childrenOrText = childrenOrText.filter(Boolean) // remove possible null values
+  childrenOrText = childrenOrText.filter((x) => x !== null) // remove possible null values
   const childCount: number = childrenOrText.length
 
   const children: Array<VNode> = Array(childCount)
@@ -69,12 +87,13 @@ function sanitizeChildren(childrenOrText: Array<VNode>, parent: VNode): Array<VN
   for (let i = 0; i < childCount; ++i) {
     const vNodeOrText = childrenOrText[i]
 
-    if (isString(vNodeOrText)) children[i] = MostlyVNode.createText(vNodeOrText)
+    if (isString(vNodeOrText) || typeof vNodeOrText === 'number')
+      children[i] = MostlyVNode.createText(String(vNodeOrText))
     else children[i] = vNodeOrText
 
     if (parent.scope && !children[i].scope) children[i].scope = parent.scope
 
-    children[i].parent = parent as VNode<Element>
+    children[i].parent = parent
   }
 
   return children
