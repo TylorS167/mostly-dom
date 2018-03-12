@@ -6,8 +6,8 @@ export const h: HyperscriptFn = function(): VNode {
   const tagName: string | ComponentFn = arguments[0] // required
   const childrenOrText: HyperscriptChildren = slice(2, arguments) // optional
 
-  let props: VNodeProps<Element> = {}
-  let children: ArrayLike<VNode> | undefined
+  let props: VNodeProps = {}
+  let children: Array<VNode> | undefined
   let text: string | undefined
 
   if (childrenOrText) {
