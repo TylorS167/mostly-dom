@@ -1,3 +1,13 @@
+<a name="6.0.0"></a>
+# [6.0.0](https://github.com/TylorS/mostly-dom/compare/v5.0.0...v6.0.0) (2018-10-22)
+
+
+### Features
+
+* upgrade to typescript 3.1.1 ([21923a6](https://github.com/TylorS/mostly-dom/commit/21923a6))
+
+
+
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/TylorS/mostly-dom/compare/v4.4.0...v5.0.0) (2018-03-06)
 
