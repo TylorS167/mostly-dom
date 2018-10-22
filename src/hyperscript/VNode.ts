@@ -18,7 +18,7 @@ export class MostlyVNode<T extends Node> implements VNode<T> {
     public namespace: string | undefined
   ) {}
 
-  public static create<N extends Node>(
+  public static create(
     tagName: string | undefined,
     props: VNodeProps<Element>,
     children: Array<VNode> | undefined,

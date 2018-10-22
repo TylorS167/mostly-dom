@@ -69,8 +69,7 @@ import { HyperscriptChildren, h } from './h'
 // tslint:disable:no-shadowed-variable
 export interface HyperscriptHelperFn<
   T extends Element,
-  Props extends VNodeProps<T> = VNodeProps<T>,
-  Events extends ElementEvents<T> = ElementEvents<T>
+  Props extends VNodeProps<T> = VNodeProps<T>
 > {
   (): VNode<T, Props>
   (data: Props): VNode<T, Props & VNodeProps<T>>

@@ -251,7 +251,7 @@ export interface HTMLFormElementProperties extends VNodeProperties<HTMLFormEleme
 export interface HTMLFrameElementProperties
   extends VNodeProperties<
       HTMLFrameElement,
-      VNodeEvents<HTMLFrameElement, HTMLFrameElementEventMap>
+      VNodeEvents<HTMLFrameElement, HTMLFrameSetElementEventMap>
     > {
   border?: string
   borderColor?: any
@@ -303,7 +303,7 @@ export interface HTMLHtmlElementProperties extends VNodeProperties<HTMLHtmlEleme
 export interface HTMLIFrameElementProperties
   extends VNodeProperties<
       HTMLIFrameElement,
-      VNodeEvents<HTMLIFrameElement, HTMLIFrameElementEventMap>
+      VNodeEvents<HTMLIFrameElement, HTMLFrameSetElementEventMap>
     > {
   align?: string
   allowFullscreen?: boolean
