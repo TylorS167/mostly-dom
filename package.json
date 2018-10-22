@@ -40,7 +40,7 @@
     "url": "git+https://github.com/TylorS/mostly-dom.git"
   },
   "scripts": {
-    "build": "npm build:commonjs && npm build:es2015",
+    "build": "npm run build:commonjs && npm run build:es2015",
     "build:commonjs": "tsc -P .config/tsconfig.commonjs.json",
     "build:es2015": "tsc -P .config/tsconfig.es2015.json",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0 -p angular",
