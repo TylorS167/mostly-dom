@@ -8,6 +8,7 @@ addons:
 
 node_js:
   - 7
+  - 10
 
 cache: yarn
 
